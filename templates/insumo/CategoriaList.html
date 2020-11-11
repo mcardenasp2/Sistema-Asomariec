@@ -1,0 +1,80 @@
+{% extends 'base/body.html' %}
+{% load static %}
+{% block head %}
+
+    {#    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">#}
+    {#    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">#}
+    {##}
+    {#    <script type="text/javascript" charset="utf8"#}
+    {#            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>#}
+    {#    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>#}
+    <!-- Datatables -->
+    <link rel="stylesheet" href="{% static 'lib/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'lib/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'lib/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
+
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title p-0">Titulo</h2>
+            <div class="row">
+
+                <div class="table-responsive py-4">
+                    <table class="table table-flush" id="table_id">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Position</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Position</th>
+
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {#                        {% for object in object_list %}#}
+                        {#                            <tr>#}
+                        {#                            <td>{{ object.catDescripcion }}</td>#}
+                        {#                            <td>{{ object.catEstado }}</td>#}
+                        {#                            </tr>#}
+                        {##}
+                        {#                        {% endfor %}#}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="" type="submit">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'lib/assets/vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+{#funcion del datatable#}
+    <script src="{% static 'js/insumo/categoria/list.js' %}"></script>
+{% endblock %}

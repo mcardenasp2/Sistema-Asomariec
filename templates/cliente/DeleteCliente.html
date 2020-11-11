@@ -1,0 +1,83 @@
+{#{% extends 'base/body.html' %}#}
+{% extends 'index.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <form method="post" action="." enctype="multipart/form-data">
+
+        <div class="card">
+            <div class="card-body">
+                <h1>Crear</h1>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text"><strong>Danger!</strong> Ha ocurrido un error</span>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                {% endif %}
+                {#                {{ form.cliEstado|remove_attr:'checked' }}#}
+
+                <div class="alert alert-danger" role="alert">
+                    <span class="alert-icon"><i class="fas fa-trash-alt"></i></span>
+                    <span class="alert-text"><strong>Warning!</strong> Estas seguro que deseas eliminar a {{ object.cliNombre }} {{ object.cliApellido }}</span>
+                </div>
+                <div class="col-6">
+                    {#                    <h1>hola</h1>#}
+                    {#                    {% ifequal action "eliminar" %}#}
+
+                    {#                    {{ object.usuaReg }}#}
+                    {#                    {{ object.usuaMod }}#}
+                    {#                    {{ object.usuaEli|attr:'type:hidden'|attr:'value:1' }}#}
+                    {#                    {% endifequal %}#}
+                    <input type="hidden" name="usuaEli" value="1">
+
+
+                </div>
+
+
+                <button class="btn btn-info" type="submit">Aceptar</button>
+                <a href="{{ list_url }}" class="btn btn-danger" role="button" aria-pressed="true">Cancelar</a>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        {#    solo cuando envio con ajax#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            {#console.log('hola');#}
+            var parameters = new FormData(this);
+            console.log(parameters);
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+
+            });
+
+
+        });
+        {#submit_with_aja();#}
+        {#submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', paramet);#}
+
+
+    </script>
+{% endblock %}

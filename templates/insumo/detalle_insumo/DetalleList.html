@@ -1,0 +1,260 @@
+{% extends 'base/body.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block head %}
+
+    {#    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>#}
+    {#    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">#}
+    {#    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">#}
+    {##}
+    {#    <script type="text/javascript" charset="utf8"#}
+    {#            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>#}
+    {#    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>#}
+    <!-- Datatables -->
+    <link rel="stylesheet" href="{% static 'lib/assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'lib/assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
+    <link rel="stylesheet"
+          href="{% static 'lib/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
+
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title p-0">Detalles de Insumo</h2>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Medida</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a style="color: white" class="btn btn-primary btn-flat btnAdd">
+                                        <i class="fas fa-plus"></i> Nuevo registro
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush  display responsive no-wrap" id="table_id">
+                                            <thead class="thead-light text-center">
+                                            <tr>
+                                                <th>N</th>
+                                                <th>Nombre</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+{#                                            <tr class="text-center">#}
+{#                                                <th scope="row">#}
+{#                                                    <a href="#" type="button" rel="delete"#}
+{#                                                       class="btn btn-danger btn-sm btn-flat"><i#}
+{#                                                            class="fas fa-trash-alt"></i></a>#}
+{#                                                </th>#}
+{#                                             #}
+{#                                            </tr>#}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Categoria</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a style="color: white" class="btn btn-primary btn-flat btnAddcat">
+                                        <i class="fas fa-plus"></i> Nuevo registro
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center table-flush" id="table_idcat">
+                                            <thead class="thead-light text-center">
+                                            <tr>
+                                                <th scope="col">N</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Accion</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            {#            <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">#}
+            {#                <i class="fas fa-plus"></i> Nuevo registro#}
+            {#            </a>#}
+            {#            <a style="color: white" class="btn btn-primary btn-flat btnAdd">#}
+            {#                <i class="fas fa-plus"></i> Nuevo registro#}
+            {#            </a>#}
+            <!-- Button trigger modal -->
+            {#            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalCategoria">#}
+            {#                Launch demo modal#}
+            {#            </button>#}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+
+    <!-- Modal -->
+
+
+    <script src="{% static 'lib/assets/vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+    {#funcion del datatable#}
+    {#    categoria#}
+     <script src="{% static 'js/insumo/categoria/list.js' %}"></script>
+{#    Medida#}
+    <script src="{% static 'js/insumo/medida/list.js' %}"></script>
+
+
+
+
+
+    <div class="modal fade" id="myModalMedida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form method="post" action="." enctype="multipart/form-data" id="form_ID">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Medida</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <input name="action" type="hidden" value="add">
+                            <input name="user1" id="user1" type="hidden" value="1">
+                            <input name="id" id="id" type="hidden" value="0">
+                            <div class="form-group">
+                                <label for="id_medDescripcion">Nombre:</label>
+
+                                {{ form.medDescripcion|add_class:"form-control" }}
+                                {#                                {{ form.catFecReg }}#}
+                                {#                                {{ form.catFecMod }}#}
+                            </div>
+                            <div class="col-6">
+
+                                {{ form.medEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}
+
+                                {% ifequal action "add" %}
+                                    {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}
+                                    {{ form.usuaMod|attr:'type:hidden' }}
+                                    {{ form.usuaEli|attr:'type:hidden' }}
+                                {% endifequal %}
+                                {% ifequal action "edit" %}
+                                    {{ form.usuaReg|attr:'type:hidden' }}
+                                    {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}
+                                    {{ form.usuaEli|attr:'type:hidden' }}
+                                {% endifequal %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+
+    <div class="modal fade" id="myModalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form method="post" action="." enctype="multipart/form-data" id="form_IDcat">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Categoria</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <input name="action" type="hidden" value="addcat">
+                            <input name="user1" id="user1" type="hidden" value="1">
+                            <input name="id" id="id" type="hidden" value="0">
+                            <div class="form-group">
+                                <label for="id_catDescripcion">Nombre:</label>
+
+                                {{ form2.catDescripcion|add_class:"form-control" }}
+{#                                {{ form.catFecReg }}#}
+{#                                {{ form.catFecMod }}#}
+                            </div>
+                            <div class="col-6">
+
+                                {{ form2.catEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}
+
+                                {% ifequal action "add" %}
+                                    {{ form2.usuaReg|attr:'type:hidden'|attr:'value:1' }}
+                                    {{ form2.usuaMod|attr:'type:hidden' }}
+                                    {{ form2.usuaEli|attr:'type:hidden' }}
+                                {% endifequal %}
+                                {% ifequal action "edit" %}
+                                    {{ form2.usuaReg|attr:'type:hidden' }}
+                                    {{ form2.usuaMod|attr:'type:hidden'|attr:'value:1' }}
+                                    {{ form2.usuaEli|attr:'type:hidden' }}
+                                {% endifequal %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

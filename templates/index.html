@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+    <!-- select2 -->
+    <link rel="stylesheet" href=" {% static 'lib/assets/vendor/select2/dist/css/select2.min.css' %}">
+
+    {#    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>#}
+    {#        <script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>#}
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'lib/assets/img/brand/favicon.png' %}" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{% static 'lib/assets/vendor/nucleo/css/nucleo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'lib/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}"
+          type="text/css">
+    <!-- Page plugins -->
+    <!-- jQuery -->
+    {#    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>#}
+    <!-- Argon CSS -->
+    {#    <script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>#}
+    <link rel="stylesheet" href="{% static 'lib/assets/css/argon.css' %}" type="text/css">
+    <!-- Jquery Confirm -->
+    <link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">
+    {#    <script src="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>#}
+    <!-- select2 -->
+    {#    <link rel="stylesheet" href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}">#}
+    {#    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>#}
+    {#    <link rel="stylesheet" href=" {% static 'lib/assets/vendor/select2/dist/css/select2.min.css' %}">#}
+    {#    <script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>#}
+    <!-- Functions -->
+    <script src="{% static 'js/funciones.js' %}"></script>
+
+
+    {#    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>#}
+
+    {% block head %}
+
+    {% endblock %}
+</head>
+<style>
+    #files {
+        display: none;
+    }
+</style>
+<body>
+{% include 'base/sidebar.html' %}
+
+<!-- Main content -->
+<div class="main-content" id="panel">
+
+    {% include 'base/header.html' %}
+
+    <div class="container-fluid mt-4">
+        <div class="">
+            {% block content %}
+                <h1>Hola</h1>
+                <form>
+
+                    <div>
+                        <select class="form-control js-example-theme-multiple ">
+                            <option>Alertssss</option>
+                            <option>Badges</option>
+                            <option>Buttons</option>
+                            <option>Cards</option>
+                            <option>Forms</option>
+                            <option>Modals</option>
+                        </select>
+                    </div>
+                </form>
+
+                <form>
+                    <select class="form-control" data-toggle="select" title="Simple select" data-live-search="true"
+                            data-live-search-placeholder="Search ...">
+                        <option>Alerts</option>
+                        <option>Badges</option>
+                        <option>Buttons</option>
+                        <option>Cards</option>
+                        <option>Forms</option>
+                        <option>Modals</option>
+                    </select>
+                </form>
+
+            {% endblock %}
+        </div>
+        {% include 'base/footer.html' %}
+    </div>
+</div>
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="{% static 'lib/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'lib/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'lib/assets/vendor/js-cookie/js.cookie.js' %}"></script>
+<script src="{% static 'lib/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js' %}"></script>
+<script src="{% static 'lib/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js' %}"></script>
+<!-- Optional JS -->
+<script src="{% static 'lib/assets/vendor/chart.js/dist/Chart.min.js' %}"></script>
+<script src="{% static 'lib/assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
+<!-- Argon JS -->
+<script src="{% static 'lib/assets/js/argon.js' %}"></script>
+<!-- Select2 -->
+{#<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>#}
+<script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>
+<!-- Jquery Confirm -->
+{#    <link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">#}
+<script src="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
+
+<!-- Sweetalert2 -->
+<script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
+<!-- Select2 -->
+{#<script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>#}
+{#<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>#}
+<!-- Date Pinker Argon -->
+{#<script src="{% static 'lib/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>#}
+
+<script src="{% static 'lib/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js' %}"></script>
+
+{% block javascript %}
+
+{% endblock %}
+
+<script>
+
+    function prueba() {
+            $.ajax({
+                url: '/login/dashboard/', //'/login/dashboard/'
+                type: 'POST',
+                data: {
+                    'action': 'prueba'
+                    {#'anio':anio#}
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                if (!data.hasOwnProperty('error')) {
+                    console.log(data);
+                    {#graphpie.addSeries(data);#}
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+
+            });
+
+        }
+
+        $(function () {
+            prueba();
+        });
+        {#$(document).ready(function () {#}
+            {#$(".nav li").on("click", function () {#}
+        {#    $(".itemNav").find(".marco").addClass("show");#}
+            {#$(".itemNav").find(".marco").addClass("show");#}
+        {#    $(".itemNav a").attr("aria-expanded", "true");#}
+            {#$(this).addClass("activa");#}
+        {##}
+
+
+    </script>
+</body>
+
+
+</html>

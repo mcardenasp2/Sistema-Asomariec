@@ -1,0 +1,166 @@
+{#{% extends 'base/body.html' %}#}
+{% extends 'index.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <form method="post" action="." enctype="multipart/form-data">
+
+        <div class="card">
+            <div class="card-body">
+                <h1>Crear</h1>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text"><strong>Danger!</strong> Ha ocurrido un error</span>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                {% endif %}
+
+
+{#                {% for field in form.visible_fields %}#}
+{#                    <div class="form-group">#}
+{#                        <label for="email">{{ field.label }}:</label>#}
+{#                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
+{#                        {{ field }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliNombre">Nombre:</label>
+
+                            {{ form.cliNombre|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliApellido">Apellido:</label>
+
+                            {{ form.cliApellido|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliRuc">Ruc:</label>
+
+                            {{ form.cliRuc|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliTelefono">Telefono:</label>
+
+                            {{ form.cliTelefono|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliDireccion">Direccion:</label>
+
+                            {{ form.cliDireccion|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="id_cliGenero">Sexo</label>
+
+                            {{ form.cliGenero|add_class:"form-control" }}
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="custom-control custom-checkbox">
+                            {{ form.cliEstado|add_class:"custom-control-input" }}
+                            <label class="custom-control-label" for="id_cliEstado">Estado</label>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <button class="btn btn-info" type="submit"> Guardar</button>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        {#    solo cuando envio con ajax#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            console.log('hola');
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+
+            });
+
+            {#console.log(parameters);#}
+
+            /*
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                datatype: 'json',
+                processData: false,
+                contentType: false,
+            }).done(function (data) {
+                console.log(data);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {#location.href = '{{ list_url }}'#}
+
+
+            })
+    */
+
+        });
+        {#submit_with_aja();#}
+        {#submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', paramet);#}
+
+
+    </script>
+{% endblock %}

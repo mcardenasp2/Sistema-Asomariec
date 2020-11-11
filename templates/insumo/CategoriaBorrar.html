@@ -1,0 +1,53 @@
+{% extends 'base/body.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <form action="." method="post">
+        <div class="card">
+            <div class="card-body">
+                <h1>Borrar</h1>
+                {#            <form action="." method="post">#}
+                {% csrf_token %}
+                <div class="alert alert-danger alert-dismissible">
+                    <h5><i class="icon fas fa-ban"></i> Notificación!</h5>
+                    ¿Estas seguro de eliminar el registro N°{{ object.id }}?
+                </div>
+                <button type="submit" class="btn btn-primary btn-flat">
+                    <i class="fas fa-save"></i> Si, aceptar
+                </button>
+
+                {#            </form>#}
+
+
+            </div>
+
+        </div>
+    </form>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                datatype: 'json',
+                processData: false,
+                contentType: false,
+
+            }).done(function (data) {
+                location.href = '{{ list_url }}'
+
+            })
+
+        });
+    </script>
+
+{% endblock %}

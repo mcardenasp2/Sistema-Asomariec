@@ -1,0 +1,68 @@
+{% extends 'base/body.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <form method="post" action=".">
+
+        <div class="card">
+            <div class="card-body">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="email">{{ field.label }}:</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    </div>
+                {% endfor %}
+
+{#            <label>{{ form.catDescripcion.label }}</label>#}
+{#            <label>{{ form.catFecReg.label }}</label>#}
+{#            {{ form.catDescripcion|add_class:'form-control'  }}#}
+
+                <button class="btn btn-info" type="submit"> Guardar</button>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+{#    solo cuando envio con ajax#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            console.log('hola');
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname,'Notification','¿Estas seguro de realizar la siguiente acción?', parameters,function () {
+                location.href='{{ list_url }}';
+
+            });
+
+            {#console.log(parameters);#}
+
+            /*
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                datatype: 'json',
+                processData: false,
+                contentType: false,
+            }).done(function (data) {
+                console.log(data);
+                {#location.href = '{{ list_url }}'#}
+
+
+            })
+    */
+
+        });
+        {#submit_with_aja();#}
+    {#submit_with_ajax(window.location.pathname,'Notification','¿Estas seguro de realizar la siguiente acción?', paramet);#}
+
+    </script>
+{% endblock %}
