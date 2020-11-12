@@ -271,7 +271,7 @@ class InsumoListView(ListView):
         context = super().get_context_data(**kwargs)
         # context['title'] = 'Listado de Clientes'
         context['create_url'] = reverse_lazy('insumo:insumo_create')
-        # context['list_url'] = reverse_lazy('erp:client_list')
+        context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
         context['entity'] = 'Clientes'
         return context
 
@@ -305,6 +305,7 @@ class InsumoCreateView(CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
+        context['title'] = 'Creacion de un Insumo'
         context['action'] = 'add'
         return context
 
@@ -356,6 +357,7 @@ class InsumoUpdateView(UpdateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
+        context['title'] = 'Edicion de un Insumo'
         context['action'] = 'edit'
         return context
 

@@ -103,12 +103,18 @@ var comp = {
             columns: [
                 {"data": "id"},
                 {"data": "insDescripcion"},
+                {"data": "medida.medDescripcion"},
                 {"data": "insPrecio"},
-                // {"data": "pvp"},
+
                 {"data": "cant"},
                 {"data": "subtotal"},
             ],
             columnDefs: [
+                {
+                    targets: [1, 2],
+                    class: 'text-center',
+                    orderable: false,
+                },
                 {
                     targets: [0],
                     class: 'text-center',
@@ -146,8 +152,12 @@ var comp = {
 
                 $(row).find('input[name="cant"]').TouchSpin({
                     min: 1,
-                    max: 1000000000,
+                    max: 100000,
                     step: 1,
+                    verticalbuttons: true,
+                    verticalupclass: 'glyphicon glyphicon-plus',
+                    verticaldownclass: 'glyphicon glyphicon-minus',
+                    // sufijo:'sss'
                     // boostat: 5,
                 });
 
@@ -342,7 +352,7 @@ $(function () {
             //actualizo la factura
             comp.calculate_invoce();
             // console.log(data);
-            $('td:eq(4)', tblInsumos.row(tr.row).node()).html('$' + comp.items.insumos[tr.row].subtotal.toFixed(2));
+            $('td:eq(5)', tblInsumos.row(tr.row).node()).html('$' + comp.items.insumos[tr.row].subtotal.toFixed(2));
 
         });
 
@@ -383,7 +393,7 @@ $(function () {
         // });
         submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
             alerta_action2('Notificacion', 'Desea Imprimir la Boleta de Venta?', function () {
-                window.open('/compra/compra/invoice/pdf/'+response.id+'/','_blank')
+                window.open('/compra/compra/invoice/pdf/' + response.id + '/', '_blank')
                 location.href = '/compra/compra/mostrar/';
             }, function () {
                 location.href = '/compra/compra/mostrar/';

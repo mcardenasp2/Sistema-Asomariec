@@ -33,7 +33,7 @@ var prod = {
 
 
         });
-        console.log('buenas ' + band);
+        // console.log('buenas ' + band);
         if (band == 1) {
             this.items.insumos.push(item);
         }
@@ -44,40 +44,40 @@ var prod = {
         this.list();
 
     },
-    calculate_invoce: function () {
-
-        var subtotal = 0.00;
-        $.each(this.items.insumos, function (pos, dict) {
-            // console.log(pos);
-            // console.log(dict);
-            dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
-            subtotal += dict.subtotal;
-        });
-        this.items.totalproduc = subtotal;
-        // console.clear();
-        // console.log('prueba');
-        // console.log(this.items.totalproduc);
-        $('input[name="totalproduc"]').val(this.items.totalproduc.toFixed(2));
-        this.totalp();
-
-    },
-    totalp: function () {
-        var tot = 0.00;
-        tot = this.items.totalproduc + this.items.subtolagast;
-        this.items.total = parseFloat(tot)
-        // this.items.total = 225.50
-        // console.log(tot);
-        $('input[name="prodTotal"]').val(this.items.total.toFixed(2));
-        var pr = 0.00;
-        pr = $('input[name="prodCantidad"]').val();
-        pr = this.items.total / pr;
-        // $('input[name="precioprod"]').val(this.items.total.toFixed(2));
-        $('input[name="precioprod"]').val(pr.toFixed(2));
-
-
-    },
+    // calculate_invoce: function () {
+    //
+    //     var subtotal = 0.00;
+    //     $.each(this.items.insumos, function (pos, dict) {
+    //         // console.log(pos);
+    //         // console.log(dict);
+    //         dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
+    //         subtotal += dict.subtotal;
+    //     });
+    //     this.items.totalproduc = subtotal;
+    //     // console.clear();
+    //     // console.log('prueba');
+    //     // console.log(this.items.totalproduc);
+    //     $('input[name="totalproduc"]').val(this.items.totalproduc.toFixed(2));
+    //     this.totalp();
+    //
+    // },
+    // totalp: function () {
+    //     var tot = 0.00;
+    //     tot = this.items.totalproduc + this.items.subtolagast;
+    //     this.items.total = parseFloat(tot)
+    //     // this.items.total = 225.50
+    //     // console.log(tot);
+    //     $('input[name="prodTotal"]').val(this.items.total.toFixed(2));
+    //     var pr = 0.00;
+    //     pr = $('input[name="prodCantidad"]').val();
+    //     pr = this.items.total / pr;
+    //     // $('input[name="precioprod"]').val(this.items.total.toFixed(2));
+    //     $('input[name="precioprod"]').val(pr.toFixed(2));
+    //
+    //
+    // },
     list: function () {
-        this.calculate_invoce();
+        // this.calculate_invoce();
         // this.totalp();
         tblInsumos = $('#tblInsumos').DataTable({
             responsive: true,
@@ -172,93 +172,93 @@ var prod = {
         });
 
     },
-    addgasto: function (item) {
-        this.items.gastosad.push(item);
-        this.listgast();
+    // addgasto: function (item) {
+    //     this.items.gastosad.push(item);
+    //     this.listgast();
+    //
+    // },
+    // calculate_invoce_gasto: function () {
+    //
+    //     var subtotalg = 0.00;
+    //     $.each(this.items.gastosad, function (pos, dict) {
+    //         // console.log(pos);
+    //         // console.log(dict);
+    //         // dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
+    //         subtotalg += parseFloat(dict.gastPrecio);
+    //     });
+    //     this.items.subtolagast = subtotalg;
+    //
+    //     // $('input[name="gastoadicionales"]').val(this.items.subtolagast);
+    //     $('input[name="gastoadicionales"]').val(this.items.subtolagast.toFixed(2));
+    //     this.totalp();
+    //
+    //
+    // },
 
-    },
-    calculate_invoce_gasto: function () {
-
-        var subtotalg = 0.00;
-        $.each(this.items.gastosad, function (pos, dict) {
-            // console.log(pos);
-            // console.log(dict);
-            // dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
-            subtotalg += parseFloat(dict.gastPrecio);
-        });
-        this.items.subtolagast = subtotalg;
-
-        // $('input[name="gastoadicionales"]').val(this.items.subtolagast);
-        $('input[name="gastoadicionales"]').val(this.items.subtolagast.toFixed(2));
-        this.totalp();
-
-
-    },
-
-    listgast: function () {
-        // this.total();
-
-        this.calculate_invoce_gasto();
-        // this.totalp();
-        tblGast = $('#tblDet').DataTable({
-            responsive: true,
-            autoWidth: false,
-            destroy: true,
-            data: this.items.gastosad,
-            language: {
-                processing: 'Procesando...',
-                // search: 'Buscar:',
-                search: "Buscar: _INPUT_",
-                // searchPlaceholder: "Buscar Registros",
-                lengthMenu: '   Mostrar _MENU_ registros',
-                info: 'Mostrando desde _START_ al _END_ de _TOTAL_ registros',
-                infoEmpty: 'Mostrando ningún elemento.',
-                infoFiltered: '(filtrado _MAX_ elementos total)',
-                infoPostFix: '',
-                loadingRecords: 'Cargando registros...',
-                zeroRecords: 'No se encontraron registros',
-                emptyTable: 'No hay datos disponibles en la tabla',
-                paginate: {
-                    first: 'Primero',
-                    previous: '<-',
-                    next: '->',
-                    last: 'Último'
-                }
-            },
-            columns: [
-                // {"data": "id"},
-                {"data": "gastDescripcion"},
-                {"data": "gastDescripcion"},
-                {"data": "gastPrecio"},
-                // {"data": "pvp"},
-                // {"data": "cant"},
-                // {"data": "subtotal"},
-            ],
-            columnDefs: [
-                {
-                    targets: [0],
-                    class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
-                    }
-                },
-                {
-                    targets: [-1],
-                    class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '$' + parseFloat(data).toFixed(2);
-                    }
-                },
-            ],
-
-            initComplete: function (settings, json) {
-
-            }
-        });
-
-    },
+    // listgast: function () {
+    //     // this.total();
+    //
+    //     // this.calculate_invoce_gasto();
+    //     // this.totalp();
+    //     tblGast = $('#tblDet').DataTable({
+    //         responsive: true,
+    //         autoWidth: false,
+    //         destroy: true,
+    //         data: this.items.gastosad,
+    //         language: {
+    //             processing: 'Procesando...',
+    //             // search: 'Buscar:',
+    //             search: "Buscar: _INPUT_",
+    //             // searchPlaceholder: "Buscar Registros",
+    //             lengthMenu: '   Mostrar _MENU_ registros',
+    //             info: 'Mostrando desde _START_ al _END_ de _TOTAL_ registros',
+    //             infoEmpty: 'Mostrando ningún elemento.',
+    //             infoFiltered: '(filtrado _MAX_ elementos total)',
+    //             infoPostFix: '',
+    //             loadingRecords: 'Cargando registros...',
+    //             zeroRecords: 'No se encontraron registros',
+    //             emptyTable: 'No hay datos disponibles en la tabla',
+    //             paginate: {
+    //                 first: 'Primero',
+    //                 previous: '<-',
+    //                 next: '->',
+    //                 last: 'Último'
+    //             }
+    //         },
+    //         columns: [
+    //             // {"data": "id"},
+    //             {"data": "gastDescripcion"},
+    //             {"data": "gastDescripcion"},
+    //             {"data": "gastPrecio"},
+    //             // {"data": "pvp"},
+    //             // {"data": "cant"},
+    //             // {"data": "subtotal"},
+    //         ],
+    //         columnDefs: [
+    //             {
+    //                 targets: [0],
+    //                 class: 'text-center',
+    //                 orderable: false,
+    //                 render: function (data, type, row) {
+    //                     return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
+    //                 }
+    //             },
+    //             {
+    //                 targets: [-1],
+    //                 class: 'text-center',
+    //                 orderable: false,
+    //                 render: function (data, type, row) {
+    //                     return '$' + parseFloat(data).toFixed(2);
+    //                 }
+    //             },
+    //         ],
+    //
+    //         initComplete: function (settings, json) {
+    //
+    //         }
+    //     });
+    //
+    // },
 
 
 };
@@ -293,54 +293,51 @@ $(function () {
 
     //gastos adicionales
 
-    $('.btnGastos').on('click', function () {
-        $('#myModelDet').modal('show');
+    // $('.btnGastos').on('click', function () {
+    //     $('#myModelDet').modal('show');
+    //
+    // });
 
-    });
+    // $('.addgast').on('click', function () {
 
-    $('.addgast').on('click', function () {
-
-        var gast = {};
-        gast.gastDescripcion = $('input[name="descripcion"]').val();
-        gast.gastPrecio = $('input[name="precio"]').val();
-        // console.log(gast);
-        if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
-        // console.log(gast.length);
-        prod.addgasto(gast);
-        $('input[name="descripcion"]').val('');
-        $('input[name="precio"]').val('');
-        // console.log((prod.items.gastosad));
+        // var gast = {};
+        // gast.gastDescripcion = $('input[name="descripcion"]').val();
+        // gast.gastPrecio = $('input[name="precio"]').val();
+        // if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
+        // prod.addgasto(gast);
+        // $('input[name="descripcion"]').val('');
+        // $('input[name="precio"]').val('');
 
 
-    });
+    // });
 
 
     //total precio venta
-    $('input[name="prodCantidad"]').on('change keyup', function () {
-        // alert('x');
-        // prod.calculate_invoce();
-        // prod.calculate_invoce_gasto();
-        prod.totalp();
-        // var uni=0.00
-        // uni=prod.items.total/$(this).val();
-        // $('input[name="precioprod"]').val(uni);
-
-    });
+    // $('input[name="prodCantidad"]').on('change keyup', function () {
+    //     // alert('x');
+    //     // prod.calculate_invoce();
+    //     // prod.calculate_invoce_gasto();
+    //     prod.totalp();
+    //     // var uni=0.00
+    //     // uni=prod.items.total/$(this).val();
+    //     // $('input[name="precioprod"]').val(uni);
+    //
+    // });
 
     //eliminar item de gastos adicionales
-    $('#tblDet tbody')
-        .on('click', 'a[rel="remove"]', function () {
-            // alert('x');
-            //Obtengo la posicion
-
-            var tr = tblGast.cell($(this).closest('td, li')).index();
-            alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
-                prod.items.gastosad.splice(tr.row, 1);
-                //    actualizams
-                prod.listgast();
-            });
-
-        });
+    // $('#tblDet tbody')
+    //     .on('click', 'a[rel="remove"]', function () {
+    //         // alert('x');
+    //         //Obtengo la posicion
+    //
+    //         var tr = tblGast.cell($(this).closest('td, li')).index();
+    //         alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
+    //             prod.items.gastosad.splice(tr.row, 1);
+    //             //    actualizams
+    //             prod.listgast();
+    //         });
+    //
+    //     });
 
 
     //    evento eiminar insumo de de la tabla
@@ -371,7 +368,7 @@ $(function () {
             // console.log(data);
             prod.items.insumos[tr.row].cant = cant;
             //actualizo la factura
-            prod.calculate_invoce();
+            // prod.calculate_invoce();
             // console.log(data);
             $('td:eq(4)', tblInsumos.row(tr.row).node()).html('$' + prod.items.insumos[tr.row].subtotal.toFixed(2));
 
@@ -456,6 +453,7 @@ $(function () {
         // console.log(parameters);
         submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
             location.href = '/producto/producto/mostrar/';
+
         });
 
     });
@@ -463,7 +461,7 @@ $(function () {
 
     prod.list();
 
-    prod.listgast();
+    // prod.listgast();
     // prod.total();
 
 });

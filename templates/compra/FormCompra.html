@@ -13,7 +13,7 @@
 
     {#    <link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>#}
     {#    touchspin para numero#}
-    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
+{#    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>#}
     {#    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>#}
 {% endblock %}
 {% block content %}
@@ -21,7 +21,7 @@
 
         <div class="card">
             <div class="card-body">
-                {#                <h1>Crear</h1>#}
+
                 {% csrf_token %}
                 <input type="hidden" name="action" value="{{ action }}">
 
@@ -31,11 +31,9 @@
                             <div class="card-header border-0">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="mb-0">Insumos</h3>
+{#                                        <h3 class="mb-0">Insumos</h3>#}
+                                        <h2 class="">{{ title }}</h2>
                                     </div>
-                                    {#                                    <div class="col text-right">#}
-                                    {#                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>#}
-                                    {#                                    </div>#}
                                 </div>
                             </div>
 
@@ -82,7 +80,8 @@
                                                 <tr>
                                                     <th scope="col">Eliminar</th>
                                                     <th scope="col">Insumo</th>
-                                                    <th scope="col">Precio Compra</th>
+                                                    <th scope="col">U. Medida</th>
+                                                    <th scope="col">P. Compra</th>
                                                     <th scope="col">Cantidad</th>
                                                     <th scope="col">Subtotal</th>
                                                 </tr>
@@ -324,6 +323,8 @@
     <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
 
     {#    para numero#}
+
+    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
 
     <script src="{% static 'js/compra/form.js' %}"></script>

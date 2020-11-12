@@ -122,17 +122,17 @@ class ProductoCreateView(CreateView):
                         # print(prod['insumos'])
                         # print(prod['gastosad'])
 
-                    if prod['gastosad']:
-                        # print('gastos adici')
-                        for i in prod['gastosad']:
-                            gast = GastosAdicionales()
-                            gast.producto_id = cabprod.id
-                            # print(i)
-                            # print('gastos adici x1')
-                            gast.gastdescripcion = i['gastDescripcion']
-                            # print('gastos adici x2')
-                            gast.gastprecio = float(i['gastPrecio'])
-                            gast.save()
+                    # if prod['gastosad']:
+                    #     # print('gastos adici')
+                    #     for i in prod['gastosad']:
+                    #         gast = GastosAdicionales()
+                    #         gast.producto_id = cabprod.id
+                    #         # print(i)
+                    #         # print('gastos adici x1')
+                    #         gast.gastdescripcion = i['gastDescripcion']
+                    #         # print('gastos adici x2')
+                    #         gast.gastprecio = float(i['gastPrecio'])
+                    #         gast.save()
 
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
@@ -146,7 +146,7 @@ class ProductoCreateView(CreateView):
         context['list_url'] = reverse_lazy('producto:producto_mostrar')
         context['action'] = 'add'
         context['det']=[]
-        context['gasta']=[]
+        # context['gasta']=[]
         return context
 
 
@@ -167,6 +167,7 @@ class ProductoUpdateView(UpdateView):
             # print(request.FILES)
             action = request.POST['action']
             if action == 'search_insumos':
+
                 # print(request.POST['term'])
                 data = []
                 # gte mayor lte menor
@@ -233,17 +234,17 @@ class ProductoUpdateView(UpdateView):
 
                     cabprod.gastosadicionales_set.all().delete()
 
-                    if prod['gastosad']:
-                        # print('gastos adici')
-                        for i in prod['gastosad']:
-                            gast = GastosAdicionales()
-                            gast.producto_id = cabprod.id
-                            # print(i)
-                            # print('gastos adici x1')
-                            gast.gastdescripcion = i['gastDescripcion']
-                            # print('gastos adici x2')
-                            gast.gastprecio = float(i['gastPrecio'])
-                            gast.save()
+                    # if prod['gastosad']:
+                    #     # print('gastos adici')
+                    #     for i in prod['gastosad']:
+                    #         gast = GastosAdicionales()
+                    #         gast.producto_id = cabprod.id
+                    #         # print(i)
+                    #         # print('gastos adici x1')
+                    #         gast.gastdescripcion = i['gastDescripcion']
+                    #         # print('gastos adici x2')
+                    #         gast.gastprecio = float(i['gastPrecio'])
+                    #         gast.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -266,18 +267,18 @@ class ProductoUpdateView(UpdateView):
             pass
         return data
 
-    def get_details_gastos(self):
-        data = []
-        try:
-            for i in GastosAdicionales.objects.filter(producto_id=self.get_object().id):
-                item = {}
-                item['gastDescripcion'] = i.gastdescripcion
-                item['gastPrecio'] = float(i.gastprecio)
-                data.append(item)
-
-        except:
-            pass
-        return data
+    # def get_details_gastos(self):
+    #     data = []
+    #     try:
+    #         for i in GastosAdicionales.objects.filter(producto_id=self.get_object().id):
+    #             item = {}
+    #             item['gastDescripcion'] = i.gastdescripcion
+    #             item['gastPrecio'] = float(i.gastprecio)
+    #             data.append(item)
+    #
+    #     except:
+    #         pass
+    #     return data
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -286,7 +287,7 @@ class ProductoUpdateView(UpdateView):
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         context['det'] = json.dumps(self.get_details_insumos(), cls=DjangoJSONEncoder)
-        context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
+        # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
         return context
 
 

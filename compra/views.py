@@ -146,6 +146,7 @@ class CabCompraCreateView(CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('compra:compra_listar')
+        context['title'] = 'Creacion de una Compra'
         context['action'] = 'add'
         context['det'] = []
         return context
@@ -238,7 +239,7 @@ class CabCompraUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición de una Venta'
+        context['title'] = 'Edición de una Compra'
         context['entity'] = 'Ventas'
         context['list_url'] = self.success_url
         context['action'] = 'edit'

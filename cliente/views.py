@@ -76,6 +76,7 @@ class ClienteCrearView(CreateView):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('cliente:cliente_listar')
         context['action'] = 'add'
+        context['title'] = 'Creacion de un Cliente'
         return context
 
 
@@ -112,6 +113,7 @@ class ClienteUpdateView(UpdateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('cliente:cliente_listar')
+        context['title'] = 'Edicion de un Cliente'
         context['action'] = 'edit'
         return context
 

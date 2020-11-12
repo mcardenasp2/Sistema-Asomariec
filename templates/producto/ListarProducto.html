@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title p-0">Producto</h2>
+            <h2 class="card-title p-0">Lista de Producto</h2>
             <div class="row">
 
                 <div class="table-responsive py-4 ">
@@ -27,7 +27,7 @@
                             <th>Nombre</th>
                             <th>Fecha</th>
                             <th>Cantidad</th>
-{#                            <th>Imagen</th>#}
+                            {#                            <th>Imagen</th>#}
                             <th>Imagen</th>
                             <th>Precio</th>
                             <th>Accion</th>
@@ -35,17 +35,17 @@
 
                         </tr>
                         </thead>
-{#                        <tfoot>#}
-{#                        <tr>#}
-{#                            <th>Id</th>#}
-{#                            <th>Nombre</th>#}
-{#                            <th>Apellido</th>#}
-{#                            <th>Ruc</th>#}
-{#                            <th>Telefono</th>#}
-{#                            <th>Accion</th>#}
-{##}
-{#                        </tr>#}
-{#                        </tfoot>#}
+                        {#                        <tfoot>#}
+                        {#                        <tr>#}
+                        {#                            <th>Id</th>#}
+                        {#                            <th>Nombre</th>#}
+                        {#                            <th>Apellido</th>#}
+                        {#                            <th>Ruc</th>#}
+                        {#                            <th>Telefono</th>#}
+                        {#                            <th>Accion</th>#}
+                        {##}
+                        {#                        </tr>#}
+                        {#                        </tfoot>#}
                         <tbody>
                         {#                        {% for object in object_list %}#}
                         {#                            <tr>#}
@@ -63,6 +63,9 @@
             </div>
             <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">
                 <i class="fas fa-plus"></i> Nuevo registro
+            </a>
+            <a href="{{ list_url }}" class="btn btn-success btn-flat">
+                <i class="fas fa-sync"></i> Actualizar
             </a>
         </div>
     </div>
@@ -102,18 +105,18 @@
                 <div class="modal-body">
                     <div class="table-responsive py-4">
                         <table class="table table-bordered" id="tblDet">
-                        <thead class="thead-light">
-                        <tr>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>PVP</th>
-                            <th>Cantidad</th>
-                            <th>Subtotal</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>PVP</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

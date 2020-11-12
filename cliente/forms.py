@@ -15,26 +15,30 @@ class ClienteForm(ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Ingrese un Nombre',
+                    'autocomplete':'off'
                 }
             ),
             'cliApellido': TextInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Ingrese el Apellido',
+                    'autocomplete':'off'
                 }
             ),
             'cliRuc': TextInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Ingrese el Ruc',
-                    'minlength': '10'
+                    'minlength': '10',
+                    'autocomplete': 'off'
                 }
             ),
             'cliTelefono': TextInput(
                 attrs={
                     'class': 'form-control phone',
                     'placeholder': 'Ingrese el Telefono',
-                    'minlength':'10'
+                    'minlength':'10',
+                    'autocomplete': 'off'
                 }
             ),
             'cliDireccion': TextInput(
@@ -47,6 +51,7 @@ class ClienteForm(ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'name@example.com',
+                    'autocomplete': 'off'
                 }
             ),
             # 'cliEstado': CheckboxInput(

@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title p-0">Lista de Clentes</h2>
+            <h2 class="card-title p-0">Lista de Clientes</h2>
             <div class="row">
 
                 <div class="table-responsive py-4 ">
@@ -33,17 +33,17 @@
 
                         </tr>
                         </thead>
-{#                        <tfoot>#}
-{#                        <tr>#}
-{#                            <th>Id</th>#}
-{#                            <th>Nombre</th>#}
-{#                            <th>Apellido</th>#}
-{#                            <th>Ruc</th>#}
-{#                            <th>Telefono</th>#}
-{#                            <th>Accion</th>#}
-{##}
-{#                        </tr>#}
-{#                        </tfoot>#}
+                        {#                        <tfoot>#}
+                        {#                        <tr>#}
+                        {#                            <th>Id</th>#}
+                        {#                            <th>Nombre</th>#}
+                        {#                            <th>Apellido</th>#}
+                        {#                            <th>Ruc</th>#}
+                        {#                            <th>Telefono</th>#}
+                        {#                            <th>Accion</th>#}
+                        {##}
+                        {#                        </tr>#}
+                        {#                        </tfoot>#}
                         <tbody>
                         {#                        {% for object in object_list %}#}
                         {#                            <tr>#}
@@ -61,6 +61,9 @@
             </div>
             <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest">
                 <i class="fas fa-plus"></i> Nuevo registro
+            </a>
+            <a href="{{ list_url }}" class="btn btn-success btn-flat">
+                <i class="fas fa-sync"></i> Actualizar
             </a>
         </div>
     </div>
