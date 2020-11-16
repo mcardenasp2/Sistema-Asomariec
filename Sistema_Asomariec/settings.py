@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'venta',
     'login',
     'reports',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,5 @@ LOGIN_REDIRECT_URL = '/login/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL='user.User'

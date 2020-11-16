@@ -186,6 +186,7 @@ class ProductoUpdateView(UpdateView):
                 with transaction.atomic():
                     prod= json.loads(request.POST['compras'])
 
+
                     cabprod= self.get_object()
                     cabprod.prodDescripcion=prod['producto']
                     # print('sumare')
@@ -222,7 +223,9 @@ class ProductoUpdateView(UpdateView):
                         det.insumo_id=i['id']
                         det.detCantidad=i['cant']
                         det.detprecio=i['insPrecio']
-                        det.detSubtotal=i['subtotal']
+                        # det.detSubtotal=i['subtotal']
+                        # borrar
+                        det.detSubtotal=0.00
                         det.save()
 
                         insumo = Insumo.objects.get(pk=i['id'])
