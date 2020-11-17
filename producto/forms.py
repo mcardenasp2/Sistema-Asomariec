@@ -37,6 +37,7 @@ class ProductoForm(ModelForm):
             'prodIva': TextInput(
                 attrs={
                     'class': 'form-control',
+                    'value':0.12
                 },
             ),
             'prodTotal': TextInput(

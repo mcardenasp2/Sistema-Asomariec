@@ -4,7 +4,7 @@ from django.db import transaction
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from django.utils.decorators import method_decorator
@@ -14,9 +14,15 @@ from insumo.models import Insumo
 from producto.models import Producto, DetProducto
 from venta.models import *
 
-from django.views.generic import CreateView,ListView, UpdateView, DeleteView
+from django.views.generic import CreateView,ListView, UpdateView, DeleteView, View
 
 from venta.forms import CabVentaForm
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 class VentaListView(ListView):
     template_name = 'venta/normal/ListarVenta.html'
@@ -91,9 +97,11 @@ class VentaCreateView(CreateView):
                     cabventa.cliente_id= vent['cliente']
                     cabventa.venFechaInici=vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
+                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion='Ninguna'
                     cabventa.venTipo=2
-                    cabventa.ventTotal=float(vent['tgsto'])+float(vent['subproductos'])
+                    cabventa.ventTotal=float(vent['tgsto'])+float(vent['subproductos'])+float(vent['impuestos'])
                     cabventa.ventEstado=1
                     cabventa.save()
 
@@ -117,6 +125,8 @@ class VentaCreateView(CreateView):
                             gast.gastdescripcion=i['gastDescripcion']
                             gast.gastprecio=i['gastPrecio']
                             gast.save()
+
+                    data = {'id': cabventa.id}
 
 
 
@@ -173,9 +183,11 @@ class VentaUpdateView(UpdateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
+                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 2
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])+float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
@@ -211,6 +223,7 @@ class VentaUpdateView(UpdateView):
                             gast.gastdescripcion = i['gastDescripcion']
                             gast.gastprecio = i['gastPrecio']
                             gast.save()
+                    data = {'id': cabventa.id}
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -250,6 +263,53 @@ class VentaUpdateView(UpdateView):
         context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
         return context
 
+
+class SaleInvoicePdfView(View):
+
+    def link_callback(self, uri, rel):
+        sUrl = settings.STATIC_URL  # Typically /static/
+        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL  # Typically /media/
+        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
+
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
+        else:
+            return uri
+
+    # make sure that file exists
+        if not os.path.isfile(path):
+            raise Exception(
+                'media URI must start with %s or %s' % (sUrl, mUrl)
+            )
+        return path
+
+
+    def get(self, request, *args, **kwargs):
+        try:
+            template = get_template('venta/normal/invoice.html')
+            context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
+                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg')
+                       # se utiliza con collectstatic
+                       # 'icon':'{}{}'.format(settings.STATIC_URL, 'img/logo2.jpeg')
+
+                       }
+            html = template.render(context)
+            response = HttpResponse(content_type='application/pdf')
+            # para descargar el pdf
+            # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            pisa_status = pisa.CreatePDF(
+                html, dest=response,
+                link_callback=self.link_callback
+
+            )
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('venta:venta_mostrar'))
 
 
 
@@ -316,6 +376,8 @@ class VentaContratoCreateView(CreateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.venFechaFin=vent['fechafin']
+                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
                     cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])
@@ -327,7 +389,9 @@ class VentaContratoCreateView(CreateView):
                     for i in vent['productos']:
                         prd = Producto()
                         prd.prodDescripcion=i['prodDescripcion']
+                        prd.prodIva=i['prodIva']
                         prd.prodTipo=1
+                        # prd.prodEstado=False
                         prd.prodCantidad=i['cant']
                         prd.prodPrecio=i['prodPrecio']
                         prd.save()
@@ -352,6 +416,8 @@ class VentaContratoCreateView(CreateView):
                             gast.gastdescripcion = i['gastDescripcion']
                             gast.gastprecio = i['gastPrecio']
                             gast.save()
+
+                    data = {'id': cabventa.id}
 
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
@@ -408,10 +474,13 @@ class VentaContratoUpdateView(UpdateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.venFechaFin = vent['fechafin']
+
+                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventImpuesto = float(vent['impuestos'])
                     # cabventa.venFechaFin=vent['cliente']
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])+float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
@@ -458,6 +527,8 @@ class VentaContratoUpdateView(UpdateView):
                             print('aggrego')
                             prd = Producto()
                             prd.prodDescripcion = i['prodDescripcion']
+                            prd.prodIva = i['prodIva']
+                            prd.prodEstado = False
                             prd.prodCantidad = i['cant']
                             prd.prodPrecio = i['prodPrecio']
                             prd.save()
@@ -472,6 +543,16 @@ class VentaContratoUpdateView(UpdateView):
 
                         elif i['id'] in c:
                             print('si estas ' + str(i['id']))
+
+                            # edito el produto 16/11/2020
+                            prd = Producto.objects.get(pk=i['id'])
+                            prd.prodDescripcion = i['prodDescripcion']
+                            prd.prodIva = i['prodIva']
+                            prd.prodEstado = False
+                            prd.prodCantidad = i['cant']
+                            prd.prodPrecio = i['prodPrecio']
+                            prd.save()
+
                             det = DetVenta()
                             det.venta_id = cabventa.id
                             det.producto_id = i['id']
@@ -541,6 +622,8 @@ class VentaContratoUpdateView(UpdateView):
                             gast.gastdescripcion = i['gastDescripcion']
                             gast.gastprecio = i['gastPrecio']
                             gast.save()
+
+                    data = {'id': cabventa.id}
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

@@ -15,7 +15,7 @@ class Producto(models.Model):
     prodCantidad=models.IntegerField(default=1)
     prodPrecio=models.DecimalField(default=1.25,max_digits=9, decimal_places=2)
     prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
-    prodIva = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    prodIva = models.DecimalField(default=0.12, max_digits=10, decimal_places=2)
     # prodTalla=models.CharField(max_length=100)
     prodCaracteristica=models.TextField(max_length=400, null=True)
     # estado de la produccion
@@ -37,10 +37,11 @@ class Producto(models.Model):
         item=model_to_dict(self)
         item['prodImagen'] = self.get_image()
         item['prodImagen2'] = self.get_image2()
+        item['prodPrecioTotal'] = format((self.prodPrecio*self.prodIva)+self.prodPrecio, '.2f')
         item['prodPrecio'] = format(self.prodPrecio, '.2f')
         item['prodIva'] = format(self.prodIva, '.2f')
         item['prodTotal'] = format(self.prodTotal, '.2f')
-        # item['ccoFecCom'] = self.ccoFecCom.strftime('%Y-%m-%d')
+        item['prodFecElab'] = self.prodFecElab.strftime('%Y-%m-%d')
         return item
 
     def get_image(self):

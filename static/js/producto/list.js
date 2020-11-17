@@ -50,7 +50,7 @@ $(function () {
             {"data": "prodFecElab"},
             {"data": "prodCantidad"},
             {"data": "prodImagen"},
-            {"data": "prodPrecio"},
+            {"data": "prodPrecioTotal"},
             {"data": "id"},
 
         ],

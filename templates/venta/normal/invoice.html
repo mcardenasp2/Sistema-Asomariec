@@ -57,13 +57,13 @@
     </tr>
     </thead>
     <tbody>
-    {% for d in sale.detcompra_set.all %}
+    {% for d in sale.detventa_set.all %}
         <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td class="text-center">{{ d.dcoCantidad }}</td>
-            <td class="text-center">${{ d.dcoPreCom }}</td>
-            <td>{{ d.insumo.categoria.catDescripcion }}</td>
+            <td class="text-center">{{ d.producto }}</td>
+            <td class="text-center">${{ d.detPrecio }}</td>
+            <td>{{ d.detCant }}</td>
             <td>{{ d.insumo.insDescripcion }}</td>
-            <td style="text-align: right;">${{ d.dcoSubtotal }}</td>
+            <td style="text-align: right;">${{ d.detSubtotal }}</td>
         </tr>
     {% endfor %}
     <tr style="border-top: 1px solid black; padding-top: 4px;">

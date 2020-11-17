@@ -29,7 +29,7 @@ class ProductoListView(ListView):
             if action == 'searchdata':
                 # print('com aqui')
                 data = []
-                for i in Producto.objects.filter(prodEstado=True):
+                for i in Producto.objects.filter(prodEstado=True, prodEstprod=True):
                     data.append(i.toJSON())
 
             # elif action == 'search_details_ins':

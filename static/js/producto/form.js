@@ -107,10 +107,11 @@ var prod = {
             columns: [
                 {"data": "id"},
                 {"data": "insDescripcion"},
-                {"data": "insPrecio"},
+                {"data": "medida.medDescripcion"},
+                // {"data": "insPrecio"},
                 // {"data": "pvp"},
                 {"data": "cant"},
-                {"data": "subtotal"},
+                // {"data": "subtotal"},
             ],
             columnDefs: [
                 {
@@ -122,29 +123,29 @@ var prod = {
                     }
                 },
                 {
-                    targets: [-3],
-                    class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '$' + parseFloat(data).toFixed(2);
-                    }
-                },
-                {
                     targets: [-2],
                     class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
-                    }
+                    // orderable: false,
+                    // render: function (data, type, row) {
+                    //     return '$' + parseFloat(data).toFixed(2);
+                    // }
                 },
                 {
                     targets: [-1],
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '$' + parseFloat(data).toFixed(2);
+                        return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
                     }
                 },
+                // {
+                //     targets: [-1],
+                //     class: 'text-center',
+                //     orderable: false,
+                //     render: function (data, type, row) {
+                //         return '$' + parseFloat(data).toFixed(2);
+                //     }
+                // },
             ],
             rowCallback(row, data, displayNum, displayIndex, dataIndex) {
                 // var ty = data.insStock;
@@ -340,6 +341,18 @@ $(function () {
     //     });
 
 
+    //eliminar todos los productos
+    $('.btnRemoveAll').on('click', function () {
+        //si no hay productos retorno falso
+        if (prod.items.insumos.length === 0) return false;
+        alerta_action('Notificacion', 'Estas seguro de Eliminar todos los items de tu detalle?', function () {
+            prod.items.insumos = [];
+            prod.list();
+        });
+
+
+    });
+
     //    evento eiminar insumo de de la tabla
     $('#tblInsumos tbody')
         .on('click', 'a[rel="remove"]', function () {
@@ -412,8 +425,8 @@ $(function () {
             data.cant = 1;
             ct = data.cant;
             data.subtotal = 0.00;
-            console.log(data);
-            console.log(data.insStock);
+            // console.log(data);
+            // console.log(data.insStock);
 
 
             prod.add(data);

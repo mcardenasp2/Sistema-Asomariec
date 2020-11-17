@@ -201,40 +201,11 @@ function formatRepo(repo) {
 
 
 $(function () {
-    //numeros cambie y lo desapareci
-    // $("input[name='ccoIva']").TouchSpin({
-    //     min: 0,
-    //     max: 1,
-    //     step: 0.01,
-    //     decimals: 2,
-    //     boostat: 5,
-    //     maxboostedstep: 10,
-    //     postfix: '%'
-    // })
-    //     .on('change', function () {
-    //         //calculo de nuevo la factura para que se actualice
-    //         comp.calculate_invoce();
-    //
-    //     })
-    //     .val(0.12);
-    //   evento  iva
-    // $('input[name="iva"]')
-    //     .on('change', function () {
-    //         //calculo de nuevo la factura para que se actualice
-    //         comp.calculate_invoce();
-    //
-    //     })
-    //     .val(0.12);
 
     $('.mySelect2').select2({
-
         dropdownAutoWidth: true,
-
-
         width: 'auto',
-
         placeholder: 'Seleccione una opcion',
-
 
     });
 
@@ -256,55 +227,6 @@ $(function () {
         locale: 'es',
         //minDate: moment().format("YYYY-MM-DD")
     });
-
-
-// evento search insumos jquery ui
-    /*
-    $('input[name="search"]').autocomplete({
-
-
-        source: function (request, response) {
-
-            $.ajax({
-                url: window.location.pathname,
-                type: 'POST',
-                data: {
-                    'action': 'search_insumos',
-                    //enviamos el termino
-                    'term': request.term
-
-                },
-                dataType: 'json',
-            }).done(function (data) {
-                response(data);
-                // console.log();
-
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                //alert(textStatus + ': ' + errorThrown);
-            }).always(function (data) {
-
-            });
-
-        },
-        delay: 500,
-        minLength: 1,
-        select: function (event, ui) {
-            event.preventDefault();
-            // console.log('hola');
-            // console.log(ui.item);
-            console.clear();
-            //agrego los insumo uno por uno
-            ui.item.cant = 1;
-            ui.item.subtotal = 0.00;
-            // comp.items.insumos.push(ui.item);
-            // comp.list();
-            comp.add(ui.item);
-            console.log(comp.items.insumos);
-            $(this).val('');
-        }
-    });
-
-    */
 
 //Evento eliminar items
     $('.btnRemoveAll').on('click', function () {
@@ -421,7 +343,6 @@ $(function () {
                 return queryParameters;
             },
             processResults: function (data) {
-                console.log(data);
                 return {
                     results: data
                 };
@@ -434,7 +355,6 @@ $(function () {
         .on('select2:select', function (e) {
             // alert('c');
             var data = e.params.data;
-            // console.clear();
             // console.log(data);
 
 
@@ -442,7 +362,7 @@ $(function () {
             // data.canta = 1;
             data.subtotal = 0.00;
 
-            // console.log(data);
+            console.log(data);
 
 
             comp.add(data);

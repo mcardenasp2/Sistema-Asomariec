@@ -17,6 +17,8 @@ class Venta(models.Model):
     ventObservacion=models.CharField(max_length=100)
     venTipo=models.CharField(max_length=20, choices=vent_choices, default='1')
     ventTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
+    ventSubtotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
+    ventImpuesto=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventEstado = models.BooleanField(default=True)
 
     def __str__(self):
@@ -26,6 +28,9 @@ class Venta(models.Model):
         item= model_to_dict(self)
         item['cliente']=self.cliente.toJSON()
         item['ventTotal']=format(self.ventTotal, '.2f')
+        item['ventSubtotal']=format(self.ventSubtotal, '.2f')
+        item['ventImpuesto']=format(self.ventImpuesto, '.2f')
+        item['venFechaInici']=self.venFechaInici.strftime('%Y-%m-%d')
         return item
 
     class Meta:

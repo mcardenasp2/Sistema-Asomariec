@@ -43,15 +43,15 @@ var produ = {
             // console.log(pos);
             // console.log(dict);
             dict.subtotal = dict.cant * parseFloat(dict.prodPrecio);
-            impuesto+=dict.subtotal*dict.prodIva;
+            // impuesto=dict.subtotal*dict.prodIva;
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
-        this.items.impuestos = impuesto;
+        // this.items.impuestos = impuesto;
         console.log(this.items.subproductos);
 
         $('input[name="subtotal"]').val(this.items.subproductos.toFixed(2));
-        $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
+        // $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
         this.tpago();
 
     },
@@ -75,11 +75,9 @@ var produ = {
         var ga = 0.00;
         var st = 0.00;
         var t = 0.00;
-        var iva = 0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
-        iva = parseFloat($('input[name="iva"]').val());
-        t = ga + st+iva;
+        t = ga + st;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -131,19 +129,11 @@ var produ = {
                     }
                 },
                 {
-                    targets: [-4],
-                    class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '<div class="input-group input-group-sm"><input type="text" name="prodPrecio" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodPrecio + '"></div>';
-                    }
-                },
-                {
                     targets: [-3],
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<div class="input-group input-group-sm"><input type="text" name="prodIva" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodIva + '"></div>';
+                        return '<div class="input-group input-group-sm"><input type="text" name="prodPrecio" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodPrecio + '"></div>';
                     }
                 },
                 {
@@ -303,7 +293,6 @@ $(function () {
         //
         gast.prodDescripcion = $('input[name="descripcionc"]').val();
         gast.prodPrecio = $('input[name="precioc"]').val();
-        gast.prodIva = $('input[name="ivac"]').val();
         gast.id = 0;
         gast.cant = 1;
         gast.subtotal = 0.00;
@@ -313,7 +302,6 @@ $(function () {
 
         $('input[name="descripcionc"]').val('');
         $('input[name="precioc"]').val('1.00');
-        $('input[name="ivac"]').val('0.12');
         produ.list();
 
     });
@@ -336,7 +324,7 @@ $(function () {
             // console.log(tr);
             produ.items.productos[tr.row].cant = cant;
             produ.calculate_invoice();
-            $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
+            $('td:eq(4)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
         }).on('change keyup', 'input[name="prodPrecio"]',function () {
             // prodPrecio
             // alert('x');
@@ -346,18 +334,7 @@ $(function () {
             // console.log(tr);
             produ.items.productos[tr.row].prodPrecio = precio;
             produ.calculate_invoice();
-            $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
-
-        }).on('change keyup', 'input[name="prodIva"]',function () {
-            // prodPrecio
-            // alert('x');
-            var iva = parseFloat($(this).val());
-            // console.log(precio)
-            var tr = tblProducto.cell($(this).closest('td, li')).index();
-            // console.log(tr);
-            produ.items.productos[tr.row].prodIva = iva;
-            produ.calculate_invoice();
-            $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
+            $('td:eq(4)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
 
         });
 

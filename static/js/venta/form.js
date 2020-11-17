@@ -8,6 +8,7 @@ var produ = {
         // precio: 0.00,
         tgsto: 0.00,
         subproductos: 0.00,
+        impuestos:0.00,
         productos: [],
         gastoad: [],
     },
@@ -37,16 +38,21 @@ var produ = {
     },
     calculate_invoice: function () {
         var subtotal = 0.00;
+        var impuesto=0.00;
         $.each(this.items.productos, function (pos, dict) {
             // console.log(pos);
             // console.log(dict);
             dict.subtotal = dict.cant * parseFloat(dict.prodPrecio);
+            impuesto+=dict.subtotal*dict.prodIva;
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
-        console.log(this.items.subproductos);
+        this.items.impuestos = impuesto;
+        // console.log(this.items.subproductos);
+        // console.log(impuesto);
 
         $('input[name="subtotal"]').val(this.items.subproductos.toFixed(2));
+        $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
         this.tpago();
 
     },
@@ -70,9 +76,11 @@ var produ = {
         var ga = 0.00;
         var st = 0.00;
         var t = 0.00;
+        var im=0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
-        t = ga + st;
+        im = parseFloat($('input[name="iva"]').val());
+        t = ga + st+im;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -426,8 +434,18 @@ $(function () {
 
         });
 
-        submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
-            location.href = '/venta/normal/mostrar/';
+        submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
+            alerta_action2('Notificacion', '¿Desea imprimir la Boleta de Venta?', function () {
+                // print('fff');
+                // print(response);
+                window.open('/venta/normal/invoice/pdf/' + response.id + '/', '_blank')
+                location.href = '/venta/normal/mostrar/';
+            }, function () {
+                location.href = '/venta/normal/mostrar/';
+
+            });
+
+
         });
 
     });

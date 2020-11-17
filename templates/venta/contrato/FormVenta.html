@@ -28,7 +28,7 @@
                             <div class="card-header border-0">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h3 class="mb-0">Productos segundo</h3>
+                                        <h3 class="mb-0">Productos Contrato</h3>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                             <div class="card-body">
                                 <div class="row">
 
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Descripcion:</label>
                                             <input class="form-control" name="descripcionc" type="text">
@@ -49,10 +49,10 @@
                                         <div class="form-group">
                                             <label>Precio:</label>
                                             <input class="form-control" name="precioc" type="text">
-{#                                            <div class="input-group input-group-sm"><input id="demo4" type="text"#}
-{#                                                                                           value="" name="demo4"#}
-{#                                                                                           class="input-sm">#}
-{#                                            </div>#}
+                                            {#                                            <div class="input-group input-group-sm"><input id="demo4" type="text"#}
+                                            {#                                                                                           value="" name="demo4"#}
+                                            {#                                                                                           class="input-sm">#}
+                                            {#                                            </div>#}
 
                                         </div>
                                         {#                                        <div class="input-group input-group-sm">#}
@@ -60,6 +60,13 @@
                                         {#                                                   name="demo4"#}
                                         {#                                                   class="form-control input-sm">#}
                                         {#                                        </div>#}
+
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label>Iva:</label>
+                                            <input class="form-control" name="ivac" type="text">
+                                        </div>
 
                                     </div>
                                     <div class="col-lg-2">
@@ -83,6 +90,9 @@
                                                     <th scope="col">Eliminar</th>
                                                     <th scope="col">Producto</th>
                                                     <th scope="col">Precio Venta</th>
+
+                                                    <th scope="col">Iva</th>
+
                                                     <th scope="col">Cantidad</th>
                                                     <th scope="col">Subtotal</th>
                                                 </tr>
@@ -207,7 +217,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
 
-                                            <input class="form-control" type="text" value="0.0"
+                                            <input class="form-control" name="iva" type="text" value="0.0"
                                                    id="example-text-input" disabled>
                                         </div>
                                     </div>
@@ -423,10 +433,9 @@
         });
 
 
-
     </script>
 
-     <script>
+    <script>
         produ.items.productos ={{ det|safe }};
         {#console.log('gatos');#}
         {#console.log({{ gasta|safe }});#}
