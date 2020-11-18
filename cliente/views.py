@@ -13,10 +13,13 @@ from cliente.forms import *
 
 
 # Create your views here.
+from user.mixins import ValidatePermissionRequiredMixin
 
-class ClienteListarView(LoginRequiredMixin,ListView):
+
+class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Cliente
     template_name = 'cliente/ListarCliente.html'
+    permission_required = 'view_cliente'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -47,11 +50,12 @@ class ClienteListarView(LoginRequiredMixin,ListView):
         return context
 
 
-class ClienteCrearView(CreateView):
+class ClienteCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente/FormCliente.html'
     success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'add_cliente'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -80,11 +84,12 @@ class ClienteCrearView(CreateView):
         return context
 
 
-class ClienteUpdateView(UpdateView):
+class ClienteUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'cliente/FormCliente.html'
     success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'change_cliente'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -119,11 +124,12 @@ class ClienteUpdateView(UpdateView):
 
 
 
-class ClienteDeleteView(DeleteView):
+class ClienteDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     model = Cliente
     # form_class = ClienteForm
     template_name = 'cliente/DeleteCliente.html'
     success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_cliente'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

@@ -1,18 +1,20 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.contrib.auth.models import Group
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 # Create your views here.
 from user.mixins import ValidatePermissionRequiredMixin
 from user.forms import UserForm
 from user.models import User
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model=User
     template_name = 'user/ListarUser.html'
+    permission_required = 'view_user'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -37,7 +39,7 @@ class UserListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Usuarios'
         context['create_url'] = reverse_lazy('user:user_create')
-        # context['list_url'] = reverse_lazy('user:user_list')
+        context['list_url'] = reverse_lazy('user:user_list')
         context['entity'] = 'Usuarios'
         return context
 
@@ -47,7 +49,7 @@ class UserCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
     form_class = UserForm
     template_name = 'user/FormUser.html'
     success_url = reverse_lazy('user:user_list')
-    permission_required = 'user.add_user'
+    permission_required = 'add_user'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -77,12 +79,12 @@ class UserCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
 
 
 
-class UserUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = User
     form_class = UserForm
     template_name = 'user/FormUser.html'
     success_url = reverse_lazy('user:user_list')
-    permission_required = 'user.change_user'
+    permission_required = 'change_user'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -111,11 +113,12 @@ class UserUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Update
         return context
 
 
-class UserDeleteView(DeleteView):
+class UserDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     model = User
     # form_class = ClienteForm
     template_name = 'user/DeleteUser.html'
     success_url = reverse_lazy('user:user_list')
+    permission_required = 'delete_user'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -143,3 +146,16 @@ class UserDeleteView(DeleteView):
         context['action'] = 'eliminar'
         context['list_url'] = reverse_lazy('user:user_list')
         return context
+
+
+class UserChangeGroup(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        try:
+            # anadimos la sesion
+            request.session['group'] = Group.objects.get(pk=self.kwargs['pk'])
+            # request.session['group'] =self.kwargs['pk']
+            # print(self.kwargs)
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('dashboard'))

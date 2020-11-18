@@ -130,42 +130,54 @@
 <script>
 
     function prueba() {
-            $.ajax({
-                url: '/login/dashboard/', //'/login/dashboard/'
-                type: 'POST',
-                data: {
-                    'action': 'prueba'
-                    {#'anio':anio#}
-                },
-                dataType: 'json',
-            }).done(function (data) {
-                if (!data.hasOwnProperty('error')) {
-                    console.log(data);
-                    {#graphpie.addSeries(data);#}
-                    return false;
-                }
-                message_error(data.error);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            }).always(function (data) {
+        $.ajax({
+            url: '/login/dashboard/', //'/login/dashboard/'
+            type: 'POST',
+            data: {
+                'action': 'prueba'
+                {#'anio':anio#}
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            if (!data.hasOwnProperty('error')) {
+                console.log(data);
+                {#graphpie.addSeries(data);#}
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
 
-            });
-
-        }
-
-        $(function () {
-            prueba();
         });
-        {#$(document).ready(function () {#}
-            {#$(".nav li").on("click", function () {#}
-        {#    $(".itemNav").find(".marco").addClass("show");#}
-            {#$(".itemNav").find(".marco").addClass("show");#}
-        {#    $(".itemNav a").attr("aria-expanded", "true");#}
-            {#$(this).addClass("activa");#}
-        {##}
+
+    }
+
+    $(function () {
+        prueba();
+    });
+    {#$(document).ready(function () {#}
+    {#$(".nav li").on("click", function () {#}
+    {#    $(".itemNav").find(".marco").addClass("show");#}
+    {#$(".itemNav").find(".marco").addClass("show");#}
+    {#    $(".itemNav a").attr("aria-expanded", "true");#}
+    {#$(this).addClass("activa");#}
+    {##}
 
 
-    </script>
+    {% if messages %}
+        var html = '<p>';
+        {% for message in messages %}
+            html += '{{ message }}<br>';
+        {% endfor %}
+        html += '</p>';
+        Swal.fire({
+            title: 'Error!',
+            html: html,
+            icon: 'error'
+        });
+    {% endif %}
+</script>
 </body>
 
 
