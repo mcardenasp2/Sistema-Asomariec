@@ -85,34 +85,22 @@
                             <div class="form-group mb-3">
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
 
                                     {#                    <input class="form-control" placeholder="Email" type="email">#}
-                                    {{ form.username|add_class:'form-control' }}
+                                    {{ form.username }}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div>
-                                    {#                    <input class="form-control" placeholder="Password" type="password">#}
-                                    {{ form.password|add_class:'form-control' }}
-                                </div>
-                            </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted">Remember me</span>
-                                </label>
-                            </div>
+
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                                <button type="submit" class="btn btn-primary my-4">Resetear Password</button>
                             </div>
+
                             <p class="text-center mt-2" style="font-size: 13px;">
-                                Si no recuerdas tu contraseña puedes resetearla dando click <a
-                                    href="{% url 'reset_password' %}">aqui </a>
+                                Si deseas volver al login da un click <a
+                                    href="{% url 'login' %}">aqui </a>
                             </p>
                         </form>
                     </div>
@@ -147,24 +135,34 @@
 <!-- Sweetalert2 -->
 <script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
 
+<!-- Jquery Confirm -->
+<link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">
+<script src="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
+
+<!-- Functions -->
+    <script src="{% static 'js/funciones.js' %}"></script>
+
 
 <script type="application/javascript">
-    {% if form.errors %}
-        var errors = '';
-        {% for field in form %}
-            {% for error in field.errors %}
-                errors += '{{ error }}\n';
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            errors += '{{ error }}\n';
-        {% endfor %}
-        Swal.fire({
-            title: 'Error!',
-            text: errors,
-            icon: 'error'
+    $(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de resetear tu contraseña?', parameters, function () {
+                Swal.fire({
+                    title: 'Notificación',
+                    text: 'Se ha enviado un correo electrónico con los pasos a seguir para que pueda resetear su contraseña',
+                    icon: 'success',
+                    timer: 5000,
+                    onClose: () => {
+                        location.href = '/login/';
+                    }
+                }).then((result) => {
+
+                });
+            });
         });
-    {% endif %}
+    });
 </script>
 </body>
 

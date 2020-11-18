@@ -153,3 +153,16 @@ LOGIN_URL = '/login/'
 AUTH_USER_MODEL = 'user.User'
 # trabajar con sesiones video 85
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+
+# Email
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = 'marco.cardenas1702@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'Marco087742190'
+
+DOMAIN = ''

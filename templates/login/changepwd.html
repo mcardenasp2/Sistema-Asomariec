@@ -75,9 +75,9 @@
                         {#              </div>#}
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        {#              <div class="text-center text-muted mb-4">#}
-                        {#                <small>Or sign in with credentials</small>#}
-                        {#              </div>#}
+                        <div class="text-center text-muted mb-4">
+                            <h2>Cambio de Contraseña</h2>
+                        </div>
                         <form role="form" action="." method="post">
                             <input type="hidden" name="next" value="{{ next }}">
 
@@ -85,34 +85,32 @@
                             <div class="form-group mb-3">
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     </div>
 
                                     {#                    <input class="form-control" placeholder="Email" type="email">#}
-                                    {{ form.username|add_class:'form-control' }}
+                                    {{ form.password }}
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                     </div>
-                                    {#                    <input class="form-control" placeholder="Password" type="password">#}
-                                    {{ form.password|add_class:'form-control' }}
+
+                                    {#                    <input class="form-control" placeholder="Email" type="email">#}
+                                    {{ form.confirmPassword }}
                                 </div>
                             </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                <label class="custom-control-label" for=" customCheckLogin">
-                                    <span class="text-muted">Remember me</span>
-                                </label>
-                            </div>
+
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                                <button type="submit" class="btn btn-primary my-4">Resetear Password</button>
                             </div>
+
                             <p class="text-center mt-2" style="font-size: 13px;">
-                                Si no recuerdas tu contraseña puedes resetearla dando click <a
-                                    href="{% url 'reset_password' %}">aqui </a>
+                                Si deseas volver al login da un click <a
+                                    href="{% url 'login' %}">aqui </a>
                             </p>
                         </form>
                     </div>
@@ -147,24 +145,35 @@
 <!-- Sweetalert2 -->
 <script src="{% static 'lib/sweetalert2-9.10.0/sweetalert2.all.min.js' %}"></script>
 
+<!-- Jquery Confirm -->
+<link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">
+<script src="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
+
+<!-- Functions -->
+<script src="{% static 'js/funciones.js' %}"></script>
+
 
 <script type="application/javascript">
-    {% if form.errors %}
-        var errors = '';
-        {% for field in form %}
-            {% for error in field.errors %}
-                errors += '{{ error }}\n';
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            errors += '{{ error }}\n';
-        {% endfor %}
-        Swal.fire({
-            title: 'Error!',
-            text: errors,
-            icon: 'error'
+    $(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de cambiar tu contraseña?', parameters, function () {
+                Swal.fire({
+                    title: 'Notificación',
+                    text: 'Tu contraseña ha sido cambiada correctamente',
+                    icon: 'success',
+                    timer: 5000,
+                    onClose: () => {
+                        {#location.href = '/login/';#}
+                         location.href = '{{ login_url }}';
+                    }
+                }).then((result) => {
+
+                });
+            });
         });
-    {% endif %}
+    });
 </script>
 </body>
 

@@ -1,3 +1,6 @@
+import uuid
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -20,8 +23,20 @@ from datetime import datetime
 import Sistema_Asomariec.settings as setting
 from compra.models import CabCompra, DetCompra
 from insumo.models import Insumo
+from login.forms import ResetPasswordForm, ChangePasswordForm
 from producto.models import Producto
 from venta.models import Venta, DetVenta
+
+
+from Sistema_Asomariec.wsgi import *
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+from django.template.loader import render_to_string
+
+from Sistema_Asomariec import settings
+from user.models import User
 
 
 class LoginFormView(LoginView):
@@ -46,7 +61,7 @@ class LogoutView(RedirectView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin,TemplateView):
     template_name = 'inicio/dashboard.html'
 
     @method_decorator(csrf_exempt)
@@ -157,4 +172,110 @@ class DashboardView(TemplateView):
         context['graph_sales_year_month'] = self.get_graph_sales_year_month()
         # context['valor'] = { 'venta':'250.30'}
         context['valor'] = self.valores()
+        return context
+
+
+class ResetPasswordView(FormView):
+    form_class = ResetPasswordForm
+    template_name = 'login/resetpwd.html'
+    success_url = reverse_lazy(setting.LOGIN_REDIRECT_URL)
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def send_email_reset_pwd(self, user):
+        data = {}
+        try:
+            URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
+            user.token = uuid.uuid4()
+            user.save()
+
+
+            mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
+            mailServer.starttls()
+            mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+            print('Hola');
+
+            email_to = user.email
+            mensaje = MIMEMultipart()
+            mensaje['From'] = settings.EMAIL_HOST_USER
+            mensaje['To'] = email_to
+            mensaje['Subject'] = 'Reseteo de contraseña'
+
+
+            content = render_to_string('login/send_email.html', {
+                'user': user,
+                'link_resetpwd': 'http://{}/login/change/password/{}/'.format(URL, str(user.token)),
+                # 'link_resetpwd': '',
+                # 'link_home': '/'
+                'link_home': 'http://{}/login/'.format(URL)
+            })
+            mensaje.attach(MIMEText(content, 'html'))
+
+            mailServer.sendmail(settings.EMAIL_HOST_USER,
+                                email_to,
+                                mensaje.as_string())
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            form = ResetPasswordForm(request.POST)  # self.get_form()
+            if form.is_valid():
+                pass
+                user = form.get_user()
+                data = self.send_email_reset_pwd(user)
+                # print('hola')
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reseteo de Contraseña'
+        return context
+
+
+
+
+class ChangePasswordView(FormView):
+    form_class = ChangePasswordForm
+    template_name = 'login/changepwd.html'
+    success_url = reverse_lazy(setting.LOGIN_REDIRECT_URL)
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        token = self.kwargs['token']
+        print(token)
+        if User.objects.filter(token=token).exists():
+            return super().get(request, *args, **kwargs)
+        return HttpResponseRedirect('/login/')
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            form = ChangePasswordForm(request.POST)
+            if form.is_valid():
+                user = User.objects.get(token=self.kwargs['token'])
+                user.set_password(request.POST['password'])
+                user.token = uuid.uuid4()
+                user.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reseteo de Contraseña'
+        context['login_url'] = settings.LOGIN_URL
         return context

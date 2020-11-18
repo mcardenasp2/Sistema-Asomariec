@@ -1,0 +1,204 @@
+{#{% extends 'base/body.html' %}#}
+{#{% load static %}#}
+{% extends 'index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+    <form method="post" action="." enctype="multipart/form-data">
+
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title p-0">{{ title }}</h2>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text"><strong>Danger!</strong> Ha ocurrido un error</span>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                {% endif %}
+
+
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="email">{{ field.label }}:</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                        {#                        {{ field }}#}
+                    </div>
+                {% endfor %}
+
+
+                {#                <div class="row">#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliNombre">Nombre:</label>#}
+                {##}
+                {#                            {{ form.cliNombre }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliApellido">Apellido:</label>#}
+                {##}
+                {#                            {{ form.cliApellido|add_class:"form-control" }}#}
+                {#                            {{ form.cliApellido }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliRuc">Ruc:</label>#}
+                {##}
+                {#                            {{ form.cliRuc|add_class:"form-control" }}#}
+                {#                            {{ form.cliRuc }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliTelefono">Telefono:</label>#}
+                {##}
+                {#                            {{ form.cliTelefono|add_class:"form-control"|attr:'type:text' }}#}
+                {#                            {{ form.cliTelefono }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliDireccion">Direccion:</label>#}
+                {##}
+                {#                            {{ form.cliDireccion|add_class:"form-control" }}#}
+                {#                            {{ form.cliDireccion }}#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="col-6">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliGenero">Sexo</label>#}
+                {##}
+                {#                            {{ form.cliGenero|add_class:"form-control mySelect2" }}#}
+                {##}
+                {#                            </select>#}
+                {#                        </div>#}
+                {##}
+                {#                    </div>#}
+                {##}
+                {#                    <div class="col">#}
+                {#                        <div class="form-group">#}
+                {#                            <label for="id_cliEmail">Email</label>#}
+                {#                            {{ form.cliEmail|add_class:"form-control"|attr:'placeholder:name@example.com' }}#}
+                {#                            {{ form.cliEmail }}#}
+                {#                            <input type="email" class="form-control" id="exampleFormControlInput1"#}
+                {#                                   placeholder="name@example.com">#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {##}
+                {#                    <div class="col-6">#}
+                {##}
+                {#                        {{ form.cliEstado|add_class:"custom-control-input"|attr:'checked' }}#}
+                {#                        <label>Hola</label>#}
+                {##}
+                {#                        {{ form.cliEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}#}
+                {##}
+                {##}
+                {#                        <div class="custom-control custom-checkbox">#}
+                {#                            {{ form.cliEstado|add_class:"custom-control-input"|attr:'checked' }}#}
+                {#                            {{ form.cliEstado|add_class:"custom-control-input"|attr:'checked' }}#}
+                {#                            <label class="custom-control-label" for="id_cliEstado">Estado</label>#}
+                {#                        </div>#}
+                {##}
+                {##}
+                {#                    </div>#}
+                {##}
+                {#                    <div class="col-6">#}
+                {##}
+                {#                        <div class="custom-control ">#}
+                {#                            {% ifequal action "add" %}#}
+                {#                                {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}#}
+                {#                                {{ form.usuaMod|attr:'type:hidden' }}#}
+                {#                                {{ form.usuaEli|attr:'type:hidden' }}#}
+                {#                            {% endifequal %}#}
+                {#                            {% ifequal action "edit" %}#}
+                {#                                {{ form.usuaReg|attr:'type:hidden' }}#}
+                {#                                {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}#}
+                {#                                {{ form.usuaEli|attr:'type:hidden' }}#}
+                {#                            {% endifequal %}#}
+                {##}
+                {##}
+                {##}
+                {#                            {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}#}
+                {#                            {{ form.usuaEli|attr:'type:hidden'|attr:'value:1' }}#}
+                {#                            <label class="custom-control-label" for="id_cliEstado">Estado</label>#}
+                {#                        </div>#}
+                {##}
+                {##}
+                {#                    </div>#}
+                {##}
+                {#                </div>#}
+                <div class="text-right">
+                    <button class="btn btn-info" type="submit"> Guardar</button>
+                    {#                <a type="button" class="btn btn-danger"role="button" aria-pressed="true">Cancelar</a>#}
+                    <a href="{{ list_url }}" class="btn btn-danger" role="button" aria-pressed="true">Cancelar</a>
+                    {#                <button class="btn btn-danger" type="submit"> </button>#}
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script>
+
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+        {#    solo cuando envio con ajax#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            {#console.log('hola');#}
+            var parameters = new FormData(this);
+            {#console.log(parameters);#}
+            parameters.forEach(function (value, key) {
+                console.log(key + ':' + value);
+            });
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+
+            });
+
+        });
+
+    </script>
+
+     <script src="{% static 'js/user/form.js' %}"></script>
+
+{% endblock %}
