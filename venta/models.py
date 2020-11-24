@@ -31,6 +31,7 @@ class Venta(models.Model):
         item['ventSubtotal']=format(self.ventSubtotal, '.2f')
         item['ventImpuesto']=format(self.ventImpuesto, '.2f')
         item['venFechaInici']=self.venFechaInici.strftime('%Y-%m-%d')
+        item['nfact']=format(str(self.id).zfill(10))
         return item
 
     class Meta:

@@ -79,8 +79,6 @@ class UserCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
         return context
 
 
-
-
 class UserUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = User
     form_class = UserForm
@@ -163,7 +161,6 @@ class UserChangeGroup(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse_lazy('dashboard'))
 
 
-
 class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
@@ -198,7 +195,6 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         return context
-
 
 
 class UserChangePasswordView(LoginRequiredMixin, FormView):

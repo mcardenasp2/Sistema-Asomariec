@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -7,11 +8,13 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 # Create your views here.
 from proveedor.forms import ProveedorForm
 from proveedor.models import *
+from user.mixins import ValidatePermissionRequiredMixin
 
 
-class ProveedorListarView(ListView):
+class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Proveedor
     template_name = 'proveedor/proveedor/ListarProveedor.html'
+    permission_required = 'view_proveedor'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -42,11 +45,12 @@ class ProveedorListarView(ListView):
         context['entity'] = 'Proveedor'
         return context
 
-class ProveedorCrearView(CreateView):
+class ProveedorCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Proveedor
     form_class =ProveedorForm
     template_name = 'proveedor/proveedor/FormProveedor.html'
     success_url = reverse_lazy('proveedor:proveedor_listar')
+    permission_required = 'add_proveedor'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -70,11 +74,12 @@ class ProveedorCrearView(CreateView):
         context['action'] = 'add'
         return context
 
-class ProveedorUpdateView(UpdateView):
+class ProveedorUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = Proveedor
     form_class = ProveedorForm
     template_name = 'proveedor/proveedor/FormProveedor.html'
     success_url = reverse_lazy('proveedor:proveedor_listar')
+    permission_required = 'change_proveedor'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -106,11 +111,11 @@ class ProveedorUpdateView(UpdateView):
         context['action'] = 'edit'
         return context
 
-
-class ProveedorDeleteView(DeleteView):
+class ProveedorDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     model = Proveedor
     template_name = 'proveedor/proveedor/DeleteProveedor.html'
     success_url = reverse_lazy('proveedor:proveedor_listar')
+    permission_required = 'delete_proveedor'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

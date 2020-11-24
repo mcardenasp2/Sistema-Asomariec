@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+{#<meta name="viewport" content="width=device-width, initial-scale=1">#}
+<style>
+
+
+    .img-invoice {
+        width: 150px;
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .datos {
+
+        border: 1px solid #2dcecc;
+    {#border-radius: 1px;#}{#background-color: black;#}{#padding: ;#}{#-moz-border-radius: 7px;#}{#-webkit-border-radius: 7px;#}{#padding: 10px;#}
+    }
+
+    #invoice thead tr th {
+        text-align: center;
+        background-color: #2dcecc;
+    {#border-bottom: 1px solid black;#}{#border-top: 1px solid black;#} padding-top: 4px;
+    {#border: 1px solid black;#}
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    #fact tbody tr {
+        border: 1px solid #2dcecc;
+    }
+
+    .iconDetails {
+        border: 1px solid #2d4474;
+        padding: 1%;
+    {#margin-left: 2%;#}{#float: left;#}{#height: 30px;#}{#width: 30px;#}{#padding-right: 20px;#}{#padding-bottom: 10px#}
+    }
+
+
+</style>
+<body>
+{#<img src="{{ icon }}" class="img-invoice img-center">#}
+
+{#<div class="text-center">#}
+
+{#    <h1>Hola</h1>#}
+{#     <div class="container bg-info h-100 d-flex align-items-center">#}
+{#<img src="{{ icon }}" class="img-invoice">#}
+{#    </div>#}
+
+{#</div>#}
+
+
+<table>
+    <tbody>
+    <tr>
+        <td>
+            <center>
+                <img src="{{ icon }}" class="img-invoice">
+            </center>
+        </td>
+        <td>
+
+            <p class="head">
+                Direccion: Av. Aguarico y Demetrio Aguilera<br>
+                Telefono: 098119600<br>
+                Twiter: M@sjjs_dd
+
+            </p>
+            {#                <p class="head">dd</p>#}
+
+        </td>
+        <td class="datos">
+            <p class="head" style="padding-top: 5px; padding-bottom: 0; border: 1px solid #2dcecc"><b>Factura</b></p>
+            <p class="head" style="">
+                {#                <b>Factura</b><br>#}
+                Nro: 0000001<br>
+                Fecha: 11/11/2020<br>
+                Hora:10:35
+
+
+            </p>
+
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+{#<br>#}
+{#<table>#}
+{#    <tr>#}
+{#        <td style="border-bottom: 2px solid #2d4474; margin-top: 10px;">#}
+{#        </td>#}
+{##}
+{#    </tr>#}
+{#</table>#}
+<br>
+
+<table id="fact">
+    <tbody>
+    <tr style="padding-top: 10px; padding-bottom: 5px">
+        <td colspan="2">
+            <p>
+            <center>
+                <b>DATOS DEL PROVEEDOR</b>
+            </center>
+            </p>
+        </td>
+    </tr>
+    <tr style="padding-top: 5px; padding-bottom: 5px">
+        <td style="padding-left: 10px">
+            {#            <center>#}
+
+            <p>
+                <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAADP0lEQVRIia2XT28TRxjGf7vetUIS20nBSSBVU4hoVQlBOFdqItQDHFpVlXooUquUC4d+gubSPfkL9AtEqtRTD9yCxAFHEMGtMSlCiLQlKrQU19m4XjtxvDtvD14bx95/FjzSXHaefX6e0ew7rzURIU7lFeszYMkfFwIsJaAIFPMF60ZsIKBFgcsr1jJgAXNJwnztAFa+YK0ODS6vWO8Cq8DiEMB+rQPL+YL1NBG4vGIt0N623GtAO6oCS/mCtRkJ9qG/RCVphoGeyaBnMyCCV6mg6o24H3CxH94F+9u7ScRK02fnOfbRh5hz76AZBgCq5tAo3qG59RDlOGGvVoGF3m3XeyZXI6HzZ8h9fZX0/JkuFEDPjDP+yRVy177CPB16BnN+/qv3oHt6Qw+Slk4zemkRUqkwC8bMNJnPP0UbGQmzLPqcV2Dan0yo9GwW4+1TURYAUsePY0zloyxdju4Xh8jvVDMNNNOMBQNox0JXDDDn89BpV6NoKQUJKhyANJtxlqXEYDk8RNVCT+wRqKrVE4ODau8RKaeO++JFLLj17DmqVouzXeiAY6WPj2HMzMT6jPwJ9LHRJJHJwJhmu1LFhWWzkPAQJgKrXZv9jfuxvv2Ne6hd+82BxXVprN/Fs8NDPdumsb6BuG5icCmJUTkOre0/Qudbvz+NqtW9KnXAxSRugEbxTuCq1V6VRvFu0pji0GDPtvEqg2DP3sOrVIYD+z3STtK3NGPwotBMI8AZqJ1OT5bokujImJ4i9dbkwHN9Iodx6mSSiC6ntxEoEnI16qOjmPOnGbv8ManJQTCAt7dHfe1W+5DVA8vmer5gLXUX0TOxTF8HkprKM3L+HOn3z2LMRl+LqYkJsl9+gfvX3xw+fkLzwa+4/7zsTFf9/K5Ce67U5CQT168lqlhBUrUaztotmpsPIKDnQkSOjJfffb9QtgpVd9eWNyHPcW6LiN7PGQCLCP/9fONic/u38utC1cHBTRGZDmIEgjvjoLT1o/tv5XBoYKPxXES+jcqOBPtj9qC09UPrz2fbnuO0xPNElOqhKBHPU2p/v+7u2vdF5BsRmY3Ljfzv1KcR4D3gKnAF+MB//ghYA34CHgOxvQ/A/wXMob1PARBIAAAAAElFTkSuQmCC'
+                     class='iconDetails' style="width: 30px">
+                {#            <div>#}
+
+                {#            </div>#}
+                <b>&nbsp;PROVEEDOR:</b> {{ sale.proveedor.proEmpresa|upper }}<br>
+                {#                <b>PROVEEDOR:</b> {{ sale.proveedor.proEmpresa|upper }}<br>#}
+                {#                <b>FACTURA:</b> {{ sale.id }}<br>#}
+                {#                <b>FECHA DE VENTA:</b> {{ sale.ccoFecCom }}<br>#}
+                {#                <b>PROVEEDOR:</b> {{ sale.proveedor.proEmpresa|upper }}<br>#}
+                {#                <b>DNI:</b> {{ sale.proEmpresa.proRuc }}<br>#}
+            </p>
+            {#            </center>#}
+
+        </td>
+        <td style="padding-left: 10px">
+            {#            <div>#}
+
+            {#            </div>#}
+
+            {#            <center>#}
+
+            <p>
+                <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC2ElEQVRIic2XzU4aURTHfzMODB+2mJYoSiwumtraBDSpXTQp0HTnovoAXRBZ+Qztwo1P0DXGN6j2CYClNamwqquWhQGrC6wVQah0cWdGhq8Zgjb+k0lmDtzzm3vuPeeekZrNJt0kSZJxn8usrgBx7Yp0+XsOSAPpSGxzWzf28g0g9QPnMqsJYB0I9fTQqQKwHoltbg0MzmeTM8AWEBsA2K4MkAhHUz9tgfPZ5DwibL4hoLpOgXg4mtrvC9ag324A2K6FdrjcAp1BzPQ2lNb8d4IRa2oZ3hHFy+ziBrOLG4Yt+Pg9s4sbeH1Peg3zaf7N4Hw2mcDmRnJ5g6juAIrjvmF7EHiN6g7QqJ/1GxrTONdgRMrY0ujYMwAa9d+GTZIVAC6rJ1bDDY6czyZXGCBPVU8AgPKvXUCEXlfzqm41PKTxkBHVyLbco48AqJ4fAqA4RchrFyW7LuIAih3wRGiZidA7ky00t2Z6Vt0BwtEUAPls0ha4W+01qXwswqo47vFw6g0AR4UvAIxPLyHJCrWLkhF+C0V0sKVqlSJHhR1Uz2QLeAeAsfGXqO4ApR+fOT3Zs+MOMOexpVyeoHiRlvV0qn4AqpXDQVxZz1iSHYxPLwFidjpsIrSs/S5c+Kfe0qifUT7epVYpDg92uvwdG0uSlQ6bvgRwvQxW4Bx9NlitUjR26fNXnxhRPBzsfaRWKeLzvyA0t0btosTB1w+WME05EGuctjtiRPEA0LgUVcvlDZqebSo9EFiSHcb938Y5cF3F/pS/Dw4OR1PbiHalr5wuvwatGLb2KmZDBY1n/5AYHXsKmA8H1S1mPEAqGRyjA8lnk2n6HI2S7MDp8nNZPTEOA9UzCWArfYBMOJqK6w+t6ZQA9unRDDSv6h0Am0AQvVei1WBULq0bjHM7ird3m6aSqTVkC4g3vAmd0qXR6wC3wOcRffEwygDz3aBw174kdLCu//7tNKz6gf8BZS4R/YpfHREAAAAASUVORK5CYII='
+                     class='iconDetails' style="width: 30px">
+
+                <b>&nbsp;CEDULA:</b> 094429630 <br>
+            </p>
+            {#            </center>#}
+        </td>
+
+    </tr>
+    <tr style="padding-top: 5px; padding-bottom: 5px">
+        <td style="padding-left: 10px">
+            {#            <center>#}
+
+            <p>
+                <img style="width: 30px"
+                     src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC6ElEQVRIib2XsW7aUBSGP9waUlBDJUilIqV0YIlShUSd2qoKSV8gYulW5SF4gDwAD5G1C8rWrYEO6VLUEiXKEIYiSxkCDKaCxDEJHTDm2rk2N6naX0LCvsfn8zm+5/g4MhqNmKVypbsFFJxfXmLSAKpAtVRM7c10CETCwOVKdxvYAbIqzhy1gJ1SMbV7Z3C50n0B7ALr4vlcJsrztM7CkwcAGO0h5+aQ5tmVzHcN2C4VU7+UwOVKd5Vx2pIicHMlwXxck9592xzy+Xufc3PoXzKBQqmY+hkKdqA/RINXuTk2VhJSoCjLHrF/2OeoZcmW1/xwNwQnvVVxMZeJSqFGx6btiy6mR9hYSfA0+VAGrjr+XYlWuwjpBdj0QQ9OLqg3L7DscZaScY2NfILcs+gUno/z6WvPD046/guTExq4u9ezkV5mY55nun/Y5+Bk4EIBzMENe99+cyykdzGtk5TvhXWHMwUzLhmPFtO6+783uKHevJQ5A+DLYd9znMtEg0xdjuY0h1t1Op+Y3nXAhnFl2SOMju0ex3T57geyDg8NIe9/o17/RtW0oAye0yMzvYkZUgXLei9Ge1ouy9kYsRB4Mq759sR1GDg/AUsltsGYHrlVWuLa1uvH7rFljziVt1CPpNUOcG4OMTq2G8lyNsZ8QmO/MXBbYy4T5e3SIxaEplFvXnpK7s5gGDeMD++mKVxM63x8nwy5AurNi5lQCEk1gNG2PWUyS8ctSynaCbgRZnBwohbB2HagYtaYgKthVkbbpjeYXaPHLQtTwW7CmwkGtUgUo52CnRmpFWZ51LJCo75DtK3JTBb4kvArLKKwF4hPLkcDcAazWtgVQVEbHVs28shUEwdAsZy2Gc9IgZJFrbjrTce/KxfsTIOFsKtPz648dWp0bIy2Up0X/NOmp4E4A9kaAZFb9sjzPBWiNZEMerfAAnyVgGc+mbkUoq0BqzIo3PNL4s1SnN7gOmgyuf+XhOQG/u+307/UH2GaWlnIxxrdAAAAAElFTkSuQmCC'
+                     class='iconDetails'>
+
+                <b>&nbsp;DIRECCION:</b> MARCELINO MARIDUENA <br>
+            </p>
+            {#            </center>#}
+        </td>
+
+        <td style="padding-left: 10px">
+            {#            <center>#}
+
+            <p>
+                <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC2ElEQVRIic2XzU4aURTHfzMODB+2mJYoSiwumtraBDSpXTQp0HTnovoAXRBZ+Qztwo1P0DXGN6j2CYClNamwqquWhQGrC6wVQah0cWdGhq8Zgjb+k0lmDtzzm3vuPeeekZrNJt0kSZJxn8usrgBx7Yp0+XsOSAPpSGxzWzf28g0g9QPnMqsJYB0I9fTQqQKwHoltbg0MzmeTM8AWEBsA2K4MkAhHUz9tgfPZ5DwibL4hoLpOgXg4mtrvC9ag324A2K6FdrjcAp1BzPQ2lNb8d4IRa2oZ3hHFy+ziBrOLG4Yt+Pg9s4sbeH1Peg3zaf7N4Hw2mcDmRnJ5g6juAIrjvmF7EHiN6g7QqJ/1GxrTONdgRMrY0ujYMwAa9d+GTZIVAC6rJ1bDDY6czyZXGCBPVU8AgPKvXUCEXlfzqm41PKTxkBHVyLbco48AqJ4fAqA4RchrFyW7LuIAih3wRGiZidA7ky00t2Z6Vt0BwtEUAPls0ha4W+01qXwswqo47vFw6g0AR4UvAIxPLyHJCrWLkhF+C0V0sKVqlSJHhR1Uz2QLeAeAsfGXqO4ApR+fOT3Zs+MOMOexpVyeoHiRlvV0qn4AqpXDQVxZz1iSHYxPLwFidjpsIrSs/S5c+Kfe0qifUT7epVYpDg92uvwdG0uSlQ6bvgRwvQxW4Bx9NlitUjR26fNXnxhRPBzsfaRWKeLzvyA0t0btosTB1w+WME05EGuctjtiRPEA0LgUVcvlDZqebSo9EFiSHcb938Y5cF3F/pS/Dw4OR1PbiHalr5wuvwatGLb2KmZDBY1n/5AYHXsKmA8H1S1mPEAqGRyjA8lnk2n6HI2S7MDp8nNZPTEOA9UzCWArfYBMOJqK6w+t6ZQA9unRDDSv6h0Am0AQvVei1WBULq0bjHM7ird3m6aSqTVkC4g3vAmd0qXR6wC3wOcRffEwygDz3aBw174kdLCu//7tNKz6gf8BZS4R/YpfHREAAAAASUVORK5CYII='
+                     class='iconDetails' style="width: 30px">
+
+                <b>&nbsp;TELEFONO:</b> 094429630 <br>
+            </p>
+            {#            </center>#}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+{#<p class="head">#}
+{#    {{ comp.name|upper }}<br>#}
+{#    {{ comp.ruc }}<br>#}
+{#    {{ comp.address|upper }}#}
+{#</p>#}
+
+{#<p>#}
+{#    <b>FACTURA:</b> {{ sale.id }}<br>#}
+{#    <b>FECHA DE VENTA:</b> {{ sale.ccoFecCom }}<br>#}
+{#    <b>PROVEEDOR:</b> {{ sale.proveedor.proEmpresa|upper }}<br>#}
+{#    <b>DNI:</b> {{ sale.proEmpresa.proRuc }}<br>#}
+{#</p>#}
+
+<br>
+{#<table>#}
+{#    <tr>#}
+{#        <td style="border-bottom: 2px solid #2d4474; margin-top: 10px;">#}
+{#        </td>#}
+{##}
+{#    </tr>#}
+{#</table>#}
+{#<br>#}
+
+<table id="invoice">
+    <thead>
+    <tr>
+        <th style="width: 40%;">PRODUCTO</th>
+        <th style="width: 20%;">CATEGORIA</th>
+        <th style="width: 10%;">P.UNITARIO</th>
+
+        <th style="width: 15%;">CANTIDAD</th>
+        <th style="width: 15%;">TOTAL</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for d in sale.detcompra_set.all %}
+        <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
+            <td class="text-center">{{ d.insumo.insDescripcion }}</td>
+            <td class="text-center">{{ d.insumo.categoria.catDescripcion }}</td>
+            <td class="text-center">${{ d.dcoPreCom }}</td>
+            <td class="text-center">{{ d.dcoCantidad }}</td>
+            <td style="text-align: right;">${{ d.dcoSubtotal }}</td>
+        </tr>
+    {% endfor %}
+
+    <tr style="border-top: 1px solid black; padding-top: 4px;">
+        <td style="width: 40%;"></td>
+        <td style="width: 20%;"></td>
+        <td style="width: 10%;"></td>
+        <td class="text-center" style="width: 15%;"><b>SUBTOTAL</b></td>
+        <td style="text-align: right">{{ sale.ccoSubtotal }}</td>
+    </tr>
+    <tr style="padding-top: 0px;">
+        <td style="width: 40%;"></td>
+        <td style="width: 20%;"></td>
+        <td style="width: 10%;"></td>
+        <td class="text-center" style="width: 15%;"><b>IVA 12%</b></td>
+        {#        <td colspan="4"><b>IVA 12%</b></td>#}
+        <td style="text-align: right;">{{ sale.ccoIva }}</td>
+    </tr>
+    <tr style="padding-top: 0px;">
+        <td style="width: 40%;"></td>
+        <td style="width: 20%;"></td>
+        <td style="width: 10%;"></td>
+        <td class="text-center" style="width: 15%;"><b>TOTAL A PAGAR</b></td>
+        {#        <td colspan="4"><b>TOTAL A PAGAR</b></td>#}
+        <td style="text-align: right; color: red;border-top: 1px solid black; padding-top: 4px;">
+            <b>{{ sale.ccoTotal }}</b></td>
+    </tr>
+
+
+    {#    <tr style="border-top: 1px solid black; padding-top: 4px;">#}
+    {#        <td colspan="4"><b>SUBTOTAL</b></td>#}
+    {#        <td style="text-align: right">{{ sale.ccoSubtotal }}</td>#}
+    {#    </tr>#}
+    {#    <tr style="padding-top: 0px;">#}
+    {#        <td colspan="4"><b>IVA 12%</b></td>#}
+    {#        <td style="text-align: right">{{ sale.ccoIva }}</td>#}
+    {#    </tr>#}
+    {#    <tr style="padding-top: 0px;">#}
+    {#        <td colspan="4"><b>TOTAL A PAGAR</b></td>#}
+    {#        <td style="text-align: right">{{ sale.ccoTotal }}</td>#}
+    {#    </tr>#}
+    </tbody>
+</table>
+<table style="margin-top: 250px;">
+    <thead>
+    <tr>
+        <th>****GRACIAS POR SU COMPRA****</th>
+    </tr>
+    <tr>
+        <th>NOSE ACEPTAN CAMBIOS NI DEVOLUCIONES</th>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>
+
+

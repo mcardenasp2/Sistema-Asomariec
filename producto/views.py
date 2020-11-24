@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 
 from django.shortcuts import render
@@ -12,11 +14,13 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from producto.models import Producto, DetProducto, GastosAdicionales
 from insumo.models import Insumo
 from producto.forms import ProductoForm
+from user.mixins import ValidatePermissionRequiredMixin
 
 
-class ProductoListView(ListView):
+class ProductoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Producto
     template_name = 'producto/ListarProducto.html'
+    permission_required = 'view_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -51,10 +55,11 @@ class ProductoListView(ListView):
         return context
 
 
-class ProductoCreateView(CreateView):
+class ProductoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'producto/FormProducto.html'
+    permission_required = 'add_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -150,12 +155,12 @@ class ProductoCreateView(CreateView):
         return context
 
 
-
-class ProductoUpdateView(UpdateView):
+class ProductoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     template_name = 'producto/FormProducto.html'
     model = Producto
     form_class = ProductoForm
     success_url = reverse_lazy('producto:producto_mostrar')
+    permission_required = 'change_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -294,11 +299,12 @@ class ProductoUpdateView(UpdateView):
         return context
 
 
-class ProductoDeleteView(DeleteView):
+class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     template_name = 'producto/DeleteProducto.html'
     model = Producto
     # form_class = ProductoForm
     success_url = reverse_lazy('producto:producto_mostrar')
+    permission_required = 'delete_producto'
 
     # @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

@@ -48,8 +48,8 @@
       boostat: 10,
       maxboostedstep: false,
       mousewheel: true,
-      buttondown_class: 'btn btn-secondary',
-      buttonup_class: 'btn btn-secondary',
+      buttondown_class: 'btn btn-primary',
+      buttonup_class: 'btn btn-primary',
       buttondown_txt: '-',
       buttonup_txt: '+',
       callback_before_calculation: function(value) {

@@ -1,7 +1,14 @@
 <!DOCTYPE html>
-<html>
-   <style>
-       /*
+<html lang="en" dir="ltr">
+<head>
+<title>:: Guru-Soft 2020 lml:: </title>
+<meta charset="UTF-8">
+<!-- <link rel="stylesheet" href="styles/layout.css" type="text/css"> -->
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+
+<style>
+	/*
 HTML 5 Template Name: Basic 79
 File: Layout CSS
 Author: OS Templates
@@ -91,11 +98,11 @@ q {
     line-height: normal;
 }
 q:before {
-    content: '“ ';
+    content: '.';
     font-size: 26px;
 }
 q:after {
-    content: ' „';
+    content: '.';
     font-size: 26px;
     line-height: 0;
 }
@@ -161,11 +168,11 @@ blockquote, q {
     line-height: normal;
 }
 blockquote:before, q:before {
-    content: '“ ';
+    content: '.';
     font-size: 26px;
 }
 blockquote:after, q:after {
-    content: ' „';
+    content: '.';
     font-size: 26px;
     line-height: 0;
 }
@@ -436,146 +443,182 @@ table th {
 	padding: 10px
 }
 
-    </style>
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-{#<style>#}
-{#    .img-invoice {#}
-{#        width: 150px;#}
-{#        text-align: center;#}
-{#        margin: 0 auto;#}
-{#    }#}
-{##}
-{#    .head {#}
-{#        text-align: center;#}
-{#        text-transform: uppercase;#}
-{#    }#}
-{##}
-{#    #invoice thead tr th {#}
-{#        text-align: center;#}
-{#        border-bottom: 1px solid black;#}
-{#        border-top: 1px solid black;#}
-{#        padding-top: 4px;#}
-{#        border: 1px solid black;#}
-{#    }#}
-{##}
-{#    #invoice thead tr {#}
-{#        margin-bottom: 0;#}
-{#        padding-bottom: 0;#}
-{#    }#}
-{##}
-{#    #invoice tbody tr {#}
-{#        padding: 0;#}
-{#    }#}
-{##}
-{#    .text-center {#}
-{#        text-align: center;#}
-{#    }#}
-{#</style>#}
-
-<style>
-    #customers {
-        font-family: Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    #customers td, #customers th {
-        border: 1px solid #ddd;
-        padding: 5px;
-    }
-
-    #customers tr:nth-child(even) {
-        background-color: #80bdff;
-        {#background-color: #f2f2f2;#}
-    }
-
-    #customers th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        text-align: left;
-        {#background-color: #4CAF50;#}
-        background-color: #0b2e13;
-        color: white;
-    }
 </style>
 <body>
-{#<img src="{{ icon }}" class="img-invoice img-center">#}
+<div id="header-green"></div>
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+    <img src="images/logo-prueba.png" width="352" height="88" alt=""/> </div>
+    <nav>
+      <ul>
+        <li><a href="#">COTIZACIÓN</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+    </section>
+    <!-- main content -->
+    <section id="services" class="clear">
+		<div id="contenedor" class="clearfix">
 
-{#<div class="text-center">#}
+<div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-5.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Cotización No. C-19</h4>
+	</div>
+</div></p>
+</div>
 
-{#    <h1>Hola</h1>#}
-{#     <div class="container bg-info h-100 d-flex align-items-center">#}
-<img src="{{ icon }}" class="img-invoice">
-{#    </div>#}
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-1.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Julian Enrique Gonzalez Borda</h4>
+	</div>
+</div></p>
+</div>
 
-{#</div>#}
+	  <div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-6.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Fecha de Vencimiento:&nbsp;08/10/2060</h4>
+	</div>
+</div></p>
+</div>
 
-<p class="head">
-    {#    {{ comp.name|upper }}<br>#}
-    {{ comp.ruc }}<br>
-    {{ comp.address|upper }}
-</p>
-<p>
-    <b>FACTURA:</b> {{ sale.id }}<br>
-    <b>FECHA DE VENTA:</b> {{ sale.ccoFecCom }}<br>
-    <b>PROVEEDOR:</b> {{ sale.proveedor.proEmpresa|upper }}<br>
-    <b>DNI:</b> {{ sale.proEmpresa.proRuc }}<br>
-</p>
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-2.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>1110460606</h4>
+	</div>
+</div></p>
+</div>
+	
+	<div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-7.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Total de la Cotización:&nbsp;8.102.060</h4>
+	</div>
+</div></p>
+</div>
 
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-3.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Calle 164 19-64</h4>
+	</div>
+</div></p>
+</div>
 
-
-
-
-
-<table id="customers">
-    <thead>
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-4.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>08/10/2020 15:54:04</h4>
+	</div>
+</div></p>
+</div>
+	
+</div>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+    </section>
+    <!-- main content -->
+    <section id="services" class="clear">
+	  <div id="contenedor" class="clearfix">
+<div id="principal">
+  <p><div class='container2'>
+		<div>
+		<img src='images/icon-8.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>Razon Social Cliente: Rojos del Mar</h4>
+	</div>
+</div></p>
+</div>
+<div id="principal">
+  <p><div class='container2'>
+		<div>
+		<img src='images/icon-9.png' class='iconDetails'>
+		</div>	
+	<div style='margin-left:60px;'>
+	  <h4>RNC Cliente: 578847458</h4>
+	</div>
+</div></p>
+</div>
+</div>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<div class="wrapper row2">
+  <table>
+<thead>
+  <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Codigo</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Cant</th>
+	  <th scope="col">Precio Unitario</th>
+      <th scope="col">Valor Bruto</th>
+      <th scope="col">Valor Desc.</th>
+      <th scope="col">Impuestos</th>
+	  <th scope="col">Valor Total</th>
+	  
+    </tr>
+</thead>
+  <tbody>
     <tr>
-        <th style="width: 40%;">PRODUCTO</th>
-        <th style="width: 20%;">CATEGORIA</th>
-        <th style="width: 10%;">P.UNITARIO</th>
-
-        <th style="width: 15%;">CANTIDAD</th>
-        <th style="width: 15%;">TOTAL</th>
+      <td data-label="Item">1</td>
+      <td data-label="Codigo">b11255</td>
+      <td data-label="Descripción">BOTELLA DE AGUA</td>
+      <td data-label="Cant">800</td>
+	  <td data-label="Precio Unitario">800</td>
+      <td data-label="Valor Bruto">0.00</td>
+      <td data-label="Valor Desc.">0.00</td>
+      <td data-label="Impuesto">0.00</td>
+		<td data-label="Valor Total">800</td>
     </tr>
-    </thead>
-    <tbody>
-    {% for d in sale.detcompra_set.all %}
-        <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td>{{ d.insumo.insDescripcion }}</td>
-            <td>{{ d.insumo.categoria.catDescripcion }}</td>
-            <td class="text-center">${{ d.dcoPreCom }}</td>
-            <td class="text-center">{{ d.dcoCantidad }}</td>
-            <td style="text-align: right;">${{ d.dcoSubtotal }}</td>
-        </tr>
-    {% endfor %}
-    <tr style="border-top: 1px solid black; padding-top: 4px;">
-        <td colspan="4"><b>SUBTOTAL</b></td>
-        <td style="text-align: right">{{ sale.ccoSubtotal }}</td>
-    </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>IVA 12%</b></td>
-        <td style="text-align: right">{{ sale.ccoIva }}</td>
-    </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>TOTAL A PAGAR</b></td>
-        <td style="text-align: right">{{ sale.ccoTotal }}</td>
-    </tr>
-    </tbody>
+  </tbody>
 </table>
-<table style="margin-top: 250px;">
-    <thead>
-    <tr>
-        <th>****GRACIAS POR SU COMPRA****</th>
-    </tr>
-    <tr>
-        <th>NOSE ACEPTAN CAMBIOS NI DEVOLUCIONES</th>
-    </tr>
-    </thead>
-</table>
+</div>
+<!-- footer -->
+<div class="wrapper row3">
+  <footer id="footer" class="clear">
+    <p class="fl_left">Copyright &copy; 2020 - All Rights Reserved -</p>
+    <p class="fl_right"><img src="images/ft.png" width="40" height="30" alt=""/> - Documento generado por Edoc pyme/ GURUSOFT S.AS. / NIT: 901.014.886-8<a target="_blank" href="https://guru-soft.com" title="Free Website Templates"></a></p>
+  </footer>
+</div>
 </body>
 </html>
-
-

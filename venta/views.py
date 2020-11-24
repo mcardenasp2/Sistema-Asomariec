@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
 from django.shortcuts import render
@@ -12,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from insumo.models import Insumo
 from producto.models import Producto, DetProducto
+from user.mixins import ValidatePermissionRequiredMixin
 from venta.models import *
 
 from django.views.generic import CreateView,ListView, UpdateView, DeleteView, View
@@ -24,9 +27,10 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
-class VentaListView(ListView):
+class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     template_name = 'venta/normal/ListarVenta.html'
     model = Venta
+    permission_required = 'view_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -61,10 +65,11 @@ class VentaListView(ListView):
         return context
 
 
-class VentaCreateView(CreateView):
+class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Venta
     form_class = CabVentaForm
     template_name = 'venta/normal/FormVenta.html'
+    permission_required = 'add_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -97,7 +102,7 @@ class VentaCreateView(CreateView):
                     cabventa.cliente_id= vent['cliente']
                     cabventa.venFechaInici=vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
-                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion='Ninguna'
                     cabventa.venTipo=2
@@ -146,12 +151,12 @@ class VentaCreateView(CreateView):
         return context
 
 
-
-class VentaUpdateView(UpdateView):
+class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     template_name = 'venta/normal/FormVenta.html'
     model = Venta
     form_class = CabVentaForm
     success_url = reverse_lazy('venta:venta_mostrar')
+    permission_required = 'change_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -183,7 +188,7 @@ class VentaUpdateView(UpdateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
-                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 2
@@ -264,6 +269,58 @@ class VentaUpdateView(UpdateView):
         return context
 
 
+class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
+    template_name = 'venta/DeleteVenta.html'
+    model = Venta
+    # form_class = CabVentaForm
+    success_url = reverse_lazy('venta:venta_mostrar')
+    permission_required = 'delete_venta'
+
+    # @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+
+            if action == 'delete':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                    cabventa = self.get_object()
+                    cabventa.ventEstado = False
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=self.get_object().id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        producto.save()
+
+                    # cabventa.detventa_set.all().delete()
+
+
+                    # cabventa.gastadc_set.all().delete()
+
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['title'] = 'Edición de una Venta'
+        # context['entity'] = 'Ventas'
+        context['list_url'] = self.success_url
+        context['action'] = 'delete'
+        # context['det'] = json.dumps(self.get_details_produtos(), cls=DjangoJSONEncoder)
+        # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
+        return context
+
+
 class SaleInvoicePdfView(View):
 
     def link_callback(self, uri, rel):
@@ -289,10 +346,35 @@ class SaleInvoicePdfView(View):
 
     def get(self, request, *args, **kwargs):
         try:
-            template = get_template('venta/normal/invoice.html')
+            template = get_template('venta/normal/invoice2.html')
+            # item={}
+            det=[]
+
+
+
+            data= Venta.objects.get(pk=self.kwargs['pk']).toJSON()
+            # det= DetVenta.objects.get(venta=self.kwargs['pk'])
+            for i in DetVenta.objects.filter(venta=self.kwargs['pk']):
+                item = i.producto.toJSON()
+                item['imp'] = format(i.producto.prodIva * i.detPrecio*i.detCant,'.2f')
+                item['cant'] = i.detCant
+                item['subt'] = i.detSubtotal
+                item['deta']=i.producto.toJSON()
+                det.append(item)
+
+            gast = []
+            for i in GastAdc.objects.filter(venta=self.kwargs['pk']):
+                gast.append(i)
+
+
             context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
+            # context = {'sale': data,
                        'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
-                       'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg')
+                       'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
+                       'nfact':data['nfact'],
+                       'fec':data['venFechaInici'],
+                       'det':det,
+                       'gastad':gast
                        # se utiliza con collectstatic
                        # 'icon':'{}{}'.format(settings.STATIC_URL, 'img/logo2.jpeg')
 
@@ -314,9 +396,10 @@ class SaleInvoicePdfView(View):
 
 
 # contrato
-class VentaContratoListView(ListView):
+class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     template_name = 'venta/contrato/ListarVenta.html'
     model = Venta
+    permission_required = 'view_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -351,11 +434,11 @@ class VentaContratoListView(ListView):
         return context
 
 
-
-class VentaContratoCreateView(CreateView):
+class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     template_name = 'venta/contrato/FormVenta.html'
     form_class = CabVentaForm
     model = Venta
+    permission_required = 'add_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -376,7 +459,7 @@ class VentaContratoCreateView(CreateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.venFechaFin=vent['fechafin']
-                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
@@ -436,11 +519,12 @@ class VentaContratoCreateView(CreateView):
         return context
 
 # tomar en cuenta el guardado del producto
-class VentaContratoUpdateView(UpdateView):
+class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     template_name = 'venta/contrato/FormVenta.html'
     model = Venta
     form_class = CabVentaForm
     success_url = reverse_lazy('venta:ventac_mostrar')
+    permission_required = 'change_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -474,8 +558,10 @@ class VentaContratoUpdateView(UpdateView):
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.venFechaFin = vent['fechafin']
+                    # print(float(vent['tgsto']))
 
-                    cabventa.ventSubtotal = float(vent['subproductos'])
+                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
+                    # cabventa.ventSubtotal = float(vent['subproductos'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     # cabventa.venFechaFin=vent['cliente']
                     cabventa.ventObservacion = 'Ninguna'
@@ -664,63 +750,12 @@ class VentaContratoUpdateView(UpdateView):
         return context
 
 
-
-class VentaDeleteView(DeleteView):
-    template_name = 'venta/DeleteVenta.html'
-    model = Venta
-    # form_class = CabVentaForm
-    success_url = reverse_lazy('venta:venta_mostrar')
-
-    # @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        data = {}
-        try:
-            action = request.POST['action']
-
-            if action == 'delete':
-                with transaction.atomic():
-                    # vent = json.loads(request.POST['ventas'])
-                    # print(prod);
-                    cabventa = self.get_object()
-                    cabventa.ventEstado = False
-                    cabventa.save()
-
-                    for i in DetVenta.objects.filter(venta_id=self.get_object().id):
-                        producto = Producto.objects.get(pk=i.producto_id)
-                        producto.prodCantidad += i.detCant
-                        producto.save()
-
-                    # cabventa.detventa_set.all().delete()
-
-
-                    # cabventa.gastadc_set.all().delete()
-
-            else:
-                data['error'] = 'No ha ingresado a ninguna opción'
-        except Exception as e:
-            data['error'] = str(e)
-        return JsonResponse(data, safe=False)
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['title'] = 'Edición de una Venta'
-        # context['entity'] = 'Ventas'
-        context['list_url'] = self.success_url
-        context['action'] = 'delete'
-        # context['det'] = json.dumps(self.get_details_produtos(), cls=DjangoJSONEncoder)
-        # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
-        return context
-
-
-class VentaDeleteContratoView(DeleteView):
+class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     template_name = 'venta/DeleteVenta.html'
     model = Venta
     # form_class = CabVentaForm
     success_url = reverse_lazy('venta:ventac_mostrar')
+    permission_required = 'delete_venta'
 
     # @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

@@ -1,0 +1,692 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<title>:: Guru-Soft 2020 lml:: </title>
+<meta charset="UTF-8">
+<!-- <link rel="stylesheet" href="styles/layout.css" type="text/css"> -->
+<!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+</head>
+
+<style>
+
+    html {
+        overflow-y: scroll;
+    }
+
+    /* Forces a scrollbar when the viewport is larger than the websites content - CSS3 */
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        color: #979797;
+        background-color: #ECEFF6;
+    }
+
+    .clear:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+    }
+
+    .clear {
+        display: block;
+        clear: both;
+    }
+
+    html[xmlns] .clear {
+        display: block;
+    }
+
+    * html .clear {
+        height: 1%;
+    }
+
+    a {
+        outline: none;
+        text-decoration: none;
+    }
+
+    code {
+        font-weight: normal;
+        font-style: normal;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    .fl_left {
+        float: left;
+    }
+
+    .fl_right {
+        float: right;
+    }
+
+    img {
+        margin: 0;
+        padding: 0;
+        border: none;
+        line-height: normal;
+        vertical-align: middle;
+    }
+
+    .imgholder, .imgl, .imgr {
+        padding: 4px;
+        border: 1px solid #D6D6D6;
+        text-align: center;
+    }
+
+    .imgl {
+        float: left;
+        margin: 0 15px 15px 0;
+        clear: left;
+    }
+
+    .imgr {
+        float: right;
+        margin: 0 0 15px 15px;
+        clear: right;
+    }
+
+    /*----------------------------------------------HTML 5 Overrides-------------------------------------*/
+
+    address, article, aside, figcaption, figure, footer, header, nav, section {
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+
+    q {
+        display: block;
+        padding: 0 10px 8px 10px;
+        color: #979797;
+        background-color: #ECECEC;
+        font-style: italic;
+        line-height: normal;
+    }
+
+    /*
+        q:before {
+            content: '“ ';
+            font-size: 26px;
+        }
+
+        q:after {
+            content: ' „';
+            font-size: 26px;
+            line-height: 0;
+        }*/
+
+    /* ----------------------------------------------Wrapper-------------------------------------*/
+
+    div.wrapper {
+        display: block;
+        width: 960px;
+        margin: 0 auto;
+        padding: 0;
+        text-align: left;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .row1, .row1 a {
+        color: #979797;
+        background-color: #FFFFFF;
+    }
+
+    .row2 {
+        color: #979797;
+        background-color: #FFFFFF;
+    }
+
+    .row2 a {
+        color: #FF9900;
+        background-color: #FFFFFF;
+    }
+
+    .row3 {
+        border-top: 1px solid #DEDEDE;
+    }
+
+    .row3, .row3 a {
+        color: #979797;
+        background-color: #FFFFFF;
+    }
+
+
+    /*----------------------------------------------Generalise-------------------------------------*/
+
+    #header, #container, #footer {
+        display: block;
+        width: 960px;
+    }
+
+    nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        font-weight: bold;
+        font-style: normal;
+        line-height: normal;
+        text-transform: uppercase;
+    }
+
+    address {
+        font-style: normal;
+    }
+
+    blockquote, q {
+        display: block;
+        padding: 8px 10px;
+        color: #979797;
+        background-color: #ECECEC;
+        font-style: italic;
+        line-height: normal;
+    }
+
+    /*
+        blockquote:before, q:before {
+            content: '“ ';
+            font-size: 26px;
+        }
+
+        blockquote:after, q:after {
+            content: ' „';
+            font-size: 26px;
+            line-height: 0;
+        }
+    */
+    .one_third, .two_third, .three_third {
+        display: block;
+        float: left;
+        margin: 0 30px 0 0;
+    }
+
+    .one_third {
+        width: 300px;
+    }
+
+    .two_third {
+        width: 630px;
+    }
+
+    .three_third {
+        width: 960px;
+        float: none;
+        margin-right: 0;
+        clear: both;
+    }
+
+    .lastbox {
+        margin-right: 0;
+    }
+
+
+    /*----------------------------------------------Header-------------------------------------*/
+
+    #header {
+    }
+
+    #header #hgroup {
+        padding: 20px 0 0 0;
+        float: left;
+    }
+
+    #header #hgroup h1, #header #hgroup h2 {
+        font-weight: normal;
+        text-transform: none;
+    }
+
+    #header #hgroup h1 {
+        font-size: 36px;
+    }
+
+    #header #hgroup h2 {
+        font-size: 13px;
+    }
+
+    #header nav {
+        display: block;
+        float: right;
+        margin: 20px 0 0 0;
+        padding: 20px 0;
+    }
+
+    #header nav ul {
+    }
+
+    #header nav li {
+        display: inline;
+        margin-right: 25px;
+        text-transform: uppercase;
+    }
+
+    #header nav li.last {
+        margin-right: 0;
+    }
+
+    #header nav li a {
+        padding: 5px 8px;
+        color: #FFFFFF;
+        background-color: #666666;
+    }
+
+    #header nav li a:hover {
+        color: #FF9900;
+        background-color: #FFFFFF;
+    }
+
+    /*----------------------------------------------Content Area-------------------------------------*/
+
+    #container {
+        padding-top: 30px;
+    }
+
+    #container section {
+        display: block;
+        width: 100%;
+        margin: 0 0 30px 0;
+        padding: 0;
+    }
+
+    #container .last {
+        margin: 0;
+    }
+
+    #container .more {
+        text-align: right;
+    }
+
+    /* ------Shout-----*/
+
+    #container #shout {
+        margin-bottom: 10px;
+        padding: 3px 0;
+        border-top: 1px solid #DEDEDE;
+    }
+
+    #container #shout h1 {
+        font-size: 56px;
+        font-weight: normal;
+        font-style: italic;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    #container #shout p {
+        font-size: 16px;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        line-height: 1.8em;
+    }
+
+    /* ------services-----*/
+
+    #container #services {
+        line-height: 1.6em;
+    }
+
+    #container #services article {
+    }
+
+    #container #services article h2 {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    #container #services article p {
+        margin: 0;
+        padding: 0;
+    }
+
+    #container #services article img {
+        float: left;
+        width: 80px;
+        height: 80px;
+        margin: 0 10px 10px 0;
+        padding: 4px;
+        border: 1px solid #DEDEDE;
+    }
+
+    #container #services article footer {
+        margin: 10px 0 0 0;
+    }
+
+    /*----------------------------------------------Footer-------------------------------------*/
+
+    #footer {
+        padding: 20px 0;
+    }
+
+    #footer p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .iconDetails {
+        margin-left: 2%;
+        float: left;
+        height: 30px;
+        width: 30px;
+        padding-right: 20px;
+        padding-bottom: 10px
+    }
+
+    .container2 {
+        width: 100%;
+        height: auto;
+        padding: 1%;
+    }
+
+    h4 {
+        margin: 0px;
+    }
+
+    #contenedor {
+        text-align: left;
+        width: 100%;
+        margin: auto;
+        border-top: solid #002879 3px;
+        padding-top: 10px
+    }
+
+    #lateral {
+        width: 49%;
+        float: right;
+        background-color: #FFFFFF;
+        border: #A5A5A5 1px solid;
+        border-radius: 20px;
+        margin: 2px;
+    }
+
+    #principal {
+        width: 49%;
+        float: left;
+        background-color: #FFFFFF;
+        border: #A5A5A5 1px solid;
+        border-radius: 20px;
+        margin: 2px;
+    }
+
+
+    /* Para limpiar los floats */
+    .clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    table caption {
+        font-size: 1.5em;
+        margin: .5em 0 .75em;
+    }
+
+    table tr {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: .35em;
+    }
+
+    table th,
+    table td {
+        padding: .625em;
+        text-align: center;
+    }
+
+    table th {
+        font-size: .85em;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 1244px ) {
+        table {
+            border: 0;
+        }
+
+        table caption {
+            font-size: 1.3em;
+        }
+
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+        }
+
+        table td::before {
+            /*
+            * aria-label has no advantage, it won't be read inside a table
+            content: attr(aria-label);
+            */
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td:last-child {
+            border-bottom: 0;
+        }
+    }
+/*
+    #header-green {
+        width: 100%;
+        background-color: #A6C333;
+        padding: 10px
+    }
+*/
+</style>
+<body>
+{#<div id="header-green"></div>#}
+<div class="wrapper row1">
+  <header id="header" class="clear">
+    <div id="hgroup">
+    <img src="{{icon}}" width="352" height="88" alt=""/> </div>
+    <nav>
+      <ul>
+        <li><a >COTIZACIÓN</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- content -->
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+    </section>
+    <!-- main content -->
+    <section id="services" class="clear">
+		<div id="contenedor" class="clearfix">
+
+<div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-5.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Cotización No. C-19</h4>
+	</div>
+</div></p>
+</div>
+
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-1.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Julian Enrique Gonzalez Borda</h4>
+	</div>
+</div></p>
+</div>
+
+	  <div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-6.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Fecha de Vencimiento:&nbsp;08/10/2060</h4>
+	</div>
+</div></p>
+</div>
+
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-2.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>1110460606</h4>
+	</div>
+</div></p>
+</div>
+
+	<div id="lateral">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-7.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Total de la Cotización:&nbsp;8.102.060</h4>
+	</div>
+</div></p>
+</div>
+
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-3.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Calle 164 19-64</h4>
+	</div>
+</div></p>
+</div>
+
+<div id="principal">
+<p><div class='container2'>
+		<div>
+		<img src='images/icon-4.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>08/10/2020 15:54:04</h4>
+	</div>
+</div></p>
+</div>
+
+</div>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<div class="wrapper row2">
+  <div id="container" class="clear">
+    <!-- content body -->
+    <section id="shout">
+    </section>
+    <!-- main content -->
+    <section id="services" class="clear">
+	  <div id="contenedor" class="clearfix">
+<div id="principal">
+  <p><div class='container2'>
+		<div>
+		<img src='images/icon-8.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>Razon Social Cliente: Rojos del Mar</h4>
+	</div>
+</div></p>
+</div>
+<div id="principal">
+  <p><div class='container2'>
+		<div>
+		<img src='images/icon-9.png' class='iconDetails'>
+		</div>
+	<div style='margin-left:60px;'>
+	  <h4>RNC Cliente: 578847458</h4>
+	</div>
+</div></p>
+</div>
+</div>
+    </section>
+    <!-- / content body -->
+  </div>
+</div>
+<div class="wrapper row2">
+  <table>
+<thead>
+  <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Codigo</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Cant</th>
+	  <th scope="col">Precio Unitario</th>
+      <th scope="col">Valor Bruto</th>
+      <th scope="col">Valor Desc.</th>
+      <th scope="col">Impuestos</th>
+	  <th scope="col">Valor Total</th>
+
+    </tr>
+</thead>
+  <tbody>
+    <tr>
+      <td data-label="Item">1</td>
+      <td data-label="Codigo">b11255</td>
+      <td data-label="Descripción">BOTELLA DE AGUA</td>
+      <td data-label="Cant">800</td>
+	  <td data-label="Precio Unitario">800</td>
+      <td data-label="Valor Bruto">0.00</td>
+      <td data-label="Valor Desc.">0.00</td>
+      <td data-label="Impuesto">0.00</td>
+		<td data-label="Valor Total">800</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- footer -->
+<div class="wrapper row3">
+  <footer id="footer" class="clear">
+    <p class="fl_left">Copyright &copy; 2020 - All Rights Reserved -</p>
+    <p class="fl_right"><img src="images/ft.png" width="40" height="30" alt=""/> - Documento generado por Edoc pyme/ GURUSOFT S.AS. / NIT: 901.014.886-8<a target="_blank" href="https://guru-soft.com" title="Free Website Templates"></a></p>
+  </footer>
+</div>
+</body>
+</html>

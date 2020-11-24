@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -12,12 +13,16 @@ from insumo.forms import *
 
 
 # Create your views here.
+from user.mixins import ValidatePermissionRequiredMixin
+
+
 def mostrar(request):
     return render(request, 'index.html')
 
-# Detalle Insumo Modal
-class DetalleView(TemplateView):
+# Detalle Insumo Modal este utilizo
+class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateView):
     template_name = 'insumo/detalle_insumo/DetalleList.html'
+    permission_required = 'view_unidadmedidad'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -94,9 +99,10 @@ class DetalleView(TemplateView):
         context['action'] = 'add'
         return context
 
-# Categoria Modal
-class CategoriaView(TemplateView):
+# Categoria Modal no utilizo
+class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateView):
     # model = Categoria
+    permission_required = 'view_categoria'
     # template_name = 'insumo/detalle_insumo/DetalleList.html'
     template_name = 'insumo/categoria/CategoriaList.html'
 
@@ -169,7 +175,7 @@ class CategoriaView(TemplateView):
         # context['create_url'] = reverse_lazy('insumo:categoria_create')
         return context
 
-# Modal Medida
+# Modal Medida no utilizo
 class MedidaView(TemplateView):
     template_name = 'insumo/medida/MedidaList.html'
 
@@ -242,9 +248,12 @@ class MedidaView(TemplateView):
         # context['create_url'] = reverse_lazy('insumo:categoria_create')
         return context
 
-class InsumoListView(ListView):
+# Insumo
+
+class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Insumo
     template_name = 'insumo/insumo/ListarInsumo.html'
+    permission_required = 'view_insumo'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -275,12 +284,13 @@ class InsumoListView(ListView):
         context['entity'] = 'Clientes'
         return context
 
-
-class InsumoCreateView(CreateView):
+class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Insumo
     form_class = InsumoForm
     template_name = 'insumo/insumo/FormInsumo.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
+    permission_required = 'add_insumo'
+
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -311,13 +321,12 @@ class InsumoCreateView(CreateView):
 
     # success_url = redirect()
 
-
-
-class InsumoUpdateView(UpdateView):
+class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = Insumo
     form_class = InsumoForm
     template_name = 'insumo/insumo/FormInsumo.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
+    permission_required = 'change_insumo'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -361,12 +370,12 @@ class InsumoUpdateView(UpdateView):
         context['action'] = 'edit'
         return context
 
-
-class InsumoDeleteView(DeleteView):
+class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     model = Insumo
     # form_class = ClienteForm
     template_name = 'insumo/insumo/DeleteInsumo.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
+    permission_required = 'delete_insumo'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -404,6 +413,8 @@ class InsumoDeleteView(DeleteView):
         context['action'] = 'eliminar'
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
         return context
+
+# no utilizo
 
 class CategoriaListView(ListView):
     model = Categoria

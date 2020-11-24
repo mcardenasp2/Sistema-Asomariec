@@ -1,0 +1,674 @@
+﻿@model APLICATIONCORE_GSEDOCPYME.DTOs.Ventas.CotizacionDto
+@{
+    //ViewBag.Title = "eDoc Pyme | Cotización";
+    //ViewBag.pTitle = "Cotización";
+    //ViewBag.pageTitle = "Configuración";
+    //Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>:: Guru-Soft 2020 lml:: </title>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="styles/layout.css" type="text/css"> -->
+    <!--[if lt IE 9]><script src="scripts/html5shiv.js"></script><![endif]-->
+
+    <style>
+       /*
+HTML 5 Template Name: Basic 79
+File: Layout CSS
+Author: OS Templates
+Author URI: https://www.os-templates.com/
+Licence: <a href="https://www.os-templates.com/template-terms">Website Template Licence</a>
+*/
+
+html {
+    overflow-y: scroll;
+} /* Forces a scrollbar when the viewport is larger than the websites content - CSS3 */
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: #979797;
+    background-color: #ECEFF6;
+}
+.clear:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+}
+.clear {
+    display: block;
+    clear: both;
+}
+html[xmlns] .clear {
+    display: block;
+}
+* html .clear {
+    height: 1%;
+}
+a {
+    outline: none;
+    text-decoration: none;
+}
+code {
+    font-weight: normal;
+    font-style: normal;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+.fl_left {
+    float: left;
+}
+.fl_right {
+    float: right;
+}
+img {
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: normal;
+    vertical-align: middle;
+}
+.imgholder, .imgl, .imgr {
+    padding: 4px;
+    border: 1px solid #D6D6D6;
+    text-align: center;
+}
+.imgl {
+    float: left;
+    margin: 0 15px 15px 0;
+    clear: left;
+}
+.imgr {
+    float: right;
+    margin: 0 0 15px 15px;
+    clear: right;
+}
+/*----------------------------------------------HTML 5 Overrides-------------------------------------*/
+
+address, article, aside, figcaption, figure, footer, header, nav, section {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+q {
+    display: block;
+    padding: 0 10px 8px 10px;
+    color: #979797;
+    background-color: #ECECEC;
+    font-style: italic;
+    line-height: normal;
+}
+q:before {
+    content: '“ ';
+    font-size: 26px;
+}
+q:after {
+    content: ' „';
+    font-size: 26px;
+    line-height: 0;
+}
+/* ----------------------------------------------Wrapper-------------------------------------*/
+
+div.wrapper {
+    display: block;
+    width: 960px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+	padding-left: 50px;
+    padding-right: 50px;
+}
+.row1, .row1 a {
+    color: #979797;
+    background-color: #FFFFFF;
+}
+.row2 {
+    color: #979797;
+    background-color: #FFFFFF;
+}
+.row2 a {
+    color: #FF9900;
+    background-color: #FFFFFF;
+}
+.row3 {
+    border-top: 1px solid #DEDEDE;
+}
+.row3, .row3 a {
+    color: #979797;
+    background-color: #FFFFFF;
+}
+/*----------------------------------------------Generalise-------------------------------------*/
+
+#header, #container, #footer {
+    display: block;
+    width: 960px;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: normal;
+    text-transform: uppercase;
+}
+address {
+    font-style: normal;
+}
+blockquote, q {
+    display: block;
+    padding: 8px 10px;
+    color: #979797;
+    background-color: #ECECEC;
+    font-style: italic;
+    line-height: normal;
+}
+blockquote:before, q:before {
+    content: '“ ';
+    font-size: 26px;
+}
+blockquote:after, q:after {
+    content: ' „';
+    font-size: 26px;
+    line-height: 0;
+}
+.one_third, .two_third, .three_third {
+    display: block;
+    float: left;
+    margin: 0 30px 0 0;
+}
+.one_third {
+    width: 300px;
+}
+.two_third {
+    width: 630px;
+}
+.three_third {
+    width: 960px;
+    float: none;
+    margin-right: 0;
+    clear: both;
+}
+.lastbox {
+    margin-right: 0;
+}
+/*----------------------------------------------Header-------------------------------------*/
+
+#header {
+}
+#header #hgroup {
+    padding: 20px 0 0 0;
+    float: left;
+}
+#header #hgroup h1, #header #hgroup h2 {
+    font-weight: normal;
+    text-transform: none;
+}
+#header #hgroup h1 {
+    font-size: 36px;
+}
+#header #hgroup h2 {
+    font-size: 13px;
+}
+#header nav {
+    display: block;
+    float: right;
+    margin: 20px 0 0 0;
+    padding: 20px 0;
+}
+#header nav ul {
+}
+#header nav li {
+    display: inline;
+    margin-right: 25px;
+    text-transform: uppercase;
+}
+#header nav li.last {
+    margin-right: 0;
+}
+#header nav li a {
+    padding: 5px 8px;
+    color: #FFFFFF;
+    background-color: #666666;
+}
+#header nav li a:hover {
+    color: #FF9900;
+    background-color: #FFFFFF;
+}
+/*----------------------------------------------Content Area-------------------------------------*/
+
+#container {
+    padding-top: 30px;
+}
+#container section {
+    display: block;
+    width: 100%;
+    margin: 0 0 30px 0;
+    padding: 0;
+}
+#container .last {
+    margin: 0;
+}
+#container .more {
+    text-align: right;
+}
+/* ------Shout-----*/
+
+#container #shout {
+    margin-bottom: 10px;
+    padding: 3px 0;
+    border-top: 1px solid #DEDEDE;
+}
+#container #shout h1 {
+    font-size: 56px;
+    font-weight: normal;
+    font-style: italic;
+    text-transform: uppercase;
+    text-align: center;
+}
+#container #shout p {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    line-height: 1.8em;
+}
+/* ------services-----*/
+
+#container #services {
+    line-height: 1.6em;
+}
+#container #services article {
+}
+#container #services article h2 {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+#container #services article p {
+    margin: 0;
+    padding: 0;
+}
+#container #services article img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin: 0 10px 10px 0;
+    padding: 4px;
+    border: 1px solid #DEDEDE;
+}
+#container #services article footer {
+    margin: 10px 0 0 0;
+}
+/*----------------------------------------------Footer-------------------------------------*/
+
+#footer {
+    padding: 20px 0;
+}
+#footer p {
+    margin: 0;
+    padding: 0;
+}
+.iconDetails {
+    margin-left: 2%;
+    float: left;
+    height: 30px;
+    width: 30px;
+    padding-right: 20px;
+    padding-bottom: 10px
+}
+.container2 {
+    width: 100%;
+    height: auto;
+    padding: 1%;
+}
+h4 {
+    margin: 0px;
+}
+#contenedor {
+    text-align: left;
+    width: 100%;
+    margin: auto;
+    border-top: solid #002879 3px;
+	padding-top: 10px
+}
+#lateral {
+    width: 49%;
+    float: right;
+    background-color: #FFFFFF;
+    border: #A5A5A5 1px solid;
+    border-radius: 20px;
+    margin: 2px;
+}
+#principal {
+    width: 49%;
+    float: left;
+    background-color: #FFFFFF;
+    border: #A5A5A5 1px solid;
+    border-radius: 20px;
+    margin: 2px;
+}
+/* Para limpiar los floats */
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width : 1244px ){
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+#header-green {
+    width: 100%;
+    background-color: #A6C333;
+	padding: 10px
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="header-green"></div>
+    <div class="wrapper row1">
+        <header id="header" class="clear">
+            <div id="hgroup">
+                <img src="@String.Format("data:image/png;base64,{0}",@ViewData["LogoBase64"])" width="260" height="150" alt="" />
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">COTIZACIÓN</a></li>
+                    @{
+                        string FechaVigencia = Model.FechaVigencia == null? "": ((DateTime)Model.FechaVigencia).ToString("dd/MM/yyyy");
+                        string FechaCotizacion = Model.FechaCotizacion == null ? "" : ((DateTime)Model.FechaCotizacion).ToString("dd/MM/yyyy");
+                        string Total = Model.Total == null ? "0.00" : ((decimal)Model.Total).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    }
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <!-- content -->
+    <div class="wrapper row2">
+        <div id="container" class="clear">
+            <!-- content body -->
+            <section id="shout">
+            </section>
+            <!-- main content -->
+            <section id="services" class="clear">
+                <div id="contenedor" class="clearfix">
+                    <div id="lateral">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC/UlEQVRIib2XQUsiYRjHf2pZi04SBcIUFHSYutguiB32kJ8gdrsLHj0k+wH24qW+gB48Bp3XFj+BHQoSYctLzUHZYJ0QCimVyoj2MK+zozjjKG1/GOZ9Zh7e//s+7/M88x/X6+srw6Bky1+AqLjWB7icAwWgoCZCP4dOCLjsiJVsOQ6kgCUnkwlcASk1EdofmVjJlpeBfWBzBMJ+HAFxNRH67YhYyZY/AoWZKU9gde7D2Ky1Zodas3MHRNVE6MyWWJD+AojIPg62VsYmTpfqZEr1rvmpn3zCRLqMniA9ULLlkUmT4WD/o4KSLX80h91terkPBEZmcYaAmN/ABBjZOzCRxgn3ojTJD7XR/3hTyZbj3WzvhjplNUlE9o1MbIMUYudu0Rws67SotShqLQDun14oai0ubh4APXOLWotaswPAxc1Djz0AS4IPN3o3skQsXyWWrwJweftILF9l7+QagEO1QSxf5VCEde/kuse2QBT0UNsSmzN0UZokGQ6yIHkBiMh+kmH9DrCtzLIh+4jIfk5FlOyIB/VeAzsmYlny9tgR2deTA1+VWWNsQ7zeJbZFWjSBZDhIrdkhpzZYkLxsK7MUtRanWtvYZU5tUGt22HCQkO5hDhlTB6o1n8mU6sYZFrU2mVKdotYG9DM323YYumNzHa/NT3OwtcLMlAfQzzQi+1mUJgH4/lnm/unFqo5HIzafoeT19Niy5EUWiQawOjc9bDoDbvSPuCXSpbpxzrVmh3SpTs4IdYt0qW7UuUOcd4kLdl6jnPHusUYsXzEWZoEC6KEuAN+svNREyBhHZF+PvRMO9pTX5e0jRa3NhqhrO2K30EhXdp5viKuuJuuWU8rKM5avEMtXAL0Xx/IVdo81AHJqw0lozTB43ADiU3U02NclLnC59LHL9e8NuMRdL7eI7Ddaah+OzALQkD5CgZwhxMAbS587YLACEQ+jYzPZI9qvNi1VpuT1BNbmnTeEfvxpPqM5VZkm8mXeW1f3LSDOe/5JDFjA+/47/U/8BV1HcfyjJuYXAAAAAElFTkSuQmCC' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>Cotización No. @Model.NumeroCotizacion</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAADP0lEQVRIia2XT28TRxjGf7vetUIS20nBSSBVU4hoVQlBOFdqItQDHFpVlXooUquUC4d+gubSPfkL9AtEqtRTD9yCxAFHEMGtMSlCiLQlKrQU19m4XjtxvDtvD14bx95/FjzSXHaefX6e0ew7rzURIU7lFeszYMkfFwIsJaAIFPMF60ZsIKBFgcsr1jJgAXNJwnztAFa+YK0ODS6vWO8Cq8DiEMB+rQPL+YL1NBG4vGIt0N623GtAO6oCS/mCtRkJ9qG/RCVphoGeyaBnMyCCV6mg6o24H3CxH94F+9u7ScRK02fnOfbRh5hz76AZBgCq5tAo3qG59RDlOGGvVoGF3m3XeyZXI6HzZ8h9fZX0/JkuFEDPjDP+yRVy177CPB16BnN+/qv3oHt6Qw+Slk4zemkRUqkwC8bMNJnPP0UbGQmzLPqcV2Dan0yo9GwW4+1TURYAUsePY0zloyxdju4Xh8jvVDMNNNOMBQNox0JXDDDn89BpV6NoKQUJKhyANJtxlqXEYDk8RNVCT+wRqKrVE4ODau8RKaeO++JFLLj17DmqVouzXeiAY6WPj2HMzMT6jPwJ9LHRJJHJwJhmu1LFhWWzkPAQJgKrXZv9jfuxvv2Ne6hd+82BxXVprN/Fs8NDPdumsb6BuG5icCmJUTkOre0/Qudbvz+NqtW9KnXAxSRugEbxTuCq1V6VRvFu0pji0GDPtvEqg2DP3sOrVIYD+z3STtK3NGPwotBMI8AZqJ1OT5bokujImJ4i9dbkwHN9Iodx6mSSiC6ntxEoEnI16qOjmPOnGbv8ManJQTCAt7dHfe1W+5DVA8vmer5gLXUX0TOxTF8HkprKM3L+HOn3z2LMRl+LqYkJsl9+gfvX3xw+fkLzwa+4/7zsTFf9/K5Ce67U5CQT168lqlhBUrUaztotmpsPIKDnQkSOjJfffb9QtgpVd9eWNyHPcW6LiN7PGQCLCP/9fONic/u38utC1cHBTRGZDmIEgjvjoLT1o/tv5XBoYKPxXES+jcqOBPtj9qC09UPrz2fbnuO0xPNElOqhKBHPU2p/v+7u2vdF5BsRmY3Ljfzv1KcR4D3gKnAF+MB//ghYA34CHgOxvQ/A/wXMob1PARBIAAAAAElFTkSuQmCC' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>@Model.EmpresaOrigenRazonSocial</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="lateral">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAACW0lEQVRIic2XS27aUBSGPwyugyPZlQiZUTLoBDVKSIdIaaysoPKEKV1BJ14AC2APZdoJygoqoy6gSUXndTsDMTBSUVwe7sCP2q4xRMFRf8nSfZ7v3nvu47jgui7b1BtM3wKa/52nNLkDTMA09MrNVoNAIQvcG0w7QBeo72LMlwV0Db3SfzC4N5ieAH3g6gHApIZAx9Ar33cC9wbTJt6yqY+ABrIBzdArt5lgH/plD8CkLpJwIQI9wZtpTKoscH12uJP1VkOmVhXTqkzffqhSJN0HVFUWUA6LMfDrlweMLAfpWSETXKuWOBDjbZzfLmN7qfr2taC84LpusHs/ALTfKNSO/o56Nl+jyAITe0lVLZGlib1EEgUUWYiV9wbTIPku2O1Bi+4mY4osMJuvt0K9tkUkMXNVQo7gXw6Z5zQ5g02SxMI2cN3nUSKy7oG+WQ6jHw4Apy8kxvaSsb0C4PpMZmQ5Yb59qfDx8wyAY7XIaV3i09d52PdVXUqa14CbVLA9X/NzsgCgdiQytldh/n7hxvJALH2/cGN9U6SB5+O0uzdPnUP8OIVqNcq0GuVISTlW376Mz8TQK5n5NKWCc/bxZnDOPgYiV+ZTq4T3iMc2WM4+vgvAZhKcs4/NKPh9tCZnH5sAgh8jWRsXZr+ygpgs2NVd/NfJWbh5+rgbJMIIpDeYmsCVJBY4fr79JdpVs18r7PkaYGjoFS0ojxI6wK2zcNWoz/Yk27cfKjzHfjSokY+0ZLQZu0D8gOwCb4T7kE1KoPcPOAJv4sXFj9EQaKZB4X/7k0gZwNP+O+WpP48OUS4ORtlZAAAAAElFTkSuQmCC' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>Fecha de Vencimiento:&nbsp;@FechaVigencia</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAACZUlEQVRIic2XwWvaUBzHP9Ug2gp2VCgIq2MeHDvEeh6k+Q/WY3cTch3strNnz72G+Sd0+wtswPNqYKM9tJieFKyrYFeRDXcwCa9Z8hKpK/tCwPh++X3e75ffe++XjcViQZxsyzgEdPeqhZj0gA7QUTXzJNYhsCED25bRAJpAOYkzVw7QVDWzvTLYtowXQBs4WAEY1CnQUDWznwhsW8Y+y7QVHgH1NAF0VTPPpGAX+tW7z+X3SCu5xJTp7UXUUD0I98Fues8QIq3UPiaGbhWqDJ0vDJ3PYcMTYF9MuyIMtglJ72WvRVrZJJd/Hgqcz26Yz0aomkmhWGc+G/Fj2A2aFVz/uvdHCvzqjSyktLLJVuFV6JXJ7vh2/W/HlCrvyG9Xw9wcuJwHETejoMuoRlEp/Mvuym5Rfv0e5/sx99ProEmTZeQo7uYgXae5/B6lylHo2HjQ9VMr1kSpcsRlrxU0L9uWcahq5omCkHdZJFERz2c3AFzZDyG75bdR7nQgGVimTHbHf89eoS3BkY/osHzHYXtvwHlRFoGv8aDrgyWqeeBY3U+vw97Xo5QInMkWebb7JtbubnIu271WB//+9ZO7yXmsnVdoawUnjWQVcI+YApOtY1Himpao54E7ceA1F1dHBH+QWa65uDoAKbdHcmK9rkeO15OJh8SnKOukh0QCNb0fCoCqmW3Z0ZjfrvJSjW8KJI0AwKnYAIrLqUGgA/E0vb3AtoxYsEQT178vH6xqZt+2DB2h5wLpKbOK9GC3mRJv3Ias7s6Q8SB2TUbKfXZCSKMH/1NfHZhAg6f8kgiZwNN+O/1L/QFxkhblO3Y2DwAAAABJRU5ErkJggg==' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>@Model.EmpresaOrigenNit</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="lateral">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,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' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>Total de la Cotización:&nbsp;$&nbsp;@Total</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC6ElEQVRIib2XsW7aUBSGP9waUlBDJUilIqV0YIlShUSd2qoKSV8gYulW5SF4gDwAD5G1C8rWrYEO6VLUEiXKEIYiSxkCDKaCxDEJHTDm2rk2N6naX0LCvsfn8zm+5/g4MhqNmKVypbsFFJxfXmLSAKpAtVRM7c10CETCwOVKdxvYAbIqzhy1gJ1SMbV7Z3C50n0B7ALr4vlcJsrztM7CkwcAGO0h5+aQ5tmVzHcN2C4VU7+UwOVKd5Vx2pIicHMlwXxck9592xzy+Xufc3PoXzKBQqmY+hkKdqA/RINXuTk2VhJSoCjLHrF/2OeoZcmW1/xwNwQnvVVxMZeJSqFGx6btiy6mR9hYSfA0+VAGrjr+XYlWuwjpBdj0QQ9OLqg3L7DscZaScY2NfILcs+gUno/z6WvPD046/guTExq4u9ezkV5mY55nun/Y5+Bk4EIBzMENe99+cyykdzGtk5TvhXWHMwUzLhmPFtO6+783uKHevJQ5A+DLYd9znMtEg0xdjuY0h1t1Op+Y3nXAhnFl2SOMju0ex3T57geyDg8NIe9/o17/RtW0oAye0yMzvYkZUgXLei9Ge1ouy9kYsRB4Mq759sR1GDg/AUsltsGYHrlVWuLa1uvH7rFljziVt1CPpNUOcG4OMTq2G8lyNsZ8QmO/MXBbYy4T5e3SIxaEplFvXnpK7s5gGDeMD++mKVxM63x8nwy5AurNi5lQCEk1gNG2PWUyS8ctSynaCbgRZnBwohbB2HagYtaYgKthVkbbpjeYXaPHLQtTwW7CmwkGtUgUo52CnRmpFWZ51LJCo75DtK3JTBb4kvArLKKwF4hPLkcDcAazWtgVQVEbHVs28shUEwdAsZy2Gc9IgZJFrbjrTce/KxfsTIOFsKtPz648dWp0bIy2Up0X/NOmp4E4A9kaAZFb9sjzPBWiNZEMerfAAnyVgGc+mbkUoq0BqzIo3PNL4s1SnN7gOmgyuf+XhOQG/u+307/UH2GaWlnIxxrdAAAAAElFTkSuQmCC' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>@Model.EmpresaOrigenDireccion</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAACf0lEQVRIic2XPU/bQBjHf3lRoySCqHlBlYIgHSLRggoMddlwV7pUqpU5WbrUUsaODf0GlbyTD+CBb4CzQZbCUKlSB0IVFghIVMIoUqN0iG1s4zhB2Kh/ydLd2ff87u65e+5xZDgcMklSW34PiMaz6vHJEaABmioouxMNAhE/sNSWq0ADWJzGmKEToKEKSvPeYKktl4AmsHkPoFstoKoKSmcqsNSW1xgtW+YBUFNXgKgKyqEv2IB+DwDo1robHrVBS4xm6tBcIkdtQZrKeqW4xfJs2euVZti3FLeVm0BmLpGjkMjegp/kePdMZK+3Tzqe9AWvzJZJx1KOtuu/N3T0bsawL5rtkeFwaO7eHYCvL+q8nLkd9Xn/kkIiS0c/pZQq+oI7+inpWNIxcACpLZvFmrnbzaVujDNWSGQ5719OhALMJbKTVsXiRI3g4HtO3TMYp1QsSSrmC140eMSxrbsprXfAXm8fgLf5DTp6l2O9C0BtQULr7Vv17aU6X35+A+B5ah4xv8HOb9XqK+bfuM2LwK4n+Kx/wY8/vwBYnilzrHetuj7QHXXAURYGuqOvh0QY+dgr9oapVYDIh4NPjtDl3tVByLarAVAFJRL3+jBkHwPOAGIpZB8DtpD52IozusQdG6xS3KJS3BrbaXup7qirguJbd+nIBGtucMg+1uxgxxRC9rEGEDVypJOxCxOsTsyc7M7t9Ln8kddPXwVK87qdrAxEassasJmOJSml5wODnvcvOetfALRUQRHNdvs5rgKH14ObjN1nAenKsG/JOsdGNigSjkR3tukIIEZCts5ohEHoCo9E7w7YBl9jlBc/RC1gzQsK/9ufhMcAHvffKUz9Az/SWZpRFuCzAAAAAElFTkSuQmCC' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>@FechaCotizacion</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+            <!-- / content body -->
+        </div>
+    </div>
+    <div class="wrapper row2">
+        <div id="container" class="clear">
+            <!-- content body -->
+            <section id="shout">
+            </section>
+            <!-- main content -->
+            <section id="services" class="clear">
+                <div id="contenedor" class="clearfix">
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,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' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>Razon Social Cliente: @Model.NombreCliente</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                    <div id="principal">
+                        <p>
+                            <div class='container2'>
+                                <div>
+                                    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNC8yMMlUGZ8AAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAAC2ElEQVRIic2XzU4aURTHfzMODB+2mJYoSiwumtraBDSpXTQp0HTnovoAXRBZ+Qztwo1P0DXGN6j2CYClNamwqquWhQGrC6wVQah0cWdGhq8Zgjb+k0lmDtzzm3vuPeeekZrNJt0kSZJxn8usrgBx7Yp0+XsOSAPpSGxzWzf28g0g9QPnMqsJYB0I9fTQqQKwHoltbg0MzmeTM8AWEBsA2K4MkAhHUz9tgfPZ5DwibL4hoLpOgXg4mtrvC9ag324A2K6FdrjcAp1BzPQ2lNb8d4IRa2oZ3hHFy+ziBrOLG4Yt+Pg9s4sbeH1Peg3zaf7N4Hw2mcDmRnJ5g6juAIrjvmF7EHiN6g7QqJ/1GxrTONdgRMrY0ujYMwAa9d+GTZIVAC6rJ1bDDY6czyZXGCBPVU8AgPKvXUCEXlfzqm41PKTxkBHVyLbco48AqJ4fAqA4RchrFyW7LuIAih3wRGiZidA7ky00t2Z6Vt0BwtEUAPls0ha4W+01qXwswqo47vFw6g0AR4UvAIxPLyHJCrWLkhF+C0V0sKVqlSJHhR1Uz2QLeAeAsfGXqO4ApR+fOT3Zs+MOMOexpVyeoHiRlvV0qn4AqpXDQVxZz1iSHYxPLwFidjpsIrSs/S5c+Kfe0qifUT7epVYpDg92uvwdG0uSlQ6bvgRwvQxW4Bx9NlitUjR26fNXnxhRPBzsfaRWKeLzvyA0t0btosTB1w+WME05EGuctjtiRPEA0LgUVcvlDZqebSo9EFiSHcb938Y5cF3F/pS/Dw4OR1PbiHalr5wuvwatGLb2KmZDBY1n/5AYHXsKmA8H1S1mPEAqGRyjA8lnk2n6HI2S7MDp8nNZPTEOA9UzCWArfYBMOJqK6w+t6ZQA9unRDDSv6h0Am0AQvVei1WBULq0bjHM7ird3m6aSqTVkC4g3vAmd0qXR6wC3wOcRffEwygDz3aBw174kdLCu//7tNKz6gf8BZS4R/YpfHREAAAAASUVORK5CYII=' class='iconDetails'>
+                                </div>
+                                <div style='margin-left:60px;'>
+                                    <h4>RNC Cliente: @Model.IdentificacionCliente</h4>
+                                </div>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- / content body -->
+        </div>
+    </div>
+    <div class="wrapper row2">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Cant</th>
+                    <th scope="col">Precio Unitario</th>
+                    <th scope="col">Valor Bruto</th>
+                    <th scope="col">Valor Desc.</th>
+                    <th scope="col">Impuestos</th>
+                    <th scope="col">Valor Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int cont = 0;
+                }
+
+                @foreach (APLICATIONCORE_GSEDOCPYME.DTOs.Ventas.CotizacionDetalleDto item in Model.Detalle)
+                {
+                    cont++;
+                    string Cantidad = item.Cantidad == null ? "0.00" : ((decimal)item.Cantidad).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    string ValorUnitario = item.ValorUnitario == null ? "0.00" : ((decimal)item.ValorUnitario).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    string ValorBruto = item.ValorBruto == null ? "0.00" : ((decimal)item.ValorBruto).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    string Descuento = item.Descuento == null ? "0.00" : ((decimal)item.Descuento).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    string Impuesto = item.Impuesto == null ? "0.00" : ((decimal)item.Impuesto).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    string ValorTotal = item.ValorTotal == null ? "0.00" : ((decimal)item.ValorTotal).ToString("N2").Replace(".", "|").Replace(",", ".").Replace("|", ",");
+                    <tr>
+                        <td data-label="Item" style="text-align: center;">@cont</td>
+                        <td data-label="Codigo" style="text-align: left;">@item.Codigo</td>
+                        <td data-label="Descripción" style="text-align: left;">@item.Descripcion</td>
+                        <td data-label="Cant" style="text-align: right;">@Cantidad</td>
+                        <td data-label="Precio Unitario" style="text-align: right;">@ValorUnitario</td>
+                        <td data-label="Valor Bruto" style="text-align: right;">@ValorBruto</td>
+                        <td data-label="Valor Desc." style="text-align: right;">@Descuento</td>
+                        <td data-label="Impuesto" style="text-align: right;">@Impuesto</td>
+                        <td data-label="Valor Total" style="text-align: right;">@ValorTotal</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- footer -->
+    <div class="wrapper row3">
+        <footer id="footer" class="clear">
+            <p class="fl_left">Copyright &copy; 2020 - All Rights Reserved -</p>
+            <p class="fl_right">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAeCAYAAABe3VzdAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMS8wNS8yMHHofvoAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzbovLKMAAADPUlEQVRYhcWYMXLiMBSGP2fSww1CmnjSiOQES04Q9gQhnbs4bZqQhjZQxV2cEwROsM4Jlrhh1DknCJzAW0gCYWQbJgz7z3gwkp7eL/u9X0/28jynDn6UNoEu0AEugLbV/QVkQAKMZSCmJbYX+rJh281dvr0qgnryoXbQqF3JinAfGOvf3ha2CzNeBiLbiqAfpaF2sC2xfWCBIjk0DU6CfpTGwM3heG3gTQaiBw6CfpROWY+x/4WRDER4bLfoJ1dFLkPFylTfXwB2ElQh1heoV3mi7Xol4++AcPkE/SjtAu8VxO5lIMZl3v0obQF/gFahaw5cFbO7YPeKUog1nzIQp0d6UJPV6ooYA5dV5AB09n05ut7KyBk7GYgrILSa58AtgHnFIe5sHctA/K4itgVKydmQgRj5UfqJCrGJkRubYBHLVeyARDto7mhnSCZ6jiW8s5fPsti7lYGId3Wiw8Uk2ldReHfFMZvBCTDfhpx3/mCyd5rPBmMAvWV9/IRUkaBLHiY1xJqsXqdpW25x+Wwwt9o7KCkxwr8AemZBdTgCfjnasxq7kE29PEHJxbd3/pBrcjlKeuxdqQG8a+IA+FE69KO0r8Njg6ALSQ3BTk2/IVeFrnXfBB6BTNcAS5QRPARa1n2mfxvAsx+lsXmaZQQ7NZPHPyBmYMdg0d+N8XGEO+NaVTPns0GMqhMN5vr/ZT4beOYCLlGJUyxGEz2HgSsPrv0o7XpnL59D1MZsYyEDUSu2Opvb+WxQKSt63A0q1rJ8Nniz+/0ofdQLKWKyd6HWDjvAtKyML7EJgedC88LL8xw/Sr/Z3J4WQGtHJ31UNhp8yEB0drDfyHyTJCPH+Ab1clNEkYwrtpxwaSCsCA7ZDGSAth+l0zLjPcNVsHwcwXL/fCoxbKMEtFc1uy48W472RMdklW3IemgYJGtnEj9KXykvwUEVpAmr82wHFbsd6s8xE5T2Zaga0ZyTexW2p65D01/qzxeHwJMMRN+1k1yxn53iJ4hlIPpQfXC/Q4nnIRLExlAG4t78KS0WZCBGqK0q3tFBhspIY7utjiao09+93Vj5bcZAy8w1q49HdoxmrJJmUvLx6NphhyZv7DKX73/vJlPjtvnxZgAAAABJRU5ErkJggg==" width="40" height="30" alt="" /> - Documento generado por Edoc pyme/
+                GURUSOFT S.AS. / NIT: 901.014.886-8<a target="_blank" href="https://guru-soft.com"
+                                                      title="Free Website Templates"></a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

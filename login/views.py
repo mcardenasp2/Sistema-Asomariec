@@ -241,8 +241,6 @@ class ResetPasswordView(FormView):
         return context
 
 
-
-
 class ChangePasswordView(FormView):
     form_class = ChangePasswordForm
     template_name = 'login/changepwd.html'

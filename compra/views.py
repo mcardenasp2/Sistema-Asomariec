@@ -1,4 +1,6 @@
 import json
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 
 from django.db import transaction
@@ -28,11 +30,13 @@ from xhtml2pdf import pisa
 
 
 # Create your views here.
-class CabComprListView(ListView):
+from user.mixins import ValidatePermissionRequiredMixin
+
+
+class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = CabCompra
     template_name = 'compra/ListarCompra.html'
-
-    # permission_required = 'erp.view_sale'
+    permission_required = 'view_cabcompra'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -67,11 +71,12 @@ class CabComprListView(ListView):
         return context
 
 
-class CabCompraCreateView(CreateView):
+class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = CabCompra
     form_class = CabCompraForm
     template_name = 'compra/FormCompra.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
+    permission_required = 'add_cabcompra'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -152,12 +157,12 @@ class CabCompraCreateView(CreateView):
         return context
 
 
-class CabCompraUpdateView(UpdateView):
+class CabCompraUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     model = CabCompra
     form_class = CabCompraForm
     template_name = 'compra/FormCompra.html'
     success_url = reverse_lazy('compra:compra_listar')
-    # permission_required = 'erp.change_sale'
+    permission_required = 'change_cabcompra'
     url_redirect = success_url
 
     @method_decorator(csrf_exempt)
@@ -247,12 +252,12 @@ class CabCompraUpdateView(UpdateView):
         return context
 
 
-class CabCompraDeleteView(DeleteView):
+class CabCompraDeleteView(LoginRequiredMixin,ValidatePermissionRequiredMixin,DeleteView):
     model = CabCompra
     # form_class = CabCompraForm
     template_name = 'compra/DeleteCompra.html'
     success_url = reverse_lazy('compra:compra_listar')
-    # permission_required = 'erp.change_sale'
+    permission_required = 'delete_detcompra'
     url_redirect = success_url
 
     # @method_decorator(csrf_exempt)
@@ -337,7 +342,8 @@ class SaleInvoicePdfView(View):
 
     def get(self, request, *args, **kwargs):
         try:
-            template = get_template('compra/invoice.html')
+            print('pdf no impr')
+            template = get_template('compra/compra.html')
             context = {'sale': CabCompra.objects.get(pk=self.kwargs['pk']),
                        'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
                        'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg')
@@ -346,7 +352,9 @@ class SaleInvoicePdfView(View):
 
                        }
             html = template.render(context)
+            print('pdf no imprime')
             response = HttpResponse(content_type='application/pdf')
+            print('pdf no imprime nada')
             # para descargar el pdf
             # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
             pisa_status = pisa.CreatePDF(
@@ -354,10 +362,12 @@ class SaleInvoicePdfView(View):
                 link_callback=self.link_callback
 
             )
+            print('este no corrio')
             # if error then show some funy view
             # if pisa_status.err:
-            #     return HttpResponse('We had some errors <pre>' + html + '</pre>')
+                # return HttpResponse('We had some errors <pre>' + html + '</pre>')
             return response
         except:
+            print('pdf no imprime nada de nada')
             pass
         return HttpResponseRedirect(reverse_lazy('compra:compra_listar'))

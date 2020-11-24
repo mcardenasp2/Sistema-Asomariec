@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.functions import Coalesce
 from django.db.models import Sum
 from django.http import JsonResponse
@@ -13,7 +14,7 @@ from reports.forms import ReportForm
 from venta.models import Venta
 
 
-class ReportCompraView(TemplateView):
+class ReportCompraView(LoginRequiredMixin,TemplateView):
     template_name = 'reports/ReportCompra.html'
 
     @method_decorator(csrf_exempt)
@@ -69,7 +70,7 @@ class ReportCompraView(TemplateView):
         context['form'] = ReportForm()
         return context
 
-class ReportVentaView(TemplateView):
+class ReportVentaView(LoginRequiredMixin,TemplateView):
     template_name = 'reports/ReportVenta.html'
 
     @method_decorator(csrf_exempt)

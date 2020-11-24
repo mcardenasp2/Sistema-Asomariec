@@ -4,6 +4,26 @@ $(function () {
         autoWidth: false,
         destroy: true,
         deferRender: true,
+        language: {
+            processing: 'Procesando...',
+            // search: 'Buscar:',
+            search: "Buscar: _INPUT_",
+            // searchPlaceholder: "Buscar Registros",
+            lengthMenu: '   Mostrar _MENU_ registros',
+            info: 'Mostrando desde _START_ al _END_ de _TOTAL_ registros',
+            infoEmpty: 'Mostrando ningún elemento.',
+            infoFiltered: '(filtrado _MAX_ elementos total)',
+            infoPostFix: '',
+            loadingRecords: 'Cargando registros...',
+            zeroRecords: 'No se encontraron registros',
+            emptyTable: 'No hay datos disponibles en la tabla',
+            paginate: {
+                first: 'Primero',
+                previous: '<-',
+                next: '->',
+                last: 'Último'
+            }
+        },
         ajax: {
             url: window.location.pathname,
             type: 'POST',
@@ -27,7 +47,8 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    return '<img src="' + row.image + '" class="img-fluid mx-auto d-block" style="width: 20px; height: 20px;">';
+                    // return '<img src="' + row.image + '" class="img-fluid mx-auto d-block" style="width: 20px; height: 20px;">';
+                     return '<img src="' + row.image + '" class="avatar avatar-sm rounded-circle">';
                 }
             },
             {
