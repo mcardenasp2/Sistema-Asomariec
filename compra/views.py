@@ -91,7 +91,7 @@ class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cr
             if action == 'search_insumos':
                 # print(request.POST['term'])
                 data = []
-                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'])[0:5]
+                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insEstado=1)[0:5]
                 # print(prods)
                 for i in prods:
                     item = i.toJSON()
@@ -116,6 +116,8 @@ class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cr
                     cabcompra.proveedor_id = comp['proveedor']
                     cabcompra.ccoVendedor = comp['vendedor']
                     cabcompra.ccoCedVend = comp['cedula']
+                    if request.FILES.get('documento'):
+                        cabcompra.ccoDocumento = request.FILES['documento']
                     cabcompra.ccoFecCom = comp['fecha']
                     cabcompra.ccoSubtotal = float(comp['subtotal'])
                     cabcompra.ccoIva = float(comp['iva'])
@@ -175,7 +177,7 @@ class CabCompraUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Up
             action = request.POST['action']
             if action == 'search_insumos':
                 data = []
-                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'])[0:5]
+                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insEstado=1)[0:5]
                 for i in prods:
                     item = i.toJSON()
                     item['text'] = i.insDescripcion
@@ -188,6 +190,8 @@ class CabCompraUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Up
                     cabcompra.proveedor_id = comp['proveedor']
                     cabcompra.ccoVendedor = comp['vendedor']
                     cabcompra.ccoCedVend = comp['cedula']
+                    if request.FILES.get('documento'):
+                        cabcompra.ccoDocumento = request.FILES['documento']
                     cabcompra.ccoFecCom = comp['fecha']
                     cabcompra.ccoSubtotal = float(comp['subtotal'])
                     cabcompra.ccoIva = float(comp['iva'])

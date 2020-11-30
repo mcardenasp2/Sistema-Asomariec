@@ -74,7 +74,7 @@ class ProductoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cre
             if action == 'search_insumos':
                 # print(request.POST['term'])
                 data = []
-                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insStock__gte=1)[0:5]
+                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insStock__gte=1, insEstado=1)[0:5]
                 # print(prods)
                 for i in prods:
                     item = i.toJSON()
@@ -176,7 +176,7 @@ class ProductoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upd
                 # print(request.POST['term'])
                 data = []
                 # gte mayor lte menor
-                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insStock__gte=0)[0:5]
+                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insStock__gte=1, insEstado=1)[0:5]
                 # print(prods)
                 for i in prods:
                     item = i.toJSON()

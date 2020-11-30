@@ -56,7 +56,7 @@ $(function () {
             {"data": "ccoIva"},
 
             {"data": "ccoTotal"},
-            {"data": "ccoTotal"},
+            {"data": "ccoDocumento"},
 
         ],
         columnDefs: [
@@ -77,7 +77,8 @@ $(function () {
                     var buttons = '<a href="/compra/compra/eliminar/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
                     buttons += '<a href="/compra/compra/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
-                    buttons += '<a href="/compra/compra/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+                    // buttons += '<a href="/compra/compra/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+                    buttons += '<a href="'+data+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
                     //var buttons = '<a href="/erp/sale/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     return buttons;
                 }

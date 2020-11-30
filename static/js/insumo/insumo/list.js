@@ -60,6 +60,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
+                    // return '<img src="' + data + '" class="avatar avatar-sm rounded-circle">';
                     return '<img src="' + data + '" class="avatar avatar-sm rounded-circle">';
                 }
             },

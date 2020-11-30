@@ -113,7 +113,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
             for m in range(1,13):
                 # total=CabCompra.objects.filter(ccoFecCom__year=year, ccoFecCom__month=m).aggregate(r=Coalesce(Sum('ccoSubtotal'), 0)).get('r')
                 # data.append(float(total))
-                total=Venta.objects.filter(venFechaInici__year=year, venFechaInici__month=m).aggregate(r=Coalesce(Sum('ventTotal'), 0)).get('r')
+                total=Venta.objects.filter(venFechaInici__year=year, venFechaInici__month=m,ventEstado=1).aggregate(r=Coalesce(Sum('ventTotal'), 0)).get('r')
                 data.append(float(total))
         except:
             pass
@@ -134,8 +134,10 @@ class DashboardView(LoginRequiredMixin,TemplateView):
             #             'name': p.insDescripcion,
             #             'y': float(total)
             #         })
-            for p in Producto.objects.all():
-                total = DetVenta.objects.filter(venta__venFechaInici__year=year, venta__venFechaInici__month=month,producto_id=p.id).aggregate(
+            # for p in Producto.objects.all():
+            for p in Producto.objects.filter(prodTipo=2):
+            # for p in Producto.objects.filter(prodEstado=1):
+                total = DetVenta.objects.filter(venta__venFechaInici__year=year, venta__venFechaInici__month=month,venta__ventEstado=1,producto_id=p.id).aggregate(
                     r=Coalesce(Sum('detSubtotal'), 0)).get('r')
                 if total > 0:
                     data.append({

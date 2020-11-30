@@ -60,7 +60,14 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    return '<img src="' + data + '" class="avatar avatar-sm rounded-circle">';
+                    // return '<img src="' + data + '" class="avatar avatar-sm rounded-circle">';
+                    var imagen = '<div class="avatar-group">';
+                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">';
+                    imagen += '<img alt="Image placeholder" src="' + data + '"></a>';
+                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">';
+                    imagen += '<img alt="Image placeholder" src="' + row.prodImagen2 + '"></a></div>';
+                    return imagen;
+
                 }
             },
             {

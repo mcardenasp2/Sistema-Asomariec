@@ -11,9 +11,13 @@
     <link rel="stylesheet"
           href="{% static 'lib/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
 
+
+    {#    Dropzone#}
+    {#    <script src="{% static 'lib/dropzone-5.7.0/dist/min/dropzone.min.css' %}"></script>#}
+
     {#    <link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>#}
     {#    touchspin para numero#}
-{#    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>#}
+    {#    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>#}
     {#    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>#}
 {% endblock %}
 {% block content %}
@@ -31,7 +35,7 @@
                             <div class="card-header border-0">
                                 <div class="row align-items-center">
                                     <div class="col">
-{#                                        <h3 class="mb-0">Insumos</h3>#}
+                                        {#                                        <h3 class="mb-0">Insumos</h3>#}
                                         <h2 class="">{{ title }}</h2>
                                     </div>
                                 </div>
@@ -109,9 +113,6 @@
                                     <div class="col">
                                         <h3 class="mb-0">Datos de Compra</h3>
                                     </div>
-                                    {#                                    <div class="col text-right">#}
-                                    {#                                        <a href="#!" class="btn btn-sm btn-primary">See all</a>#}
-                                    {#                                    </div>#}
                                 </div>
                             </div>
 
@@ -140,7 +141,7 @@
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Proveedor:</label>
 
-                                            {{ form.proveedor }}
+                                            {{ form.proveedor| add_class:'form-control mySelect2' }}
                                         </div>
 
                                     </div>
@@ -158,6 +159,26 @@
 
                                             {{ form.ccoCedVend }}
                                         </div>
+
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="id_ccoCedVend">Documento:</label>
+                                            <br>
+
+
+{#                                            {{ form.ccoDocumento|add_class:'form-control-file' }}#}
+{#                                            <div class="custom-file">#}
+{#                                                <input type="file" class="custom-file-input" id="customFileLang"#}
+{#                                                       lang="en">#}
+                                                 {{ form.ccoDocumento|add_class:'custom-file-input' }}
+{#                                                <label class="custom-file-label" for="id_ccoDocumento">Select#}
+{#                                                    file</label>#}
+{#                                            </div>#}
+
+                                        </div>
+
 
                                     </div>
 
@@ -309,6 +330,10 @@
     <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+
+
+
+
     {#funcion del datatable#}
 
     {#    libreria moment fechas#}
@@ -326,6 +351,12 @@
 
     <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+
+    {#    Dropzone#}
+    {#    <script src="{% static 'lib/assets/vendor/dropzone/dist/min/dropzone.min.js' %}"></script>#}
+    {#    <script src="{% static 'lib/dropzone-5.7.0/dist/min/dropzone.min.css' %}"></script>#}
+    {#    <script src="{% static 'lib/dropzone-5.7.0/dist/dropzone.js' %}"></script>#}
 
     <script src="{% static 'js/compra/form.js' %}"></script>
 

@@ -383,6 +383,7 @@ $(function () {
         parameters.append('action', $('input[name="action"]').val());
         //convierto  string
         parameters.append('compras', JSON.stringify(comp.items));
+        parameters.append('documento', $('input[name="ccoDocumento"]')[0].files[0]);
         // console.log(parameters);
 
 

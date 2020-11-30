@@ -4,6 +4,7 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 
+from Sistema_Asomariec.settings import MEDIA_URL, STATIC_URL
 from proveedor.models import Proveedor
 from insumo.models import Insumo
 #
@@ -21,6 +22,9 @@ class CabCompra(models.Model):
     ccoIva = models.DecimalField(default=0,max_digits=10,decimal_places=2)
     ccoTotal = models.DecimalField(default=0,max_digits=10,decimal_places=2)
     ccoEstado = models.BooleanField(default=True, verbose_name='Estado')
+
+    ccoDocumento=models.FileField(upload_to='documento/%Y/%m/%d', blank=True, null=True)
+
     usuaReg = models.IntegerField(blank=True, null=True)
     usuaMod = models.IntegerField(blank=True, null=True)
     usuaEli = models.IntegerField(blank=True, null=True)
@@ -37,9 +41,14 @@ class CabCompra(models.Model):
         item['ccoSubtotal'] = format(self.ccoSubtotal, '.2f')
         item['ccoIva'] = format(self.ccoIva, '.2f')
         item['ccoTotal'] = format(self.ccoTotal, '.2f')
+        item['ccoDocumento'] = self.get_doc()
         item['ccoFecCom'] = self.ccoFecCom.strftime('%Y-%m-%d')
         return item
 
+    def get_doc(self):
+        if self.ccoDocumento:
+            return '{}{}'.format(MEDIA_URL, self.ccoDocumento)
+        return '{}{}'.format(STATIC_URL, 'img/empty.png')
 
     class Meta:
         verbose_name = 'Cabecera Compra'

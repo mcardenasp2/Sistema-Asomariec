@@ -84,7 +84,7 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Create
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'],prodCantidad__gte=1)[0:5]
+                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'],prodCantidad__gte=1,prodTipo=2)[0:5]
                 # print(prods)
                 for i in prods:
                     item = i.toJSON()
@@ -169,7 +169,7 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1)[
+                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1, prodTipo=2)[
                         0:5]
                 # print(prods)
                 for i in prods:

@@ -1,9 +1,10 @@
 from django.forms import *
 from compra.models import *
+from proveedor.models import *
 
 
 class CabCompraForm(ModelForm):
-    # medida=ModelChoiceField(queryset=UnidadMedidad.objects.filter(medEstado=1))
+    proveedor=ModelChoiceField(queryset=Proveedor.objects.filter(proEstado=1))
     # categoria=ModelChoiceField(queryset=Categoria.objects.filter(catEstado=1))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,11 +29,11 @@ class CabCompraForm(ModelForm):
                     'data-toggle': 'datetimepicker'
                 }
             ),
-            'proveedor':Select(
-                attrs={
-                    'class':'form-control mySelect2'
-                }
-            ),
+            # 'proveedor':Select(
+            #     attrs={
+            #         'class':'form-control mySelect2'
+            #     }
+            # ),
             'ccoIva': TextInput(
                 attrs={
                     'class': 'form-control',
@@ -51,6 +52,13 @@ class CabCompraForm(ModelForm):
                     'minlength': '10'
                 }
             ),
+            # 'ccoDocumento': ClearableFileInput(
+            #     attrs={
+            #         'class':'custom-file-input',
+            #         'accept':'application/pdf, .doc, .docx, .odf'
+            #     }
+            #
+            # ),
 
             #     'medDescripcion': TextInput(
             #         attrs={
