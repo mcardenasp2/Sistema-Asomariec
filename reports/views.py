@@ -94,9 +94,17 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                 data = []
                 start_date = request.POST.get('start_date', '')
                 end_date = request.POST.get('end_date', '')
+                tipo = request.POST.get('tipo', '')
+                # print('tipo'+tipo)
                 search =Venta.objects.all()
                 if len(start_date) and len(end_date):
-                    search = search.filter(venFechaInici__range=[start_date, end_date])
+                    search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1)
+                if len(start_date) and len(end_date) and tipo=='3':
+                    #sin contrato
+                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=2, ventEstado=1)
+                if len(start_date) and len(end_date) and tipo=='2':
+                    # contrto
+                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=1, ventEstado=1)
                 for s in search:
                     data.append([
                         s.id,
@@ -179,6 +187,7 @@ class SaleInvoicePdfView(View):
             end_date = self.kwargs['end_date']
             search = CabCompra.objects.all()
             if len(start_date) and len(end_date):
+                print('gggggg')
                 search = search.filter(ccoFecCom__range=[start_date, end_date])
             # print('si')
             for s in search:
@@ -226,9 +235,9 @@ class SaleInvoicePdfView(View):
 
                        }
             html = template.render(context)
-            print('pdf no imprime')
+            # print('pdf no imprime')
             response = HttpResponse(content_type='application/pdf')
-            print('pdf no imprime nada')
+            # print('pdf no imprime nada')
             # para descargar el pdf
             # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
             pisa_status = pisa.CreatePDF(
@@ -236,7 +245,7 @@ class SaleInvoicePdfView(View):
                 link_callback=self.link_callback
 
             )
-            print('este no corrio')
+            # print('este no corrio')
             # if error then show some funy view
             # if pisa_status.err:
                 # return HttpResponse('We had some errors <pre>' + html + '</pre>')
@@ -287,11 +296,25 @@ class VentaPdfView(View):
             print(self.kwargs['end_date'])
 
             data = []
-            start_date = request.POST.get('start_date', '')
-            end_date = request.POST.get('end_date', '')
+            # start_date = request.POST.get('start_date', '')
+            # end_date = request.POST.get('end_date', '')
+            start_date = self.kwargs['start_date']
+            end_date = self.kwargs['end_date']
+            tipo = self.kwargs['tipo']
             search = Venta.objects.all()
+            descr = ''
             if len(start_date) and len(end_date):
-                search = search.filter(venFechaInici__range=[start_date, end_date])
+                # print('xxxxxxxxxxxxxx')
+                search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1)
+
+            if len(start_date) and len(end_date) and tipo == '3':
+                # sin contrato
+                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=2, ventEstado=1)
+                descr = 'Sin Contrato'
+            if len(start_date) and len(end_date) and tipo == '2':
+                # contrto
+                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=1, ventEstado=1)
+                descr = 'Contrato'
             for s in search:
                 data.append([
                     s.id,
@@ -314,7 +337,7 @@ class VentaPdfView(View):
             template = get_template('reports/venta.html')
             # context = {'sale': CabCompra.objects.get(pk=self.kwargs['pk']),
             context = {'sale': CabCompra.objects.get(pk=1),
-                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador','tipo':descr},
                        'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
                        'report':data,
                        'totales':{'subtotal':subtotal1,'iva':iva,'total':total}
@@ -323,9 +346,9 @@ class VentaPdfView(View):
 
                        }
             html = template.render(context)
-            print('pdf no imprime')
+            # print('pdf no imprime')
             response = HttpResponse(content_type='application/pdf')
-            print('pdf no imprime nada')
+            # print('pdf no imprime nada')
             # para descargar el pdf
             # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
             pisa_status = pisa.CreatePDF(
@@ -333,7 +356,7 @@ class VentaPdfView(View):
                 link_callback=self.link_callback
 
             )
-            print('este no corrio')
+            # print('este no corrio')
             # if error then show some funy view
             # if pisa_status.err:
                 # return HttpResponse('We had some errors <pre>' + html + '</pre>')
@@ -341,4 +364,4 @@ class VentaPdfView(View):
         except:
             print('pdf no imprime nada de nada')
             pass
-        return HttpResponseRedirect(reverse_lazy('compra:compra_listar'))
+        return HttpResponseRedirect(reverse_lazy('venta:venta_mostrar'))

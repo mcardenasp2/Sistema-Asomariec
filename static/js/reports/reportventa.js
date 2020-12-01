@@ -6,23 +6,26 @@ var date_now = new moment().format('YYYY-MM-DD');
 var param = {
     'start_date': date_now,
     'end_date': date_now,
+    'tipo': 1,
 };
 
 function repo() {
     $('.imprimirPdf').on('click', function () {
-        // alert('x');
+        alert('x');
         // window.open('/reports/invoice/pdf/' + param['start_date'] + '&' + param['end_date'] + '/', '_blank')
-        window.open('/reports/venta/pdf/' + param['start_date'] + '&' + param['end_date'] + '/', '_blank')
+        window.open('/reports/venta/pdf/' + param['start_date'] + '&' + param['end_date'] + '&'+param['tipo'], '_blank')
 
     });
 }
 
 function generate_report() {
+    var tipo = $('#tipocontrato').val();
     var parameters = {
         'action': 'search_report',
         // 'start_date': '2020-10-12',
         'start_date': date_now,
         'end_date': date_now,
+        'tipo': tipo,
     };
 
     if (date_range !== null) {
@@ -30,6 +33,7 @@ function generate_report() {
         param['start_date'] = parameters['start_date'];
         parameters['end_date'] = date_range.endDate.format('YYYY-MM-DD');
         param['end_date'] = parameters['end_date'];
+        param['tipo']=parameters['tipo'];
         // param = parameters;
 
     }
@@ -167,6 +171,12 @@ function generate_report() {
 }
 
 $(function () {
+    $('#tipocontrato').on('change', function () {
+        generate_report();
+        repo();
+        // $('.applyBtn').click();
+
+    });
 
 
     $('#imprimir').on('click', function () {
@@ -199,9 +209,12 @@ $(function () {
         date_range = picker;
 
         // $('input[name="hola"]').val(table.data.id);
+
+        // console.log(contra);
         generate_report();
         repo();
-        console.log(datos);
+        // console.log(datos);
+
     }).on('cancel.daterangepicker', function (ev, picker) {
         $(this).data('daterangepicker').setStartDate(date_now);
         $(this).data('daterangepicker').setEndDate(date_now);
@@ -212,8 +225,6 @@ $(function () {
 
     generate_report();
     repo();
-
-
 
 
 })
