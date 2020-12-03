@@ -783,8 +783,9 @@ class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     #     producto = Producto.objects.get(pk=i.producto_id)
                     #     producto.prodCantidad += i.detCant
                     #     producto.save()
-
+                    # print('no')
                     cabventa.detventa_set.all().delete()
+                    # print('si')
 
                     # insu=[]
                     for p in c:
@@ -801,11 +802,14 @@ class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixi
 
 
                     for i in c:
+                        print('yi')
                         producto = Producto.objects.get(pk=i)
                         producto.detproducto_set.all().delete()
+                        print('yo')
                         producto.delete();
+                        print('yes')
 
-
+                    print('ya')
                     # cabventa.gastadc_set.all().delete()
 
             else:

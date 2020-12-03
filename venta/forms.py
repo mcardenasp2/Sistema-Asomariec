@@ -36,7 +36,8 @@ class CabVentaForm(ModelForm):
                     'class': 'form-control datetimepicker-input',
                     'id': 'venFechaInici',
                     'data-target': '#venFechaInici',
-                    'data-toggle': 'datetimepicker'
+                    'data-toggle': 'datetimepicker',
+                    'type': 'hidden'
                 }
             ),
             'venFechaFin': forms.DateInput(
@@ -47,7 +48,8 @@ class CabVentaForm(ModelForm):
                     'class': 'form-control datetimepicker-input',
                     'id': 'venFechaFin',
                     'data-target': '#venFechaFin ',
-                    'data-toggle': 'datetimepicker'
+                    'data-toggle': 'datetimepicker',
+                    'type':'hidden'
                 }
             ),
             'venEstVenta':forms.Select(

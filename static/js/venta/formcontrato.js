@@ -1,7 +1,7 @@
 var date_range = null;
 var date_now = new moment().format('YYYY-MM-DD');
-var fechaini=date_now;
-var fechafin=date_now;
+var fechaini = date_now;
+var fechafin = date_now;
 var tblGast;
 var tblProducto;
 var produ = {
@@ -409,7 +409,10 @@ $(function () {
             });
 
         //Rango de Fechas
-        fechaini = $('#venFechaInici').val();
+        // fechaini = $('#venFechaInici').val();
+        // fechafin = $('#venFechaFin').val();
+        fechaini = $('input[name="venFechaInici"]').val();
+        // console.log(fechaini);
         fechafin = $('#venFechaFin').val();
 
         $('input[name="date_range"]').daterangepicker({
@@ -424,11 +427,12 @@ $(function () {
             .on('apply.daterangepicker', function (ev, picker) {
                 date_range = picker;
 
-            }).on('cancel.daterangepicker', function (ev, picker) {
-            $(this).data('daterangepicker').setStartDate(date_now);
-            $(this).data('daterangepicker').setEndDate(date_now);
-            date_range = picker;
-        });
+            })
+            .on('cancel.daterangepicker', function (ev, picker) {
+                $(this).data('daterangepicker').setStartDate(fechaini);
+                $(this).data('daterangepicker').setEndDate(fechafin);
+                date_range = picker;
+            });
 
 
         //evento guardar
@@ -438,10 +442,13 @@ $(function () {
                 message_error('Debe al menos tener un item en su detalle de compra');
                 return false;
             }
-            // if (date_range !== null) {
-            produ.items.fecha = date_range.startDate.format('YYYY-MM-DD');
-            produ.items.fechafin = date_range.endDate.format('YYYY-MM-DD');
-            // }
+            if (date_range !== null) {
+                produ.items.fecha = date_range.startDate.format('YYYY-MM-DD');
+                produ.items.fechafin = date_range.endDate.format('YYYY-MM-DD');
+            }else{
+                produ.items.fecha = fechaini;
+                produ.items.fechafin = fechafin;
+            }
             // produ.items.fecha = $('input[name="venFechaInici"]').val();
             // produ.items.fechafin = $('input[name="venFechaFin"]').val();
             produ.items.cliente = $('select[name="cliente"]').val();
