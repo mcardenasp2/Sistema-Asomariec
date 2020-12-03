@@ -88,7 +88,7 @@
                                                 <tr>
                                                     <th scope="col">Eliminar</th>
                                                     <th scope="col">Producto</th>
-                                                    <th scope="col">Precio Venta</th>
+                                                    <th scope="col">Unidad de Medida</th>
                                                     <th scope="col">Cantidad</th>
 {#                                                    <th scope="col">Subtotal</th>#}
                                                 </tr>
@@ -526,6 +526,7 @@
 
     <script>
         $("input[name='prodPrecio']").mask('000.000.000.000.000.00', {reverse: true});
+        $("input[name='prodIva']").mask('000.000.000.000.000.00', {reverse: true});
         $("input[name='prodCantidad']").mask('0000000000');
 
 

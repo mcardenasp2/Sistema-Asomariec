@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.forms import *
 from compra.models import *
 from proveedor.models import *
@@ -25,7 +26,7 @@ class CabCompraForm(ModelForm):
                     'autocomplete': 'off',
                     'class': 'form-control datetimepicker-input',
                     'id': 'ccoFecCom',
-                    'data-target': '#ccoFecCom ',
+                    'data-target': '#ccoFecCom',
                     'data-toggle': 'datetimepicker'
                 }
             ),

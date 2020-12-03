@@ -1,3 +1,7 @@
+var date_range = null;
+var date_now = new moment().format('YYYY-MM-DD');
+var fechaini=date_now;
+var fechafin=date_now;
 var tblGast;
 var tblProducto;
 var produ = {
@@ -5,6 +9,7 @@ var produ = {
         cliente: '',
         fecha: '',
         fechafin: '',
+        ventestado: '',
         // precio: 0.00,
         tgsto: 0.00,
         subproductos: 0.00,
@@ -43,7 +48,7 @@ var produ = {
             // console.log(pos);
             // console.log(dict);
             dict.subtotal = dict.cant * parseFloat(dict.prodPrecio);
-            impuesto+=dict.subtotal*dict.prodIva;
+            impuesto += dict.subtotal * dict.prodIva;
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
@@ -79,7 +84,7 @@ var produ = {
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
         iva = parseFloat($('input[name="iva"]').val());
-        t = ga + st+iva;
+        t = ga + st + iva;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -257,87 +262,87 @@ var produ = {
 
 
 $(function () {
-    // evento calendarip
-    $('#venFechaInici').datetimepicker({
-        icons: {
-            time: "fa fa-clock",
-            date: "fa fa-calendar-day",
-            up: "fa fa-chevron-up",
-            down: "fa fa-chevron-down",
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-        },
-        format: 'YYYY-MM-DD',
-        date: moment().format("YYYY-MM-DD"),
-        locale: 'es',
-        //minDate: moment().format("YYYY-MM-DD")
-    });
-    $('#venFechaFin').datetimepicker({
-        icons: {
-            time: "fa fa-clock",
-            date: "fa fa-calendar-day",
-            up: "fa fa-chevron-up",
-            down: "fa fa-chevron-down",
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-        },
-        format: 'YYYY-MM-DD',
-        date: moment().format("YYYY-MM-DD"),
-        locale: 'es',
-        // minDate: $('#venFechaInici').val(),
-        //minDate: moment().format("YYYY-MM-DD")
-    });
+        // evento calendarip
+        // $('#venFechaInici').datetimepicker({
+        //     icons: {
+        //         time: "fa fa-clock",
+        //         date: "fa fa-calendar-day",
+        //         up: "fa fa-chevron-up",
+        //         down: "fa fa-chevron-down",
+        //         previous: 'fa fa-chevron-left',
+        //         next: 'fa fa-chevron-right',
+        //         today: 'fa fa-screenshot',
+        //         clear: 'fa fa-trash',
+        //         close: 'fa fa-remove'
+        //     },
+        //     format: 'YYYY-MM-DD',
+        //     // date: moment().format("YYYY-MM-DD"),
+        //     locale: 'es',
+        //     //minDate: moment().format("YYYY-MM-DD")
+        // });
+        // $('#venFechaFin').datetimepicker({
+        //     icons: {
+        //         time: "fa fa-clock",
+        //         date: "fa fa-calendar-day",
+        //         up: "fa fa-chevron-up",
+        //         down: "fa fa-chevron-down",
+        //         previous: 'fa fa-chevron-left',
+        //         next: 'fa fa-chevron-right',
+        //         today: 'fa fa-screenshot',
+        //         clear: 'fa fa-trash',
+        //         close: 'fa fa-remove'
+        //     },
+        //     format: 'YYYY-MM-DD',
+        //     // date: moment().format("YYYY-MM-DD"),
+        //     locale: 'es',
+        //     // minDate: $('#venFechaInici').val(),
+        //     //minDate: moment().format("YYYY-MM-DD")
+        // });
 
 
-    //anadir producto contrato
-    $('.addcontr').on('click', function (e) {
-        // alert('xxx');
-        e.preventDefault();
-        var gast = {};
-        //
-        gast.prodDescripcion = $('input[name="descripcionc"]').val();
-        gast.prodPrecio = $('input[name="precioc"]').val();
-        gast.prodIva = $('input[name="ivac"]').val();
-        gast.id = 0;
-        gast.cant = 1;
-        gast.subtotal = 0.00;
-        if (gast.prodDescripcion === '' || gast.prodPrecio === '') return false;
-        //
-        produ.add(gast);
+        //anadir producto contrato
+        $('.addcontr').on('click', function (e) {
+            // alert('xxx');
+            e.preventDefault();
+            var gast = {};
+            //
+            gast.prodDescripcion = $('input[name="descripcionc"]').val();
+            gast.prodPrecio = $('input[name="precioc"]').val();
+            gast.prodIva = $('input[name="ivac"]').val();
+            gast.id = 0;
+            gast.cant = 1;
+            gast.subtotal = 0.00;
+            if (gast.prodDescripcion === '' || gast.prodPrecio === '') return false;
+            //
+            produ.add(gast);
 
-        $('input[name="descripcionc"]').val('');
-        $('input[name="precioc"]').val('1.00');
-        $('input[name="ivac"]').val('0.12');
-        produ.list();
+            $('input[name="descripcionc"]').val('');
+            $('input[name="precioc"]').val('1.00');
+            $('input[name="ivac"]').val('0.12');
+            produ.list();
 
-    });
-    //eliminar un producto de contrato
-    $('#tblProducto tbody')
-        .on('click', 'a[rel="remove"]', function () {
-            var tr = tblProducto.cell($(this).closest('td, li')).index();
-            alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
-                produ.items.productos.splice(tr.row, 1);
-                //    actualizams
-                produ.list();
-            });
+        });
+        //eliminar un producto de contrato
+        $('#tblProducto tbody')
+            .on('click', 'a[rel="remove"]', function () {
+                var tr = tblProducto.cell($(this).closest('td, li')).index();
+                alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
+                    produ.items.productos.splice(tr.row, 1);
+                    //    actualizams
+                    produ.list();
+                });
 
-        })
-        .on('change', 'input[name="cant"]', function () {
-            // console.clear();
-            var cant = parseInt($(this).val());
-            // console.log(cant)
-            var tr = tblProducto.cell($(this).closest('td, li')).index();
-            // console.log(tr);
-            produ.items.productos[tr.row].cant = cant;
-            produ.calculate_invoice();
-            $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
-        }).on('change keyup', 'input[name="prodPrecio"]',function () {
+            })
+            .on('change', 'input[name="cant"]', function () {
+                // console.clear();
+                var cant = parseInt($(this).val());
+                // console.log(cant)
+                var tr = tblProducto.cell($(this).closest('td, li')).index();
+                // console.log(tr);
+                produ.items.productos[tr.row].cant = cant;
+                produ.calculate_invoice();
+                $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
+            }).on('change keyup', 'input[name="prodPrecio"]', function () {
             // prodPrecio
             // alert('x');
             var precio = parseFloat($(this).val());
@@ -348,7 +353,7 @@ $(function () {
             produ.calculate_invoice();
             $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
 
-        }).on('change keyup', 'input[name="prodIva"]',function () {
+        }).on('change keyup', 'input[name="prodIva"]', function () {
             // prodPrecio
             // alert('x');
             var iva = parseFloat($(this).val());
@@ -361,84 +366,112 @@ $(function () {
 
         });
 
-    //gastos
-    $('.btnGastos').on('click', function () {
-        $('#myModelDet').modal('show');
+        //gastos
+        $('.btnGastos').on('click', function () {
+            $('#myModelDet').modal('show');
 
-    });
+        });
 
-    $('input[name="preciogasto"]').TouchSpin({
-        min: 1,
-        max: 100,
-        step: 0.1,
-        decimals: 2,
-        verticalbuttons: true,
-        verticalupclass: 'glyphicon glyphicon-plus',
-        verticaldownclass: 'glyphicon glyphicon-minus'
+        $('input[name="preciogasto"]').TouchSpin({
+            min: 1,
+            max: 100,
+            step: 0.1,
+            decimals: 2,
+            verticalbuttons: true,
+            verticalupclass: 'glyphicon glyphicon-plus',
+            verticaldownclass: 'glyphicon glyphicon-minus'
 
-    });
+        });
 
-    //anadir gasto
-    $('.addgast').on('click', function () {
-        // alert('xxx');
-        var gast = {};
-        gast.gastDescripcion = $('input[name="descripcion"]').val();
-        gast.gastPrecio = $('input[name="preciogasto"]').val();
-        if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
+        //anadir gasto
+        $('.addgast').on('click', function () {
+            // alert('xxx');
+            var gast = {};
+            gast.gastDescripcion = $('input[name="descripcion"]').val();
+            gast.gastPrecio = $('input[name="preciogasto"]').val();
+            if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
 
-        produ.add2(gast);
-        $('input[name="descripcion"]').val('');
-        $('input[name="preciogasto"]').val('1.00');
+            produ.add2(gast);
+            $('input[name="descripcion"]').val('');
+            $('input[name="preciogasto"]').val('1.00');
 
-    });
-    //eliminar gasto
-    $('#tblDet tbody')
-        .on('click', 'a[rel="remove"]', function () {
-            var tr = tblGast.cell($(this).closest('td, li')).index();
-            alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
-                produ.items.gastoad.splice(tr.row, 1);
-                //    actualizams
-                produ.list2();
+        });
+        //eliminar gasto
+        $('#tblDet tbody')
+            .on('click', 'a[rel="remove"]', function () {
+                var tr = tblGast.cell($(this).closest('td, li')).index();
+                alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
+                    produ.items.gastoad.splice(tr.row, 1);
+                    //    actualizams
+                    produ.list2();
+                });
+
+            });
+
+        //Rango de Fechas
+        fechaini = $('#venFechaInici').val();
+        fechafin = $('#venFechaFin').val();
+
+        $('input[name="date_range"]').daterangepicker({
+            startDate: fechaini,
+            endDate: fechafin,
+            locale: {
+                format: 'YYYY-MM-DD',
+                applyLabel: '<i class="fas fa-chart-pie"></i> Aplicar',
+                cancelLabel: '<i class="fas fa-times"></i> Cancelar',
+            }
+        })
+            .on('apply.daterangepicker', function (ev, picker) {
+                date_range = picker;
+
+            }).on('cancel.daterangepicker', function (ev, picker) {
+            $(this).data('daterangepicker').setStartDate(date_now);
+            $(this).data('daterangepicker').setEndDate(date_now);
+            date_range = picker;
+        });
+
+
+        //evento guardar
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            if (produ.items.productos.length === 0) {
+                message_error('Debe al menos tener un item en su detalle de compra');
+                return false;
+            }
+            // if (date_range !== null) {
+            produ.items.fecha = date_range.startDate.format('YYYY-MM-DD');
+            produ.items.fechafin = date_range.endDate.format('YYYY-MM-DD');
+            // }
+            // produ.items.fecha = $('input[name="venFechaInici"]').val();
+            // produ.items.fechafin = $('input[name="venFechaFin"]').val();
+            produ.items.cliente = $('select[name="cliente"]').val();
+            produ.items.ventestado = $('select[name="venEstVenta"]').val();
+            console.log(produ.items);
+            var parameters = new FormData();
+            parameters.append('action', $('input[name="action"]').val());
+            parameters.append('ventas', JSON.stringify(produ.items));
+            parameters.forEach(function (value, key) {
+                console.log(key + ':' + value);
+
+            });
+
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
+                alerta_action2('Notificacion', '¿Desea Imprimir la Boleta de Venta?', function () {
+                    window.open('/venta/contrato/invoice/pdf/' + response.id + '/', '_blank')
+                    location.href = '/venta/contrato/mostrar/';
+                }, function () {
+                    location.href = '/venta/contrato/mostrar/';
+
+                });
+
+                // location.href = '/venta/contrato/mostrar/';
             });
 
         });
 
-
-    //evento guardar
-    $('form').on('submit', function (e) {
-        e.preventDefault();
-        if (produ.items.productos.length === 0) {
-            message_error('Debe al menos tener un item en su detalle de compra');
-            return false;
-        }
-        produ.items.fecha = $('input[name="venFechaInici"]').val();
-        produ.items.fechafin = $('input[name="venFechaFin"]').val();
-        produ.items.cliente = $('select[name="cliente"]').val();
-        console.log(produ.items);
-        var parameters = new FormData();
-        parameters.append('action', $('input[name="action"]').val());
-        parameters.append('ventas', JSON.stringify(produ.items));
-        parameters.forEach(function (value, key) {
-            console.log(key + ':' + value);
-
-        });
-
-        submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
-            alerta_action2('Notificacion', '¿Desea Imprimir la Boleta de Venta?', function () {
-                window.open('/venta/contrato/invoice/pdf/' + response.id + '/', '_blank')
-                location.href = '/venta/contrato/mostrar/';
-            }, function () {
-                location.href = '/venta/contrato/mostrar/';
-
-            });
-
-            // location.href = '/venta/contrato/mostrar/';
-        });
-
-    });
-
-    produ.list();
-    produ.list2();
+        produ.list();
+        produ.list2();
 
 
-});
+    }
+);

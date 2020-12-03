@@ -53,6 +53,7 @@ $(function () {
             {"data": "cliente.cliNombre"},
             {"data": "venFechaInici"},
             // {"data": "categoria.catDescripcion"},
+            {"data": "venEstVenta"},
             {"data": "ventSubtotal"},
             {"data": "ventImpuesto"},
 
@@ -61,9 +62,28 @@ $(function () {
 
         ],
         columnDefs: [
+            {
+                targets: [3],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    if (data==2){
+                         var buttons = '<span class="badge badge-success">PAGADO</span>';
+                    }else {
+                         var buttons = '<span class="badge badge-danger">PENDIENTE</span>';
+                    }
+
+                    // buttons += '<a href="/venta/contrato/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
+                    // buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
+                    // buttons += '<a href="/venta/contrato/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+
+                    //var buttons = '<a href="/erp/sale/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
+                    return buttons;
+                }
+            },
 
             {
-                targets: [-2, -3, -4],
+                targets: [-3, -4, -5],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {

@@ -11,7 +11,7 @@ var param = {
 
 function repo() {
     $('.imprimirPdf').on('click', function () {
-        alert('x');
+        // alert('x');
         // window.open('/reports/invoice/pdf/' + param['start_date'] + '&' + param['end_date'] + '/', '_blank')
         window.open('/reports/venta/pdf/' + param['start_date'] + '&' + param['end_date'] + '&'+param['tipo'], '_blank')
 

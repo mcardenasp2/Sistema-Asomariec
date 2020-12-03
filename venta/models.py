@@ -7,7 +7,8 @@ from django.forms import model_to_dict
 
 from producto.models import Producto
 from cliente.models import Cliente
-from venta.tipventa import vent_choices
+from venta.tipventa import vent_choices, vent_estado
+
 
 class Venta(models.Model):
     cliente=models.ForeignKey(Cliente, on_delete=models.PROTECT)
@@ -15,7 +16,9 @@ class Venta(models.Model):
     venFechaInici=models.DateTimeField(default=datetime.now())
     venFechaFin=models.DateTimeField(default=datetime.now(),blank=True, null=True)
     ventObservacion=models.CharField(max_length=100)
-    venTipo=models.CharField(max_length=20, choices=vent_choices, default='1')
+    venTipo=models.CharField(max_length=20, choices=vent_choices, default='2')
+    #  pendiente, pagado
+    venEstVenta=models.CharField(max_length=20, choices=vent_estado, default='2')
     ventTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventSubtotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventImpuesto=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
@@ -31,6 +34,7 @@ class Venta(models.Model):
         item['ventSubtotal']=format(self.ventSubtotal, '.2f')
         item['ventImpuesto']=format(self.ventImpuesto, '.2f')
         item['venFechaInici']=self.venFechaInici.strftime('%Y-%m-%d')
+        item['venFechaFin']=self.venFechaFin.strftime('%Y-%m-%d')
         item['nfact']=format(str(self.id).zfill(10))
         return item
 

@@ -511,7 +511,7 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['list_url'] = reverse_lazy('compra:compra_listar')
+        context['list_url'] = reverse_lazy('venta:ventac_mostrar')
         context['action'] = 'add'
         # context['create_url'] = 'add'
         context['det']=[]
@@ -556,6 +556,7 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # print(prod);
                     cabventa = self.get_object()
                     cabventa.cliente_id = vent['cliente']
+                    cabventa.venEstVenta = vent['ventestado']
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.venFechaFin = vent['fechafin']
                     # print(float(vent['tgsto']))

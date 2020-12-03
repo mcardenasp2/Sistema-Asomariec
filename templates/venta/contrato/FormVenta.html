@@ -40,7 +40,8 @@
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label>Descripcion:</label>
-                                            <input class="form-control" name="descripcionc" type="text">
+                                            <input class="form-control" name="descripcionc" type="text"
+                                                   placeholder="Ingrese el nombre del Producto">
 
                                         </div>
                                     </div>
@@ -48,7 +49,7 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label>Precio:</label>
-                                            <input class="form-control" name="precioc" type="text">
+                                            <input class="form-control" value="1.00" name="precioc" type="text">
                                             {#                                            <div class="input-group input-group-sm"><input id="demo4" type="text"#}
                                             {#                                                                                           value="" name="demo4"#}
                                             {#                                                                                           class="input-sm">#}
@@ -65,7 +66,7 @@
                                     <div class="col-lg-2">
                                         <div class="form-group">
                                             <label>Iva:</label>
-                                            <input class="form-control" name="ivac" type="text">
+                                            <input class="form-control" value="0.12" name="ivac" type="text">
                                         </div>
 
                                     </div>
@@ -80,6 +81,34 @@
                                     <hr>
 
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        {#                                        <div class="custom-control custom-radio mb-3">#}
+                                        {#                                            <input type="radio" id="customRadio1" name="customRadio"#}
+                                        {#                                                   class="custom-control-input">#}
+                                        {#                                            <label class="custom-control-label" for="customRadio1">Pendiente</label>#}
+                                        {#                                        </div>#}
+                                        {#                                        <div class="custom-control custom-radio">#}
+                                        {#                                            <input type="radio" id="customRadio2" name="customRadio"#}
+                                        {#                                                   class="custom-control-input">#}
+                                        {#                                            <label class="custom-control-label" for="customRadio2">Pagado</label>#}
+                                        {#                                        </div>#}
+                                        {#                                        <div class="custom-control custom-checkbox">#}
+                                        {#                                            <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+                                        {#                                            <label class="custom-control-label" for="customCheck1">Pagado</label>#}
+                                        {#                                        </div>#}
+                                        <div class="form-group">
+                                            <label for="id_venEstVenta">Estado:</label>
+                                            {#                                            <select class="form-control" id="exampleFormControlSelect1">#}
+                                            {#                                                <option>Pendiente</option>#}
+                                            {#                                                <option>Pagado</option>#}
+                                            {##}
+                                            {#                                            </select>#}
+                                            {{ form.venEstVenta }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
@@ -150,6 +179,14 @@
                                                 {#                                                <input class="form-control" placeholder="Select date" id="venFechaInici"#}
                                                 {#                                                       type="text" value="06/20/2020">#}
                                                 {{ form.venFechaFin }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Rango de Fechas:</label>
+                                            <div class="input-group">
+                                                {{ form.date_range }}
                                             </div>
                                         </div>
                                     </div>
@@ -348,11 +385,21 @@
     <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
 
+
+
+    {#    <script src="{% static 'lib/assets/vendor/moment.min.js' %}"></script>#}
+    {#    <script src="{% static 'lib/assets/vendor/bootstrap-datetimepicker.js' %}"></script>#}
+
+
+    {#    rango de fechas#}
+    <script src="{% static 'lib/moment-2.25.3/moment.js' %}"></script>
+    <script src="{% static 'lib/daterangepicker-3.1/spanish.js' %}"></script>
+    <script src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}">
+
+
     <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
     <script src="{% static 'js/venta/formcontrato.js' %}"></script>
-
-    <script src="{% static 'lib/assets/vendor/moment.min.js' %}"></script>
-    <script src="{% static 'lib/assets/vendor/bootstrap-datetimepicker.js' %}"></script>
 
     <div class="modal fade" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -360,8 +407,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     {#                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de#}
-                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de
-                        detalle de insumo</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>
+                        {#                        <i class="fas fa-shopping-cart"></i>#}
+                        Consulta de
+                        detalles de Gastos</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -372,7 +421,8 @@
                         <div class="col-lg-7">
                             <div class="form-group">
                                 <label>Descripcion:</label>
-                                <input class="form-control" name="descripcion" type="text">
+                                <input class="form-control" name="descripcion" type="text"
+                                       placeholder="Ingrese el nombre del Gasto">
 
                             </div>
                         </div>
@@ -436,6 +486,33 @@
     </script>
 
     <script>
+        {#<script>#}
+
+        {#    </script>#}
+
+
+
+        // {#console.log(fechaini);#}
+        {#$('input[name="date_range"]').data('daterangepicker').setStartDate('2020-11-11').format('YYYY-MM-DD');#}
+        {#$('input[name="date_range"]').data('daterangepicker').setEndDate('2020-12-12').format('YYYY-MM-DD');#}
+        {#$(this).data('daterangepicker').setStartDate(date_now);#}
+        {#$(this).data('daterangepicker').setEndDate(date_now);#}
+        {#$('input[name="date_range"]').data('daterangepicker').setStartDate('2020-12-02').format('YYYY-MM-DD');#}
+        {#$('input[name="date_range"]').data('daterangepicker').setEndDate('2020-12-20').format('YYYY-MM-DD');#}
+
+
+        //create a new date range picker
+        {#$('input[name="date_range"]').daterangepicker({startDate: '03/05/2005', endDate: '03/06/2005'});#}
+
+        //change the selected date range of that picker
+        {#$('#daterange').data('daterangepicker').setStartDate('03/01/2014');#}
+        {#$('#daterange').data('daterangepicker').setEndDate('03/31/2014');#}
+
+        $("input[name='precioc']").mask('000.000.000.000.000.00', {reverse: true});
+        $("input[name='ivac']").mask('000.000.000.000.000.00', {reverse: true});
+        {#$("input[name='prodCantidad']").mask('0000000000');#}
+
+
         produ.items.productos ={{ det|safe }};
         {#console.log('gatos');#}
         {#console.log({{ gasta|safe }});#}

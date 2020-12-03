@@ -98,13 +98,13 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                 # print('tipo'+tipo)
                 search =Venta.objects.all()
                 if len(start_date) and len(end_date):
-                    search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1)
+                    search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
                 if len(start_date) and len(end_date) and tipo=='3':
                     #sin contrato
-                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=2, ventEstado=1)
+                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=2, ventEstado=1, venEstVenta=2)
                 if len(start_date) and len(end_date) and tipo=='2':
                     # contrto
-                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=1, ventEstado=1)
+                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=1, ventEstado=1, venEstVenta=2)
                 for s in search:
                     data.append([
                         s.id,
@@ -305,15 +305,15 @@ class VentaPdfView(View):
             descr = ''
             if len(start_date) and len(end_date):
                 # print('xxxxxxxxxxxxxx')
-                search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1)
+                search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
 
             if len(start_date) and len(end_date) and tipo == '3':
                 # sin contrato
-                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=2, ventEstado=1)
+                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=2, ventEstado=1, venEstVenta=2)
                 descr = 'Sin Contrato'
             if len(start_date) and len(end_date) and tipo == '2':
                 # contrto
-                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=1, ventEstado=1)
+                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=1, ventEstado=1, venEstVenta=2)
                 descr = 'Contrato'
             for s in search:
                 data.append([
