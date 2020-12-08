@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    $('#id_cliente').css('width', '50%');
+});
+
+
 var ct = 0;
 var tblGast;
 var tblProducto;
@@ -8,7 +13,7 @@ var produ = {
         // precio: 0.00,
         tgsto: 0.00,
         subproductos: 0.00,
-        impuestos:0.00,
+        impuestos: 0.00,
         productos: [],
         gastoad: [],
     },
@@ -38,12 +43,12 @@ var produ = {
     },
     calculate_invoice: function () {
         var subtotal = 0.00;
-        var impuesto=0.00;
+        var impuesto = 0.00;
         $.each(this.items.productos, function (pos, dict) {
             // console.log(pos);
             // console.log(dict);
             dict.subtotal = dict.cant * parseFloat(dict.prodPrecio);
-            impuesto+=dict.subtotal*dict.prodIva;
+            impuesto += dict.subtotal * dict.prodIva;
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
@@ -76,11 +81,11 @@ var produ = {
         var ga = 0.00;
         var st = 0.00;
         var t = 0.00;
-        var im=0.00;
+        var im = 0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
         im = parseFloat($('input[name="iva"]').val());
-        t = ga + st+im;
+        t = ga + st + im;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -275,7 +280,7 @@ function formatRepo(repo) {
 
 $(function () {
     // evento calendarip
-    $('#venFechaInici').datetimepicker({
+    $('#venFechaFin').datetimepicker({
         icons: {
             time: "fa fa-clock",
             date: "fa fa-calendar-day",
@@ -416,14 +421,71 @@ $(function () {
             $(this).val('').trigger('change.select2');
         });
 
-    //evento guardar
-    $('form').on('submit', function (e) {
+    //Buscar cliente
+    $('select[name="cliente"]').select2({
+        theme: "bootstrap4",
+        language: 'es',
+        allowClear: true,
+        ajax: {
+            delay: 250,
+            type: 'POST',
+            url: window.location.pathname,
+            data: function (params) {
+                var queryParameters = {
+                    term: params.term,
+                    action: 'search_clients'
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+        },
+        placeholder: 'Ingrese una descripción',
+        minimumInputLength: 1,
+    });
+
+    $('.btnAddClient').on('click', function () {
+        $('#MyModalClient').modal('show');
+
+    });
+
+    $('#MyModalClient').on('hidden.bs.modal', function (e) {
+        $('#formClient').trigger('reset');
+    })
+
+
+    //evento guardar cliente
+    $('#formClient').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = new FormData(this);
+        parameters.append('action', 'create_client');
+        parameters.forEach(function (value, key) {
+            console.log(key + ':' + value);
+
+        });
+
+        submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de crear el siguiente cliente', parameters, function (response) {
+            console.log(response);
+            var newOption = new Option(response.full_name, response.id, false, true);
+            $('select[name="cliente"]').append(newOption).trigger('change');
+            $('#MyModalClient').modal('hide');
+
+
+        });
+
+    });
+
+    //evento guardar venta
+    $('#frmVentaNormal').on('submit', function (e) {
         e.preventDefault();
         if (produ.items.productos.length === 0) {
             message_error('Debe al menos tener un item en su detalle de compra');
             return false;
         }
-        produ.items.fecha = $('input[name="venFechaInici"]').val();
+        produ.items.fecha = $('input[name="venFechaFin"]').val();
         produ.items.cliente = $('select[name="cliente"]').val();
         console.log(produ.items);
         var parameters = new FormData();

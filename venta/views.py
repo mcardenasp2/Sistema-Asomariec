@@ -3,6 +3,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,12 +13,13 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+from cliente.forms import ClienteForm
 from insumo.models import Insumo
 from producto.models import Producto, DetProducto
 from user.mixins import ValidatePermissionRequiredMixin
 from venta.models import *
 
-from django.views.generic import CreateView,ListView, UpdateView, DeleteView, View
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
 
 from venta.forms import CabVentaForm
 
@@ -27,7 +29,8 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
-class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
+
+class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/normal/ListarVenta.html'
     model = Venta
     permission_required = 'view_venta'
@@ -43,7 +46,7 @@ class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView
             if action == 'searchdata':
                 # print('com aqui')
                 data = []
-                for i in Venta.objects.filter(ventEstado=True,venTipo=2):
+                for i in Venta.objects.filter(ventEstado=True, venTipo=2):
                     data.append(i.toJSON())
 
             elif action == 'search_details_ins':
@@ -65,7 +68,7 @@ class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView
         return context
 
 
-class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
+class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = Venta
     form_class = CabVentaForm
     template_name = 'venta/normal/FormVenta.html'
@@ -84,7 +87,8 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Create
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'],prodCantidad__gte=1,prodTipo=2)[0:5]
+                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1,
+                                                prodTipo=2, prodEstado=1)[0:5]
                 # print(prods)
                 for i in prods:
                     item = i.toJSON()
@@ -93,42 +97,63 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Create
                     # select 2
                     item['text'] = i.prodDescripcion
                     data.append(item)
-
-            elif action=='add':
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                # este es el for que se utiliza en django
+                # , cliEstado=1
+                clients = Cliente.objects.filter(
+                    Q(cliNombre__icontains=term) | Q(cliApellido__icontains=term) | Q(cliRuc__contains=term),
+                    cliEstado=1)[0:10]
+                # print(prods)
+                for i in clients:
+                    item = i.toJSON()
+                    # jquery ui
+                    # item['value'] = i.insDescripcion
+                    # select 2
+                    item['text'] = i.get_full_name()
+                    data.append(item)
+            elif action == 'create_client':
+                # print(request.POST)
                 with transaction.atomic():
-                    vent=json.loads(request.POST['ventas'])
+                    frmCLient = ClienteForm(request.POST)
+                    data = frmCLient.save()
+
+            elif action == 'add':
+                with transaction.atomic():
+                    vent = json.loads(request.POST['ventas'])
                     # print(prod);
-                    cabventa= Venta()
-                    cabventa.cliente_id= vent['cliente']
-                    cabventa.venFechaInici=vent['fecha']
+                    cabventa = Venta()
+                    cabventa.cliente_id = vent['cliente']
+                    cabventa.venFechaFin = vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
-                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
+                    cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
-                    cabventa.ventObservacion='Ninguna'
-                    cabventa.venTipo=2
-                    cabventa.ventTotal=float(vent['tgsto'])+float(vent['subproductos'])+float(vent['impuestos'])
-                    cabventa.ventEstado=1
+                    cabventa.ventObservacion = 'Ninguna'
+                    cabventa.venTipo = 2
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
+                    cabventa.ventEstado = 1
                     cabventa.save()
 
                     for i in vent['productos']:
-                        det=DetVenta()
-                        det.venta_id=cabventa.id
-                        det.producto_id=i['id']
-                        det.detCant=i['cant']
-                        det.detPrecio=i['prodPrecio']
-                        det.detSubtotal=i['subtotal']
+                        det = DetVenta()
+                        det.venta_id = cabventa.id
+                        det.producto_id = i['id']
+                        det.detCant = i['cant']
+                        det.detPrecio = i['prodPrecio']
+                        det.detSubtotal = i['subtotal']
                         det.save()
 
-                        producto=Producto.objects.get(pk=i['id'])
-                        producto.prodCantidad-=int(i['cant'])
+                        producto = Producto.objects.get(pk=i['id'])
+                        producto.prodCantidad -= int(i['cant'])
                         producto.save()
 
                     if vent['gastoad']:
                         for i in vent['gastoad']:
-                            gast= GastAdc()
-                            gast.venta_id=cabventa.id
-                            gast.gastdescripcion=i['gastDescripcion']
-                            gast.gastprecio=i['gastPrecio']
+                            gast = GastAdc()
+                            gast.venta_id = cabventa.id
+                            gast.gastdescripcion = i['gastDescripcion']
+                            gast.gastprecio = i['gastPrecio']
                             gast.save()
 
                     data = {'id': cabventa.id}
@@ -146,12 +171,13 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Create
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('venta:venta_mostrar')
         context['action'] = 'add'
-        context['det']=[]
-        context['gasta']=[]
+        context['frmClient'] = ClienteForm()
+        context['det'] = []
+        context['gasta'] = []
         return context
 
 
-class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
+class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
     template_name = 'venta/normal/FormVenta.html'
     model = Venta
     form_class = CabVentaForm
@@ -162,6 +188,13 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_form(self, form_class=None):
+        instance = self.get_object()
+        form = CabVentaForm(instance=instance)
+        # queryset necesita un listado
+        form.fields['cliente'].queryset = Cliente.objects.filter(id=instance.cliente.id)
+        return form
+
     def post(self, request, *args, **kwargs):
         data = {}
         try:
@@ -169,7 +202,8 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1, prodTipo=2)[
+                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1,
+                                                prodTipo=2, prodEstado=1)[
                         0:5]
                 # print(prods)
                 for i in prods:
@@ -179,32 +213,50 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
                     # select 2
                     item['text'] = i.prodDescripcion
                     data.append(item)
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                # este es el for que se utiliza en django
+                # , cliEstado=1
+                clients = Cliente.objects.filter(
+                    Q(cliNombre__icontains=term) | Q(cliApellido__icontains=term) | Q(cliRuc__contains=term),
+                    cliEstado=1)[0:10]
+                # print(prods)
+                for i in clients:
+                    item = i.toJSON()
+                    # jquery ui
+                    # item['value'] = i.insDescripcion
+                    # select 2
+                    item['text'] = i.get_full_name()
+                    data.append(item)
 
+            elif action == 'create_client':
+                # print(request.POST)
+                with transaction.atomic():
+                    frmCLient = ClienteForm(request.POST)
+                    data = frmCLient.save()
             elif action == 'edit':
                 with transaction.atomic():
                     vent = json.loads(request.POST['ventas'])
                     # print(prod);
                     cabventa = self.get_object()
                     cabventa.cliente_id = vent['cliente']
-                    cabventa.venFechaInici = vent['fecha']
+                    cabventa.venFechaFin = vent['fecha']
                     # cabventa.venFechaFin=vent['cliente']
-                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
+                    cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 2
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])+float(vent['impuestos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
                     for i in DetVenta.objects.filter(venta_id=self.get_object().id):
                         producto = Producto.objects.get(pk=i.producto_id)
-                        producto.prodCantidad+=i.detCant
+                        producto.prodCantidad += i.detCant
                         producto.save()
 
-
                     cabventa.detventa_set.all().delete()
-
-
 
                     for i in vent['productos']:
                         det = DetVenta()
@@ -236,11 +288,11 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
         return JsonResponse(data, safe=False)
 
     def get_details_produtos(self):
-        data=[]
+        data = []
         try:
             for i in DetVenta.objects.filter(venta_id=self.get_object().id):
-                item=i.producto.toJSON()
-                item['cant']=i.detCant
+                item = i.producto.toJSON()
+                item['cant'] = i.detCant
                 data.append(item)
         except:
             pass
@@ -264,12 +316,13 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
         # context['entity'] = 'Ventas'
         context['list_url'] = self.success_url
         context['action'] = 'edit'
+        context['frmClient'] = ClienteForm()
         context['det'] = json.dumps(self.get_details_produtos(), cls=DjangoJSONEncoder)
         context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
         return context
 
 
-class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
+class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     template_name = 'venta/DeleteVenta.html'
     model = Venta
     # form_class = CabVentaForm
@@ -300,7 +353,6 @@ class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Delete
 
                     # cabventa.detventa_set.all().delete()
 
-
                     # cabventa.gastadc_set.all().delete()
 
             else:
@@ -308,7 +360,6 @@ class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Delete
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -336,45 +387,41 @@ class SaleInvoicePdfView(View):
         else:
             return uri
 
-    # make sure that file exists
+        # make sure that file exists
         if not os.path.isfile(path):
             raise Exception(
                 'media URI must start with %s or %s' % (sUrl, mUrl)
             )
         return path
 
-
     def get(self, request, *args, **kwargs):
         try:
             template = get_template('venta/normal/invoice2.html')
             # item={}
-            det=[]
+            det = []
 
-
-
-            data= Venta.objects.get(pk=self.kwargs['pk']).toJSON()
+            data = Venta.objects.get(pk=self.kwargs['pk']).toJSON()
             # det= DetVenta.objects.get(venta=self.kwargs['pk'])
             for i in DetVenta.objects.filter(venta=self.kwargs['pk']):
                 item = i.producto.toJSON()
-                item['imp'] = format(i.producto.prodIva * i.detPrecio*i.detCant,'.2f')
+                item['imp'] = format(i.producto.prodIva * i.detPrecio * i.detCant, '.2f')
                 item['cant'] = i.detCant
                 item['subt'] = i.detSubtotal
-                item['deta']=i.producto.toJSON()
+                item['deta'] = i.producto.toJSON()
                 det.append(item)
 
             gast = []
             for i in GastAdc.objects.filter(venta=self.kwargs['pk']):
                 gast.append(i)
 
-
             context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
-            # context = {'sale': data,
+                       # context = {'sale': data,
                        'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
-                       'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
-                       'nfact':data['nfact'],
-                       'fec':data['venFechaInici'],
-                       'det':det,
-                       'gastad':gast
+                       'icon': '{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
+                       'nfact': data['nfact'],
+                       'fec': data['venFechaInici'],
+                       'det': det,
+                       'gastad': gast
                        # se utiliza con collectstatic
                        # 'icon':'{}{}'.format(settings.STATIC_URL, 'img/logo2.jpeg')
 
@@ -394,9 +441,8 @@ class SaleInvoicePdfView(View):
         return HttpResponseRedirect(reverse_lazy('venta:venta_mostrar'))
 
 
-
 # contrato
-class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
+class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/contrato/ListarVenta.html'
     model = Venta
     permission_required = 'view_venta'
@@ -412,7 +458,7 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
             if action == 'searchdata':
                 # print('com aqui')
                 data = []
-                for i in Venta.objects.filter(ventEstado=True,venTipo=1):
+                for i in Venta.objects.filter(ventEstado=True, venTipo=1):
                     data.append(i.toJSON())
 
             elif action == 'search_details_ins':
@@ -434,7 +480,7 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
         return context
 
 
-class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
+class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     template_name = 'venta/contrato/FormVenta.html'
     form_class = CabVentaForm
     model = Venta
@@ -457,26 +503,25 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # print(prod);
                     cabventa = Venta()
                     cabventa.cliente_id = vent['cliente']
+                    cabventa.venEstVenta = vent['ventestado']
                     cabventa.venFechaInici = vent['fecha']
-                    cabventa.venFechaFin=vent['fechafin']
-                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
+                    cabventa.venFechaFin = vent['fechafin']
+                    cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + +float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
-
-
                     for i in vent['productos']:
                         prd = Producto()
-                        prd.prodDescripcion=i['prodDescripcion']
-                        prd.prodIva=i['prodIva']
-                        prd.prodTipo=1
+                        prd.prodDescripcion = i['prodDescripcion']
+                        prd.prodIva = i['prodIva']
+                        prd.prodTipo = 1
                         # prd.prodEstado=False
-                        prd.prodCantidad=i['cant']
-                        prd.prodPrecio=i['prodPrecio']
+                        prd.prodCantidad = i['cant']
+                        prd.prodPrecio = i['prodPrecio']
                         prd.save()
 
                         det = DetVenta()
@@ -501,7 +546,27 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                             gast.save()
 
                     data = {'id': cabventa.id}
-
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                # este es el for que se utiliza en django
+                # , cliEstado=1
+                clients = Cliente.objects.filter(
+                    Q(cliNombre__icontains=term) | Q(cliApellido__icontains=term) | Q(cliRuc__contains=term),
+                    cliEstado=1)[0:10]
+                # print(prods)
+                for i in clients:
+                    item = i.toJSON()
+                    # jquery ui
+                    # item['value'] = i.insDescripcion
+                    # select 2
+                    item['text'] = i.get_full_name()
+                    data.append(item)
+            elif action == 'create_client':
+                # print(request.POST)
+                with transaction.atomic():
+                    frmCLient = ClienteForm(request.POST)
+                    data = frmCLient.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -514,12 +579,14 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
         context['list_url'] = reverse_lazy('venta:ventac_mostrar')
         context['action'] = 'add'
         # context['create_url'] = 'add'
-        context['det']=[]
-        context['gasta']=[]
+        context['frmClient'] = ClienteForm()
+        context['det'] = []
+        context['gasta'] = []
         return context
 
+
 # tomar en cuenta el guardado del producto
-class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
+class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
     template_name = 'venta/contrato/FormVenta.html'
     model = Venta
     form_class = CabVentaForm
@@ -529,6 +596,13 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        instance = self.get_object()
+        form = CabVentaForm(instance=instance)
+        # queryset necesita un listado
+        form.fields['cliente'].queryset = Cliente.objects.filter(id=instance.cliente.id)
+        return form
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -547,7 +621,27 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # select 2
                     item['text'] = i.prodDescripcion
                     data.append(item)
-
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                # este es el for que se utiliza en django
+                # , cliEstado=1
+                clients = Cliente.objects.filter(
+                    Q(cliNombre__icontains=term) | Q(cliApellido__icontains=term) | Q(cliRuc__contains=term),
+                    cliEstado=1)[0:10]
+                # print(prods)
+                for i in clients:
+                    item = i.toJSON()
+                    # jquery ui
+                    # item['value'] = i.insDescripcion
+                    # select 2
+                    item['text'] = i.get_full_name()
+                    data.append(item)
+            elif action == 'create_client':
+                # print(request.POST)
+                with transaction.atomic():
+                    frmCLient = ClienteForm(request.POST)
+                    data = frmCLient.save()
             elif action == 'edit':
 
                 print('que paso')
@@ -561,20 +655,19 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     cabventa.venFechaFin = vent['fechafin']
                     # print(float(vent['tgsto']))
 
-                    cabventa.ventSubtotal = float(vent['subproductos'])+float(vent['tgsto'])
+                    cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     # cabventa.ventSubtotal = float(vent['subproductos'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     # cabventa.venFechaFin=vent['cliente']
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos'])+float(vent['impuestos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
                     # a={}
                     # contiene el id del producto
-                    c=[]
-
+                    c = []
 
                     # for i in DetVenta.objects.filter(venta_id=7):
                     #     print(i.producto_id)
@@ -582,9 +675,9 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     #     print(c)
 
                     for i in DetVenta.objects.filter(venta_id=self.get_object().id):
-                    # for i in DetVenta.objects.filter(venta_id=7):
-                    #     print(i.producto_id)
-                    #     a['id']=i.producto_id
+                        # for i in DetVenta.objects.filter(venta_id=7):
+                        #     print(i.producto_id)
+                        #     a['id']=i.producto_id
                         c.append(i.producto_id)
                         # print(c)
                         # producto = Producto.objects.get(pk=i.producto_id)
@@ -600,17 +693,17 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # insu = []
                     # for p in c:
                     # for i in DetProducto.objects.filter(producto_id=p):
-                            # insu.append(i.insumo_id)
-                            # item=i.insumo.toJSON()
-                            # item['cant']=i.detCantidad
-                            # insu.append(item)
+                    # insu.append(i.insumo_id)
+                    # item=i.insumo.toJSON()
+                    # item['cant']=i.detCantidad
+                    # insu.append(item)
 
-                        # insumo = Insumo.objects.get(pk=i.insumo_id)
-                        # insumo.insStock += i.detCantidad
-                        # insumo.save()
+                    # insumo = Insumo.objects.get(pk=i.insumo_id)
+                    # insumo.insStock += i.detCantidad
+                    # insumo.save()
 
                     for i in vent['productos']:
-                        if i['id']==0:
+                        if i['id'] == 0:
                             print('aggrego')
                             prd = Producto()
                             prd.prodDescripcion = i['prodDescripcion']
@@ -649,9 +742,6 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                             det.save()
                             c.remove(i['id'])
 
-
-
-
                             # print('no agrego')
                     # print(p)
 
@@ -663,7 +753,6 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # for v in vent['productos']:
                     #     if v['id'] in c:
                     #         print('si esta '+ str(v['id']))
-
 
                     for i in c:
                         for d in DetProducto.objects.filter(producto_id=i):
@@ -696,9 +785,9 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     #     det.detSubtotal = i['subtotal']
                     #     det.save()
 
-                        # producto = Producto.objects.get(pk=i['id'])
-                        # producto.prodCantidad -= int(i['cant'])
-                        # producto.save()
+                    # producto = Producto.objects.get(pk=i['id'])
+                    # producto.prodCantidad -= int(i['cant'])
+                    # producto.save()
 
                     cabventa.gastadc_set.all().delete()
 
@@ -742,6 +831,7 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['frmClient'] = ClienteForm()
         # context['title'] = 'Edición de una Venta'
         # context['entity'] = 'Ventas'
         context['list_url'] = self.success_url
@@ -751,7 +841,7 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
         return context
 
 
-class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
+class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     template_name = 'venta/DeleteVenta.html'
     model = Venta
     # form_class = CabVentaForm
@@ -773,6 +863,7 @@ class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     # print(prod);
                     cabventa = self.get_object()
                     cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
                     cabventa.save()
 
                     c = []
@@ -799,8 +890,6 @@ class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                             insumo.insStock += i.detCantidad
                             insumo.save()
 
-
-
                     for i in c:
                         print('yi')
                         producto = Producto.objects.get(pk=i)
@@ -817,7 +906,6 @@ class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixi
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

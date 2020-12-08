@@ -21,11 +21,17 @@ class Cliente(models.Model):
     # cliFecEli = models.DateTimeField(default=datetime.now(), blank=True, null=True)
 
     def __str__(self):
-        return self.cliNombre
+        # return self.cliNombre
+        return self.get_full_name()
+
+    def get_full_name(self):
+        return '{} {} / {}'.format(self.cliNombre, self.cliApellido, self.cliRuc)
+        # return '{} {}'.format(self.cliNombre, self.cliApellido)
 
     def toJSON(self):
         item=model_to_dict(self)
         item['cliGenero'] = {'id': self.cliGenero, 'name': self.get_cliGenero_display()}
+        item['full_name'] = self.get_full_name()
         return  item
 
     class Meta:

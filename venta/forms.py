@@ -12,12 +12,13 @@ class CabVentaForm(ModelForm):
         'title': 'Desde  -  Hasta',
         # 'id':'date_ran'
     }))
-    cliente = forms.ModelChoiceField(queryset=Cliente.objects.filter(cliEstado=1))
+    # cliente = forms.ModelChoiceField(queryset=Cliente.objects.filter(cliEstado=1))
     # medida=ModelChoiceField(queryset=UnidadMedidad.objects.filter(medEstado=1))
     # categoria=ModelChoiceField(queryset=Categoria.objects.filter(catEstado=1))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['cliente'] = ModelChoiceField(queryset=Cliente.objects.filter(cliEstado=1))
+        self.fields['cliente'].queryset=Cliente.objects.none()
+
         # for form in self.visible_fields():
         #     form.field.widget.attrs['class'] = 'form-control'
         #     form.field.widget.attrs['autocomplete'] = 'off'
@@ -49,13 +50,20 @@ class CabVentaForm(ModelForm):
                     'id': 'venFechaFin',
                     'data-target': '#venFechaFin ',
                     'data-toggle': 'datetimepicker',
-                    'type':'hidden'
+                    # 'type':'hidden'
                 }
             ),
             'venEstVenta':forms.Select(
                 attrs={
                     'class':'form-control'
                 }
+            ),
+            'cliente':forms.Select(
+                attrs={
+                    'class':'custom-select select2',
+                    # 'style':'width: 10%'
+                }
+
             ),
 
         }

@@ -10,9 +10,18 @@
           href="{% static 'lib/assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css' %}">
     {#    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>#}
     {#iconos#}
+
+    <style>
+
+
+        .select2-container .select2-selection--single .select2-selection__rendered {
+        {#display: block !important;#} white-space: nowrap !important;
+            overflow: hidden !important;
+        }
+    </style>
 {% endblock %}
 {% block content %}
-    <form method="post" action="." enctype="multipart/form-data">
+    <form id="frmVentaNormal" method="post" action="." enctype="multipart/form-data">
 
         <div class="card">
             <div class="card-body">
@@ -40,6 +49,8 @@
                                 {#                                <div class="pl-lg-4">#}
                                 <div class="row">
                                     <div class="col-lg-12">
+
+
                                         <div class="form-group">
                                             <label for="exampleFormControlInput1">Busqueda de Producto:</label>
                                             <div class="input-group">
@@ -114,6 +125,8 @@
                             </div>
 
                             <div class="card-body">
+
+
                                 <div class="row">
                                     {#                                    <div class="col-lg-12">#}
                                     <div class="col-lg-12">
@@ -126,7 +139,7 @@
                                                 </div>
                                                 {#                                                <input class="form-control" placeholder="Select date" id="venFechaInici"#}
                                                 {#                                                       type="text" value="06/20/2020">#}
-                                                {{ form.venFechaInici}}
+                                                {{ form.venFechaFin }}
                                             </div>
                                         </div>
 
@@ -136,9 +149,39 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Cliente:</label>
+                                            <label>Cliente:</label>
 
-                                            {{ form.cliente|add_class:'form-control mySelect2' }}
+                                            <div class="input-group">
+                                                {#                                                <div class="" style="width: 85%">#}
+                                                {{ form.cliente }}
+                                                {#                                                    <select class="form-control mySelect2" data-toggle="select"#}
+                                                {#                                                            title="Simple select"#}
+                                                {#                                                            data-live-search="true"#}
+                                                {#                                                            data-live-search-placeholder="Search ...">#}
+                                                {#                                                        <option>Alerts Alert a;ert aljfhf dhdhdhdh#}
+                                                {#                                                            dhdhdfdddddddddddddddddddddddddd#}
+                                                {#                                                        </option>#}
+                                                {#                                                        <option>Badges</option>#}
+                                                {#                                                        <option>Buttons</option>#}
+                                                {#                                                        <option>Cards</option>#}
+                                                {#                                                        <option>Forms</option>#}
+                                                {#                                                        <option>Modals</option>#}
+                                                {#                                                    </select>#}
+                                                {#                                                </div>#}
+
+                                                {#                                                <div class="" style="width: 10%;">#}
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success  btnAddClient" type="button">
+                                                        <i class="fas fa-user-plus"></i>
+                                                    </button>
+                                                </div>
+                                                {#                                                </div>#}
+                                            </div>
+                                            {#                                            <br>#}
+
+                                            {#                                            {{ form.cliente|add_class:'form-control mySelect2' }}#}
+
+
                                         </div>
 
                                     </div>
@@ -323,8 +366,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     {#                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de#}
-                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de
-                        detalle de insumo</b></h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b><i class=""></i> Consulta de
+                        detalles de Gasto</b></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -335,7 +378,8 @@
                         <div class="col-lg-7">
                             <div class="form-group">
                                 <label>Descripcion:</label>
-                                <input class="form-control" name="descripcion" type="text">
+                                <input class="form-control" name="descripcion" type="text"
+                                       placeholder="Ingrese el nombre del Gasto">
 
                             </div>
                         </div>
@@ -376,6 +420,71 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="MyModalClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form id="formClient" enctype="multipart/form-data" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <b><i class="fas fa-user-plus"></i> Nuevo registro de un cliente</b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+{#                        {% for field in frmClient.visible_fields %}#}
+{#                            <div class="form-group">#}
+{#                                <label for="email">{{ field.label }}</label>#}
+{#                                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
+{#                            </div>#}
+{##}
+{#                        {% endfor %}#}
+                        <div class="form-group">
+                            <label>Nombres:</label>
+                            {{ frmClient.cliNombre }}
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos:</label>
+                            {{ frmClient.cliApellido }}
+                        </div>
+                        <div class="form-group">
+                            <label>DNI:</label>
+                            {{ frmClient.cliRuc }}
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono:</label>
+                            {{ frmClient.cliTelefono }}
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección:</label>
+                            {{ frmClient.cliDireccion }}
+                        </div>
+                        <div class="form-group">
+                            <label>Sexo:</label>
+                            {{ frmClient.cliGenero| add_class:"form-control mySelect2" }}
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            {{ frmClient.cliEmail}}
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Guardar
+                            Cliente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
 {% endblock %}
 
 {% block javascript %}
@@ -390,7 +499,7 @@
 
 
 
-  {#    libreria moment fechas#}
+    {#    libreria moment fechas#}
     <script src="{% static 'lib/assets/vendor/moment.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/bootstrap-datetimepicker.js' %}"></script>
 
@@ -402,6 +511,8 @@
 
     <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+
 
     <script src="{% static 'js/venta/form.js' %}"></script>
 

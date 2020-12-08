@@ -109,7 +109,7 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                     data.append([
                         s.id,
                         s.cliente.cliNombre,
-                        s.venFechaInici.strftime('%Y-%m-%d'),
+                        s.venFechaFin.strftime('%Y-%m-%d'),
                         format(s.ventSubtotal, '.2f'),
                         format(s.ventImpuesto, '.2f'),
                         format(s.ventTotal, '.2f'),

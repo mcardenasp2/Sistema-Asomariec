@@ -435,8 +435,66 @@ $(function () {
             });
 
 
+//Buscar cliente
+        $('select[name="cliente"]').select2({
+            theme: "bootstrap4",
+            language: 'es',
+            allowClear: true,
+            ajax: {
+                delay: 250,
+                type: 'POST',
+                url: window.location.pathname,
+                data: function (params) {
+                    var queryParameters = {
+                        term: params.term,
+                        action: 'search_clients'
+                    }
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+            },
+            placeholder: 'Ingrese una descripción',
+            minimumInputLength: 1,
+        });
+
+        $('.btnAddClient').on('click', function () {
+            $('#MyModalClient').modal('show');
+
+        });
+
+        $('#MyModalClient').on('hidden.bs.modal', function (e) {
+            $('#formClient').trigger('reset');
+        })
+
+
+        //evento guardar cliente
+        $('#formClient').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            parameters.append('action', 'create_client');
+            parameters.forEach(function (value, key) {
+                console.log(key + ':' + value);
+
+            });
+
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de crear el siguiente cliente', parameters, function (response) {
+                console.log(response);
+                var newOption = new Option(response.full_name, response.id, false, true);
+                $('select[name="cliente"]').append(newOption).trigger('change');
+                $('#MyModalClient').modal('hide');
+
+
+            });
+
+        });
+
+
         //evento guardar
-        $('form').on('submit', function (e) {
+        $('#frmVentaContrato').on('submit', function (e) {
             e.preventDefault();
             if (produ.items.productos.length === 0) {
                 message_error('Debe al menos tener un item en su detalle de compra');
@@ -445,7 +503,7 @@ $(function () {
             if (date_range !== null) {
                 produ.items.fecha = date_range.startDate.format('YYYY-MM-DD');
                 produ.items.fechafin = date_range.endDate.format('YYYY-MM-DD');
-            }else{
+            } else {
                 produ.items.fecha = fechaini;
                 produ.items.fechafin = fechafin;
             }
