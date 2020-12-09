@@ -18,7 +18,7 @@ class Venta(models.Model):
     ventObservacion=models.CharField(max_length=100)
     venTipo=models.CharField(max_length=20, choices=vent_choices, default='2')
     #  pendiente, pagado
-    venEstVenta=models.CharField(max_length=20, choices=vent_estado, default='2')
+    venEstVenta=models.CharField(max_length=20, choices=vent_estado, default='1')
     ventTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventSubtotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventImpuesto=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)

@@ -434,13 +434,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
-{#                        {% for field in frmClient.visible_fields %}#}
-{#                            <div class="form-group">#}
-{#                                <label for="email">{{ field.label }}</label>#}
-{#                                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
-{#                            </div>#}
-{##}
-{#                        {% endfor %}#}
+                        {#                        {% for field in frmClient.visible_fields %}#}
+                        {#                            <div class="form-group">#}
+                        {#                                <label for="email">{{ field.label }}</label>#}
+                        {#                                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
+                        {#                            </div>#}
+                        {##}
+                        {#                        {% endfor %}#}
                         <div class="form-group">
                             <label>Nombres:</label>
                             {{ frmClient.cliNombre }}
@@ -467,7 +467,7 @@
                         </div>
                         <div class="form-group">
                             <label>Email:</label>
-                            {{ frmClient.cliEmail}}
+                            {{ frmClient.cliEmail }}
                         </div>
 
 
@@ -542,6 +542,16 @@
 
 
             {#theme: 'bootstrap4',#}
+        });
+
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#id_cliTelefono').mask('0000000000');
+            $('#id_cliRuc').mask('0000000000');
+
         });
 
 

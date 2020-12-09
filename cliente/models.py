@@ -12,7 +12,7 @@ class Cliente(models.Model):
     cliDireccion= models.CharField(max_length=100, blank=True, verbose_name='Direccion')
     cliGenero=models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     cliEmail= models.EmailField(max_length=50,blank=True,verbose_name='Email')
-    cliEstado = models.BooleanField(default=True, verbose_name='Estado')
+    cliEstado = models.BooleanField(default=True,blank=True,null=True, verbose_name='Estado')
     usuaReg=models.IntegerField(blank=True, null=True)
     cliFecReg=models.DateTimeField(auto_now_add=True,blank=True, null=True)
     usuaMod = models.IntegerField(blank=True, null=True)

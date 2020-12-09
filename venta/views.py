@@ -133,6 +133,7 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
                     cabventa.venTipo = 2
                     cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
+                    cabventa.venEstVenta = 2
                     cabventa.save()
 
                     for i in vent['productos']:
@@ -249,6 +250,8 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Updat
                     cabventa.venTipo = 2
                     cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
+                    # cabventa.venEstVenta = 2
+                    # cabventa.ventEstado =2
                     cabventa.save()
 
                     for i in DetVenta.objects.filter(venta_id=self.get_object().id):
@@ -344,6 +347,7 @@ class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Delet
                     # print(prod);
                     cabventa = self.get_object()
                     cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
                     cabventa.save()
 
                     for i in DetVenta.objects.filter(venta_id=self.get_object().id):
