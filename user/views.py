@@ -164,7 +164,7 @@ class UserChangeGroup(LoginRequiredMixin, View):
 class UserProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
-    template_name = 'user/profile.html'
+    template_name = 'user/profile2.html'
     success_url = reverse_lazy('dashboard')
 
     @method_decorator(csrf_exempt)

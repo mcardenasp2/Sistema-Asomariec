@@ -128,13 +128,13 @@
                                     <h6 class="heading-small text-muted mb-4">Informacion del Usuario</h6>
                                     <div class="pl-lg-4" wfd-id="37">
                                         <div class="row" wfd-id="45">
-                                             <div class="col-lg-6" wfd-id="42">
+                                            <div class="col-lg-6" wfd-id="42">
                                                 <div class="form-group" wfd-id="43">
                                                     <label class="form-control-label" for="input-first-name"
                                                            wfd-id="44">Nombres</label>
                                                     {#                                                    <input type="text" id="input-first-name" class="form-control"#}
                                                     {#                                                           placeholder="First name" value="Lucky" wfd-id="149">#}
-                                                    {{ form.first_name|add_class:'form-control'|attr:'autocomplete:off'  }}
+                                                    {{ form.first_name|add_class:'form-control' }}
                                                 </div>
                                             </div>
                                             <div class="col-lg-6" wfd-id="39">
@@ -142,19 +142,21 @@
                                                     <label class="form-control-label" for="input-last-name" wfd-id="41">Apellidos</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
-                                                    {{ form.last_name|add_class:'form-control'|attr:'autocomplete:off'  }}
+                                                    {{ form.last_name|add_class:'form-control' }}
                                                 </div>
                                             </div>
 
 
+
                                         </div>
                                         <div class="row" wfd-id="38">
-                                           <div class="col-lg-6" wfd-id="49">
+
+                                            <div class="col-lg-6" wfd-id="49">
                                                 <div class="form-group" wfd-id="50">
                                                     <label class="form-control-label" for="input-username" wfd-id="51">Usuario</label>
                                                     {#                                                    <input type="text" id="input-username" class="form-control"#}
                                                     {#                                                           placeholder="Username" value="lucky.jesse" wfd-id="151">#}
-                                                    {{ form.username|add_class:'form-control'|attr:'autocomplete:off'  }}
+                                                    {{ form.username|add_class:'form-control' }}
                                                 </div>
                                             </div>
                                             <div class="col-lg-6" wfd-id="46">
@@ -164,7 +166,7 @@
                                                     {#                                                    <input type="text" id="input-email" class="form-control"#}
                                                     {#                                                           placeholder="jesse@example.com" wfd-id="150"#}
                                                     {#                                                           kl_ab.original_type="email">#}
-                                                    {{ form.email|add_class:'form-control'|attr:'autocomplete:off'  }}
+                                                    {{ form.email|add_class:'form-control' }}
                                                 </div>
                                             </div>
 
@@ -173,20 +175,84 @@
                                                     <label class="form-control-label" for="input-last-name" wfd-id="41">Contraseña</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
-                                                    {{ form.password|add_class:'form-control'|attr:'autocomplete:off'  }}
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6" wfd-id="39">
-                                                <div class="form-group" wfd-id="40">
-                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Grupos</label>
-                                                    {#                                                    <input type="text" id="input-last-name" class="form-control"#}
-                                                    {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
-                                                    {{ form.groups |attr:'autocomplete:off'  }}
+                                                    {{ form.password|add_class:'form-control' }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                    {#                                    <hr class="my-4">#}
+                                    {#                                    <!-- Address -->#}
+                                    {#                                    <h6 class="heading-small text-muted mb-4">Contact information</h6>#}
+                                    {#                                    <div class="pl-lg-4" wfd-id="22">#}
+                                    {#                                        <div class="row" wfd-id="33">#}
+                                    {#                                            <div class="col-md-12" wfd-id="34">#}
+                                    {#                                                <div class="form-group" wfd-id="35">#}
+                                    {#                                                    <label class="form-control-label" for="input-address" wfd-id="36">Address</label>#}
+                                    {#                                                    <input id="input-address" class="form-control"#}
+                                    {#                                                           placeholder="Home Address"#}
+                                    {#                                                           value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"#}
+                                    {#                                                           type="text" wfd-id="147">#}
+                                    {#                                                    <kpm-button#}
+                                    {#                                                            class="_1mUok1yqu_fHkbNOXVoU6l kpm_address-button kpm_gray-key-icon"#}
+                                    {#                                                            style="z-index: 3 !important;">#}
+                                    {#                                                        <div class="_12GLdmNfqjBzgAQBymfRrk" wfd-id="155"#}
+                                    {#                                                             style="width: 20px !important; height: 24px !important; top: -35px !important; left: 468.328px !important;">#}
+                                    {#                                                            <svg class="_1jZ1QRhwRIXZDO2Rgp_qon" viewBox="25 25 50 50"#}
+                                    {#                                                                 xmlns:xlink="http://www.w3.org/1999/xlink"#}
+                                    {#                                                                 xmlns="http://www.w3.org/2000/svg"#}
+                                    {#                                                                 style="inset: 0px -2px !important;">#}
+                                    {#                                                                <circle cx="50" cy="50" r="20"></circle>#}
+                                    {#                                                            </svg>#}
+                                    {#                                                        </div>#}
+                                    {#                                                        <svg class="_2WQbmZpFI_2_k72D9o87Hq kpm_reset _2p2h7gYS-bpObPoQxR7lvo"#}
+                                    {#                                                             width="12" height="24" viewBox="0 0 8 16" version="1.1"#}
+                                    {#                                                             xmlns="http://www.w3.org/2000/svg"#}
+                                    {#                                                             xmlns:xlink="http://www.w3.org/1999/xlink"#}
+                                    {#                                                             style="width: 12px !important; height: 24px !important; top: -35px !important; left: 468.328px !important;">#}
+                                    {#                                                            <path fill-rule="evenodd" clip-rule="evenodd"#}
+                                    {#                                                                  d="M6 7.46487C7.1956 6.77325 8 5.48056 8 4C8 1.79086 6.20914 0 4 0C1.79086 0 0 1.79086 0 4C0 5.48056 0.804397 6.77325 2 7.46487V9H3V10H2V12H3V13H2V14.5L4 16L6 14.5V7.46487ZM5 3C5 3.55228 4.55229 4 4 4C3.44772 4 3 3.55228 3 3C3 2.44772 3.44772 2 4 2C4.55229 2 5 2.44772 5 3ZM4 8H5V14H4V8Z"></path>#}
+                                    {#                                                        </svg>#}
+                                    {#                                                    </kpm-button>#}
+                                    {#                                                </div>#}
+                                    {#                                            </div>#}
+                                    {#                                        </div>#}
+                                    {#                                        <div class="row" wfd-id="23">#}
+                                    {#                                            <div class="col-lg-4" wfd-id="30">#}
+                                    {#                                                <div class="form-group" wfd-id="31">#}
+                                    {#                                                    <label class="form-control-label" for="input-city"#}
+                                    {#                                                           wfd-id="32">City</label>#}
+                                    {#                                                    <input type="text" id="input-city" class="form-control"#}
+                                    {#                                                           placeholder="City" value="New York" wfd-id="146">#}
+                                    {#                                                </div>#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="col-lg-4" wfd-id="27">#}
+                                    {#                                                <div class="form-group" wfd-id="28">#}
+                                    {#                                                    <label class="form-control-label" for="input-country" wfd-id="29">Country</label>#}
+                                    {#                                                    <input type="text" id="input-country" class="form-control"#}
+                                    {#                                                           placeholder="Country" value="United States" wfd-id="145">#}
+                                    {#                                                </div>#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="col-lg-4" wfd-id="24">#}
+                                    {#                                                <div class="form-group" wfd-id="25">#}
+                                    {#                                                    <label class="form-control-label" for="input-country" wfd-id="26">Postal#}
+                                    {#                                                        code</label>#}
+                                    {#                                                    <input type="number" id="input-postal-code" class="form-control"#}
+                                    {#                                                           placeholder="Postal code" wfd-id="144">#}
+                                    {#                                                </div>#}
+                                    {#                                            </div>#}
+                                    {#                                        </div>#}
+                                    {#                                    </div>#}
+                                    {#                                    <hr class="my-4">#}
+                                    {#                                    <!-- Description -->#}
+                                    {#                                    <h6 class="heading-small text-muted mb-4">About me</h6>#}
+                                    {#                                    <div class="pl-lg-4" wfd-id="19">#}
+                                    {#                                        <div class="form-group" wfd-id="20">#}
+                                    {#                                            <label class="form-control-label" wfd-id="21">About Me</label>#}
+                                    {#                                            <textarea rows="4" class="form-control"#}
+                                    {#                                                      placeholder="A few words about you ..."#}
+                                    {#                                                      wfd-id="153">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>#}
+                                    {#                                        </div>#}
+                                    {#                                    </div>#}
                                 </form>
                             </div>
                         </div>
@@ -194,13 +260,14 @@
 
                 </div>
 
-{#                                {% for field in form.visible_fields %}#}
-{#                                    <div class="form-group">#}
-{#                                        <label for="email">{{ field.label }}:</label>#}
-{#                                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
-{#                                        {{ field }}#}
-{#                                    </div>#}
-{#                                {% endfor %}#}
+
+{#                {% for field in form.visible_fields %}#}
+{#                    <div class="form-group">#}
+{#                        <label for="email">{{ field.label }}:</label>#}
+{#                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
+                        {#                        {{ field }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
 
 
                 {#                <div class="row">#}
@@ -327,7 +394,6 @@
 {% block javascript %}
 
     <script>
-
         $('#id_image').on('change', function () {
             filePreview(this);
         });
@@ -366,10 +432,6 @@
 
     </script>
 
-    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
-    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
-    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
-    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
     <script src="{% static 'js/user/form.js' %}"></script>
 
 {% endblock %}
