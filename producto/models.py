@@ -17,7 +17,7 @@ class Producto(models.Model):
     prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     prodIva = models.DecimalField(default=0.12, max_digits=10, decimal_places=2)
     # prodTalla=models.CharField(max_length=100)
-    prodCaracteristica=models.TextField(max_length=400, null=True)
+    prodCaracteristica=models.TextField(max_length=400, null=True, blank=True)
     # estado de la produccion
     prodEstprod=models.IntegerField(default=0)
     # referencia si es por contrato o venta normal

@@ -280,8 +280,8 @@ function formatRepo(repo) {
         //'<br>' +
         '<p style="margin-bottom: 0;">' +
         '<b>Nombre:</b> ' + repo.insDescripcion + '<br>' +
-        '<b>Categoría:</b> ' + repo.categoria.catDescripcion + '<br>' +
-        '<b>PVP:</b> <span class="badge badge-warning">$' + repo.insPrecio + '</span>' +
+        '<b>Stock:</b> ' + repo.insStock + '<br>' +
+        // '<b>PVP:</b> <span class="badge badge-warning">$' + repo.insPrecio + '</span>' +
         '</p>' +
         '</div>' +
         '</div>' +

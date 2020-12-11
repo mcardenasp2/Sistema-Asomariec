@@ -41,7 +41,7 @@ class ReportCompraView(LoginRequiredMixin,TemplateView):
                 end_date = request.POST.get('end_date', '')
                 search =CabCompra.objects.all()
                 if len(start_date) and len(end_date):
-                    search = search.filter(ccoFecCom__range=[start_date, end_date])
+                    search = search.filter(ccoFecCom__range=[start_date, end_date],ccoEstado=1)
                 # print('si')
                 for s in search:
                     data.append([
@@ -98,13 +98,13 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                 # print('tipo'+tipo)
                 search =Venta.objects.all()
                 if len(start_date) and len(end_date):
-                    search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
+                    search = search.filter(venFechaFin__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
                 if len(start_date) and len(end_date) and tipo=='3':
                     #sin contrato
-                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=2, ventEstado=1, venEstVenta=2)
+                    search = search.filter(venFechaFin__range=[start_date, end_date],venTipo=2, ventEstado=1, venEstVenta=2)
                 if len(start_date) and len(end_date) and tipo=='2':
                     # contrto
-                    search = search.filter(venFechaInici__range=[start_date, end_date],venTipo=1, ventEstado=1, venEstVenta=2)
+                    search = search.filter(venFechaFin__range=[start_date, end_date],venTipo=1, ventEstado=1, venEstVenta=2)
                 for s in search:
                     data.append([
                         s.id,
@@ -188,7 +188,7 @@ class SaleInvoicePdfView(View):
             search = CabCompra.objects.all()
             if len(start_date) and len(end_date):
                 print('gggggg')
-                search = search.filter(ccoFecCom__range=[start_date, end_date])
+                search = search.filter(ccoFecCom__range=[start_date, end_date],ccoEstado=1)
             # print('si')
             for s in search:
                 data.append([
@@ -305,15 +305,15 @@ class VentaPdfView(View):
             descr = ''
             if len(start_date) and len(end_date):
                 # print('xxxxxxxxxxxxxx')
-                search = search.filter(venFechaInici__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
+                search = search.filter(venFechaFin__range=[start_date, end_date], ventEstado=1, venEstVenta=2)
 
             if len(start_date) and len(end_date) and tipo == '3':
                 # sin contrato
-                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=2, ventEstado=1, venEstVenta=2)
+                search = search.filter(venFechaFin__range=[start_date, end_date], venTipo=2, ventEstado=1, venEstVenta=2)
                 descr = 'Sin Contrato'
             if len(start_date) and len(end_date) and tipo == '2':
                 # contrto
-                search = search.filter(venFechaInici__range=[start_date, end_date], venTipo=1, ventEstado=1, venEstVenta=2)
+                search = search.filter(venFechaFin__range=[start_date, end_date], venTipo=1, ventEstado=1, venEstVenta=2)
                 descr = 'Contrato'
             for s in search:
                 data.append([

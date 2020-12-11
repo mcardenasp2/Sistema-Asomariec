@@ -126,7 +126,7 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
                     cabventa = Venta()
                     cabventa.cliente_id = vent['cliente']
                     cabventa.venFechaFin = vent['fecha']
-                    # cabventa.venFechaFin=vent['cliente']
+                    cabventa.venFechaFin=vent['cliente']
                     cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = 'Ninguna'
