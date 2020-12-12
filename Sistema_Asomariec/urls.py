@@ -20,13 +20,19 @@ from django.urls import path, include
 
 def mostrar(request):
     # return render(request, 'base/body.html')
-    return render(request, 'producto/FormProducto.html')
+    return render(request, 'test.html')
+def mostrar2(request):
+    # return render(request, 'base/body.html')
+    return render(request, 'base/notificaciones.html')
+
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hola/', mostrar),
+    # path('hola/prueba/', mostrar2),
+    path('prueba/', mostrar2),
     path('insumo/', include('insumo.urls')),
     path('cliente/', include('cliente.urls')),
     path('proveedor/', include('proveedor.urls')),

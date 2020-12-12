@@ -176,6 +176,17 @@ class DashboardView(LoginRequiredMixin,TemplateView):
         context['valor'] = self.valores()
         return context
 
+class Notificaciones(TemplateView):
+    template_name = 'base/notificaciones.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = Venta.objects.all()
+        # context['graph_sales_year_month'] = self.get_graph_sales_year_month()
+        # context['valor'] = { 'venta':'250.30'}
+        # context['valor'] = self.valores()
+        return context
+
 
 class ResetPasswordView(FormView):
     form_class = ResetPasswordForm

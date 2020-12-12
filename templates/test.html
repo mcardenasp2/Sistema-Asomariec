@@ -3,10 +3,10 @@
 <html lang="en">
 <head>
     <!-- jQuery -->
-{#    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>#}
-<script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>
+    {#    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>#}
+    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>
 
-{#    <script src="{% static 'lib/assets/vendor/jquery/dist/jquery.min.js' %}"></script>#}
+    {#    <script src="{% static 'lib/assets/vendor/jquery/dist/jquery.min.js' %}"></script>#}
     <meta charset="UTF-8">
 
 
@@ -36,10 +36,27 @@
     </tr>
     </tbody>
 </table>
+
+<button>Click</button>
+<div id="prueba">
+
+</div>
+
 <script>
     $(document).ready(function () {
         $('#table_id').DataTable();
+
+        $('button').click(function () {
+            $.get("prueba/", function (dato, status, xhr) {
+                console.log("Mensaje: " + dato + "\nStatus: " + status + " " + xhr.status);
+                $('#prueba').html(dato);
+                {#console.log('hola')#}
+            });
+
+        });
     });
+
+
 </script>
 </body>
 </html>

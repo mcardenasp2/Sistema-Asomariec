@@ -180,6 +180,18 @@
     }
 
     $(function () {
+
+        $('#btnnotificacion').click(function () {
+            {#alert('c');#}
+            var ruta="/login/notificaciones/"
+            $.get(ruta, function (dato, status, xhr) {
+                {#console.log("Mensaje: " + dato + "\nStatus: " + status + " " + xhr.status);#}
+                $('#notificaciones').html(dato);
+                {#console.log('hola')#}
+            });
+
+        });
+
         prueba();
     });
     {#$(document).ready(function () {#}
