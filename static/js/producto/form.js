@@ -163,6 +163,10 @@ var prod = {
                     max: parseInt(ty),
                     // max: 10,
                     step: 1,
+
+                    verticalbuttons: true,
+                    verticalupclass: 'glyphicon glyphicon-plus',
+                    verticaldownclass: 'glyphicon glyphicon-minus'
                     // boostat: 5,
                 });
 
@@ -301,13 +305,13 @@ $(function () {
 
     // $('.addgast').on('click', function () {
 
-        // var gast = {};
-        // gast.gastDescripcion = $('input[name="descripcion"]').val();
-        // gast.gastPrecio = $('input[name="precio"]').val();
-        // if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
-        // prod.addgasto(gast);
-        // $('input[name="descripcion"]').val('');
-        // $('input[name="precio"]').val('');
+    // var gast = {};
+    // gast.gastDescripcion = $('input[name="descripcion"]').val();
+    // gast.gastPrecio = $('input[name="precio"]').val();
+    // if (gast.gastDescripcion === '' || gast.gastPrecio === '') return false;
+    // prod.addgasto(gast);
+    // $('input[name="descripcion"]').val('');
+    // $('input[name="precio"]').val('');
 
 
     // });

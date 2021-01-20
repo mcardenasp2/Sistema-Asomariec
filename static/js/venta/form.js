@@ -17,6 +17,13 @@ var produ = {
         productos: [],
         gastoad: [],
     },
+    get_ids: function(){
+        var ids=[];
+        $.each(produ.items.productos, function (key,value) {
+            ids.push(value.id);
+        });
+        return ids;
+    },
     add: function (item) {
         var band;
         band = 1;
@@ -71,7 +78,7 @@ var produ = {
         });
         // console.log(subtotal);
         this.items.tgsto = subtotal;
-        console.log(this.items.tgsto);
+        // console.log(this.items.tgsto);
 
         $('input[name="gastoadicionales"]').val(this.items.tgsto.toFixed(2));
         this.tpago();
@@ -121,6 +128,7 @@ var produ = {
             columns: [
                 {"data": "id"},
                 {"data": "prodDescripcion"},
+                {"data": "prodCantidad"},
                 {"data": "prodPrecio"},
                 // {"data": "pvp"},
                 {"data": "cant"},
@@ -133,6 +141,14 @@ var produ = {
                     orderable: false,
                     render: function (data, type, row) {
                         return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
+                    }
+                },
+                {
+                    targets:[2],
+                    class: 'text-center',
+                    orderable: false,
+                    render:function (data, type, row) {
+                        return '<span class="badge badge-pill badge-lg badge-primary">'+data+'</span>'
                     }
                 },
                 {
@@ -185,6 +201,11 @@ var produ = {
 
             }
         });
+
+        // console.clear();
+        // console.log('hl');
+        console.log(this.get_ids());
+        // console.log('hl');
 
     },
     list2: function () {
@@ -361,7 +382,7 @@ $(function () {
             // console.log(tr);
             produ.items.productos[tr.row].cant = cant;
             produ.calculate_invoice();
-            $('td:eq(4)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
+            $('td:eq(5)', tblProducto.row(tr.row).node()).html('$' + produ.items.productos[tr.row].subtotal.toFixed(2));
         });
 //eliminar todos los productos
     $('.btnRemoveAll').on('click', function () {
@@ -386,8 +407,10 @@ $(function () {
             url: window.location.pathname,
             data: function (params) {
                 var queryParameters = {
-                    term: params.term,
-                    action: 'search_productos'
+                    term:    params.term,
+                    action: 'search_productos',
+                    //aqui transformo en string los valores
+                    ids:     JSON.stringify(produ.get_ids())
                 };
                 return queryParameters;
             },
@@ -413,7 +436,7 @@ $(function () {
             data.cant = 1;
             ct = data.cant;
             data.subtotal = 0.00;
-            console.log(data);
+            // console.log(data);
             // console.log(data.insStock);
             //
             //
@@ -463,7 +486,7 @@ $(function () {
         var parameters = new FormData(this);
         parameters.append('action', 'create_client');
         parameters.forEach(function (value, key) {
-            console.log(key + ':' + value);
+            // console.log(key + ':' + value);
 
         });
 

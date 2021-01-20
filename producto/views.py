@@ -33,7 +33,7 @@ class ProductoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListV
             if action == 'searchdata':
                 # print('com aqui')
                 data = []
-                for i in Producto.objects.filter(prodEstado=True, prodEstprod=True):
+                for i in Producto.objects.filter(prodEstado=True, prodEstprod=True, prodTipo=2):
                     data.append(i.toJSON())
 
             # elif action == 'search_details_ins':

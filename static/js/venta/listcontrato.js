@@ -63,6 +63,10 @@ $(function () {
         ],
         columnDefs: [
             {
+                targets:[1,2],
+                class: 'text-center',
+            },
+            {
                 targets: [3],
                 class: 'text-center',
                 orderable: false,

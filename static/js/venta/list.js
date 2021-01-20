@@ -49,7 +49,7 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "cliente.cliNombre"},
+            {"data": "cliente.full_name"},
             {"data": "venFechaInici"},
             // {"data": "categoria.catDescripcion"},
             {"data": "ventSubtotal"},
@@ -60,6 +60,10 @@ $(function () {
 
         ],
         columnDefs: [
+            {
+                targets:[1, 2],
+                class: 'text-center',
+            },
 
             {
                 targets: [-2, -3, -4],

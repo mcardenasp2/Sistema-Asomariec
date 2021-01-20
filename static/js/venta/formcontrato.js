@@ -139,17 +139,17 @@ var produ = {
                     targets: [-4],
                     class: 'text-center',
                     orderable: false,
-                    render: function (data, type, row) {
-                        return '<div class="input-group input-group-sm"><input type="text" name="prodPrecio" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodPrecio + '"></div>';
-                    }
+                    // render: function (data, type, row) {
+                    //     return '<div class="input-group input-group-sm"><input type="text" name="prodPrecio" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodPrecio + '"></div>';
+                    // }
                 },
                 {
                     targets: [-3],
                     class: 'text-center',
                     orderable: false,
-                    render: function (data, type, row) {
-                        return '<div class="input-group input-group-sm"><input type="text" name="prodIva" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodIva + '"></div>';
-                    }
+                    // render: function (data, type, row) {
+                    //     return '<div class="input-group input-group-sm"><input type="text" name="prodIva" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.prodIva + '"></div>';
+                    // }
                 },
                 {
                     targets: [-2],
@@ -178,6 +178,9 @@ var produ = {
                     // max: parseInt(pp),
                     max: 1000,
                     step: 1,
+                    verticalbuttons: true,
+                    verticalupclass: 'glyphicon glyphicon-plus',
+                    verticaldownclass: 'glyphicon glyphicon-minus'
                     // prefix: '$',
                     // boostat: 5,
                 });

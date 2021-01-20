@@ -158,7 +158,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
 
         insumos=Insumo.objects.filter(insEstado=1).aggregate(
                     r=Coalesce(Count('insEstado'), 0)).get('r')
-        producto=Producto.objects.filter(prodEstado=1).aggregate(
+        producto=Producto.objects.filter(prodEstado=1,prodTipo=2).aggregate(
                     r=Coalesce(Count('prodEstado'), 0)).get('r')
 
         data['venta']=float(venta)

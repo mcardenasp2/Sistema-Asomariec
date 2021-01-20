@@ -168,14 +168,19 @@
                                             <br>
 
 
-{#                                            {{ form.ccoDocumento|add_class:'form-control-file' }}#}
-{#                                            <div class="custom-file">#}
-{#                                                <input type="file" class="custom-file-input" id="customFileLang"#}
-{#                                                       lang="en">#}
-                                                 {{ form.ccoDocumento|add_class:'custom-file-input' }}
-{#                                                <label class="custom-file-label" for="id_ccoDocumento">Select#}
-{#                                                    file</label>#}
-{#                                            </div>#}
+                                            {{ form.ccoDocumento|add_class:'custom-file-input' }}
+
+
+
+
+                                            {#                                            {{ form.ccoDocumento|add_class:'form-control-file' }}#}
+                                            {#                                            <div class="custom-file">#}
+                                            {#                                                <input type="file" class="custom-file-input" id="customFileLang"#}
+                                            {#                                                       lang="en">#}
+                                            {#                                                 {{ form.ccoDocumento|add_class:'custom-file-input' }}#}
+                                            {#                                                <label class="custom-file-label" for="id_ccoDocumento">Select#}
+                                            {#                                                    file</label>#}
+                                            {#                                            </div>#}
 
                                         </div>
 
@@ -213,8 +218,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="example-text-input" class="form-control-label">Iva
-                                                Calculado:</label>
+                                            <label for="example-text-input" class="form-control-label">Iva:</label>
 
                                         </div>
                                     </div>
@@ -358,6 +362,9 @@
     {#    <script src="{% static 'lib/dropzone-5.7.0/dist/min/dropzone.min.css' %}"></script>#}
     {#    <script src="{% static 'lib/dropzone-5.7.0/dist/dropzone.js' %}"></script>#}
 
+    <script src="{% static '/lib/assets/vendor/dropzone/dist/min/dropzone.min.js' %}"></script>
+
+
     <script src="{% static 'js/compra/form.js' %}"></script>
 
     <script>
@@ -377,6 +384,8 @@
     <script>
         $(document).ready(function () {
             $('#id_ccoCedVend').mask('0000000000');
+
+
             {#$('#id_proTelefono').mask('0000000000');#}
 
         });

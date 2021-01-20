@@ -4,7 +4,7 @@ $(function () {
 
 
     $('#table_id').DataTable({
-        responsive: true,
+        // responsive: true,
         autoWidth: false,
         destroy: true,
         deferRender: true,
@@ -56,15 +56,19 @@ $(function () {
         ],
         columnDefs: [
             {
+                targets: [1, 3],
+                class: 'text-center',
+            },
+            {
                 targets: [-3],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
                     // return '<img src="' + data + '" class="avatar avatar-sm rounded-circle">';
                     var imagen = '<div class="avatar-group">';
-                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">';
+                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" >';
                     imagen += '<img alt="Image placeholder" src="' + data + '"></a>';
-                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">';
+                    imagen += '<a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" >';
                     imagen += '<img alt="Image placeholder" src="' + row.prodImagen2 + '"></a></div>';
                     return imagen;
 

@@ -60,6 +60,11 @@ $(function () {
 
         ],
         columnDefs: [
+            {
+                targets: [1, 2],
+                class: 'text-center',
+
+            },
 
             {
                 targets: [-2, -3, -4],
@@ -148,6 +153,7 @@ $(function () {
                     {"data": "dcoSubtotal"},
                 ],
                 columnDefs: [
+
                     {
                         targets: [1],
                         class: 'text-center',

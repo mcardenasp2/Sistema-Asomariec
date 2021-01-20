@@ -87,10 +87,17 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1,
-                                                prodTipo=2, prodEstado=1)[0:5]
-                # print(prods)
-                for i in prods:
+                # me retorna un string y lo cambio a lista
+                ids_exclude = json.loads(request.POST['ids'])
+                term=request.POST['term'].strip()
+                print(type(ids_exclude))
+                print(ids_exclude)
+                prueba=[1,2]
+                prods = Producto.objects.filter(prodDescripcion__icontains=term, prodCantidad__gt=0,
+                                                prodTipo=2, prodEstado=1)
+
+                print(prods)
+                for i in prods.exclude(pk__in=ids_exclude)[0:5]:
                     item = i.toJSON()
                     # jquery ui
                     # item['value'] = i.insDescripcion
@@ -203,7 +210,7 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Updat
             if action == 'search_productos':
                 # print(request.POST['term'])
                 data = []
-                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gte=1,
+                prods = Producto.objects.filter(prodDescripcion__icontains=request.POST['term'], prodCantidad__gt=0,
                                                 prodTipo=2, prodEstado=1)[
                         0:5]
                 # print(prods)
@@ -648,7 +655,7 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     data = frmCLient.save()
             elif action == 'edit':
 
-                print('que paso')
+                # print('que paso')
                 with transaction.atomic():
                     vent = json.loads(request.POST['ventas'])
                     # print(prod);

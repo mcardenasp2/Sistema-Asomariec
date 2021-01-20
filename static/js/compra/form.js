@@ -60,10 +60,10 @@ var comp = {
         });
         // console.log(subtotal);
         //cambie y multilique or 0.88
-        this.items.subtotal = subtotal * 0.88;
+        this.items.subtotal = subtotal;
         //cambie y puse lo de abajo
-        // this.items.iva = this.items.subtotal * iva;
-        this.items.iva = subtotal * 0.12;
+        this.items.iva = this.items.subtotal * 0.12;
+        // this.items.iva = subtotal * 0.12;
         this.items.total = this.items.subtotal + this.items.iva;
         // console.log(subtotal);
         //solo cundo el valor es float
