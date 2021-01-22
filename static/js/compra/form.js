@@ -12,6 +12,17 @@ var comp = {
         insumos: []
 
     },
+    get_ids: function(){
+        var ids=[];
+
+        $.each(this.items.insumos, function (key, value) {
+            ids.push(value.id);
+
+        });
+
+        return ids;
+
+    },
     add: function (item) {
         //anado el detalle
         // if (item.id==this.items.insumos.id)
@@ -74,6 +85,7 @@ var comp = {
 
     },
     list: function () {
+
         this.calculate_invoce();
         tblInsumos = $('#tblInsumos').DataTable({
             responsive: true,
@@ -167,7 +179,8 @@ var comp = {
             }
         });
 
-
+        // console.clear();
+        // console.log(this.get_ids());
     },
 
 
@@ -417,7 +430,8 @@ $(function () {
             data: function (params) {
                 var queryParameters = {
                     term: params.term,
-                    action: 'search_insumos'
+                    action: 'search_insumos',
+                    ids: JSON.stringify(comp.get_ids())
                 };
                 return queryParameters;
             },

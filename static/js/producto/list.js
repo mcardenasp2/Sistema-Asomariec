@@ -60,6 +60,26 @@ $(function () {
                 class: 'text-center',
             },
             {
+                targets:[3],
+                class: 'text-center',
+                render: function (data,type,row) {
+                    var dato;
+                    if(data>9){
+                        dato='<spam disabled class="badge badge-pill badge-lg btn-success">'+data+'</spam>';
+                    }
+                    else if(data>0){
+                        dato='<spam disabled class="badge badge-pill badge-lg btn-info">'+data+'</spam>';
+                    }else{
+                        dato='<spam disabled class="badge badge-pill badge-lg btn-danger">'+data+'</spam>';
+                    }
+                    // var dato='<a class="badge badge-lg badge-pill badge-danger">'+data+'</a>';
+
+
+                    return dato;
+
+                }
+            },
+            {
                 targets: [-3],
                 class: 'text-center',
                 orderable: false,

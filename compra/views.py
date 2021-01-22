@@ -91,9 +91,11 @@ class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cr
             if action == 'search_insumos':
                 # print(request.POST['term'])
                 data = []
-                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insEstado=1)[0:5]
+                ids=json.loads(request.POST['ids'])
+                # print(type(ids))
+                prods = Insumo.objects.filter(insDescripcion__icontains=request.POST['term'],insEstado=1)
                 # print(prods)
-                for i in prods:
+                for i in prods.exclude(id__in=ids)[0:5]:
                     item = i.toJSON()
                     # jquery ui
                     # item['value'] = i.insDescripcion

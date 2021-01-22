@@ -69,7 +69,7 @@ $(function () {
             {
                 targets: [3],
                 class: 'text-center',
-                orderable: false,
+                orderable: true,
                 render: function (data, type, row) {
                     if (data==2){
                          var buttons = '<span class="badge badge-success">PAGADO</span>';

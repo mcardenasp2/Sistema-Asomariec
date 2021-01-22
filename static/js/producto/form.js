@@ -14,11 +14,21 @@ var prod = {
         insumos: [],
         gastosad: [],
     },
+    get_ids: function(){
+        var ids=[];
+        $.each(this.items.insumos,function (key, value) {
+
+            ids.push(value.id);
+
+        })
+        return ids;
+
+    },
     add: function (item) {
         // console.clear();
         var band;
         band = 1;
-        console.log('ban inici ' + band);
+        // console.log('ban inici ' + band);
         $.each(this.items.insumos, function (pos, dict) {
             // console.log('dentro ' + dict.id);
             // console.log('fuera ' + item.id);
@@ -175,6 +185,8 @@ var prod = {
 
             }
         });
+
+        // console.log(this.get_ids());
 
     },
     // addgasto: function (item) {
@@ -404,7 +416,8 @@ $(function () {
             data: function (params) {
                 var queryParameters = {
                     term: params.term,
-                    action: 'search_insumos'
+                    action: 'search_insumos',
+                    ids: JSON.stringify(prod.get_ids())
                 };
                 return queryParameters;
             },
