@@ -9,19 +9,19 @@ from django.forms import model_to_dict
 
 class Producto(models.Model):
     prodDescripcion = models.CharField(max_length=100, verbose_name='Descripcion')
-    prodFecElab=models.DateTimeField(default=datetime.now())
+    # prodFecElab=models.DateTimeField(default=datetime.now())
     prodImagen= models.ImageField(upload_to='producto', blank=True, null=True)
     prodImagen2= models.ImageField(upload_to='producto2', blank=True, null=True)
-    prodCantidad=models.IntegerField(default=1)
+    prodCantidad=models.IntegerField(default=0, blank=True, null=True)
     prodPrecio=models.DecimalField(default=1.25,max_digits=9, decimal_places=2)
-    prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
+    prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2,blank=True, null=True)
     prodIva = models.DecimalField(default=0.12, max_digits=10, decimal_places=2)
     # prodTalla=models.CharField(max_length=100)
     prodCaracteristica=models.TextField(max_length=400, null=True, blank=True)
     # estado de la produccion
-    prodEstprod=models.IntegerField(default=0)
+    prodEstprod=models.IntegerField(default=1,blank=True)
     # referencia si es por contrato o venta normal
-    prodTipo=models.IntegerField(default=1)
+    prodTipo=models.IntegerField(default=2,blank=True)
     prodEstado = models.BooleanField(default=True, verbose_name='Estado')
     usuaReg = models.IntegerField(blank=True, null=True)
     usuaMod = models.IntegerField(blank=True, null=True)
@@ -41,7 +41,7 @@ class Producto(models.Model):
         item['prodPrecio'] = format(self.prodPrecio, '.2f')
         item['prodIva'] = format(self.prodIva, '.2f')
         item['prodTotal'] = format(self.prodTotal, '.2f')
-        item['prodFecElab'] = self.prodFecElab.strftime('%Y-%m-%d')
+        # item['prodFecElab'] = self.prodFecElab.strftime('%Y-%m-%d')
         return item
 
     def get_image(self):
@@ -60,8 +60,23 @@ class Producto(models.Model):
         ordering = ['id']
 
 
-class DetProducto(models.Model):
+class Produccion(models.Model):
     producto=models.ForeignKey(Producto,on_delete=models.PROTECT)
+    prodcFecElab = models.DateTimeField(default=datetime.now())
+    prodcCantidad = models.IntegerField(default=1)
+    prodcTotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    prodcEstado = models.BooleanField(default=True, verbose_name='Estado')
+    # estado de la produccion
+    # prodcEstprod = models.IntegerField(default=0)
+    # referencia si es por contrato o venta normal
+    prodcTipo = models.IntegerField(default=1)
+
+
+
+class DetProducto(models.Model):
+    # producto=models.ForeignKey(Producto,on_delete=models.PROTECT)
+    produccion=models.ForeignKey(Produccion,on_delete=models.PROTECT)
+
     insumo=models.ForeignKey(Insumo,on_delete=models.PROTECT)
     # detcantidad= models.IntegerField(default=0)
     detprecio=models.DecimalField(default=0.00,max_digits=10,decimal_places=2)

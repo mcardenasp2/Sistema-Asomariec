@@ -97,7 +97,7 @@ class UserProfileForm(ModelForm):
             'username': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese su username',
-                    'disabled':'disabled'
+                    # 'disabled':'disabled'
                 }
             ),
             # 'password': forms.PasswordInput(render_value=True,

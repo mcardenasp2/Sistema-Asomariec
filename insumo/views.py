@@ -345,11 +345,11 @@ class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Updat
             # print(request.FILES['insImagen'])
             print(request.POST)
             if action == 'edit':
-                print('hola')
+                # print('hola')
                 form = self.get_form()
                 # print(form.insImagen['name'])
-                print(form)
-                print('Hola')
+                # print(form)
+                # print('Hola')
                 # form.cliFecMod = datetime.now()
                 # form.cliEstado
                 # print(form)

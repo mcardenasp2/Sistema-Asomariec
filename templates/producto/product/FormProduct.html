@@ -1,0 +1,323 @@
+{#{% extends 'base/body.html' %}#}
+
+{% extends 'index.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head %}
+    <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
+
+    {#    select2#}
+    {#    <link rel="stylesheet" href="{% static 'lib/assets/vendor/select2/dist/css/select2.min.css' %}">#}
+
+{% endblock %}
+{% block content %}
+    <form method="post" action="." enctype="multipart/form-data">
+
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title p-0">{{ title }}</h2>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="{{ action }}">
+
+                {% if form.errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                        <span class="alert-text"><strong>Danger!</strong> Ha ocurrido un error</span>
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                {% endif %}
+
+
+                {#                {% for field in form.visible_fields %}#}
+                {#                    <div class="form-group">#}
+                {#                        <label for="email">{{ field.label }}:</label>#}
+                {#                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
+                {#                        {{ field }}#}
+                {#                    </div>#}
+                {#                {% endfor %}#}
+
+
+                <div class="row" wfd-id="14">
+                    <div class="col-xl-3 order-xl-1" wfd-id="56">
+                        <div class="card card-profile" wfd-id="57">
+                            <img src="{% static 'lib/assets/img/theme/img-1-1000x600.jpg' %}" alt="Image placeholder"
+                                 class="card-img-top">
+                            <div class="row justify-content-center" wfd-id="78">
+                                <div class="col-lg-3 order-lg-2" wfd-id="79">
+                                    <div class="card-profile-image" wfd-id="80">
+                                        {% if object.prodImagen %}
+                                            <img src="{{ object.prodImagen.url }}"
+                                                 style="height: 150px; width: 250px"
+                                                 class="rounded-circle cambiar">
+                                        {% else %}
+                                            <img src="{% static 'img/empty.png' %}"
+                                                 style="height: 150px; width: 250px"
+                                                 class="rounded-circle cambiar">
+
+                                        {% endif %}
+                                        {#                                        </a>#}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-3 order-lg-2" wfd-id="7">
+                                    <div class="card-profile-image" wfd-id="80">
+                                        {% if object.prodImagen2 %}
+                                            <img src="{{ object.prodImagen2.url }}"
+                                                 style="height: 150px; width: 250px"
+                                                 class="rounded-circle cambiar2">
+                                        {% else %}
+                                            <img src="{% static 'img/empty.png' %}"
+                                                 style="height: 150px; width: 250px"
+                                                 class="rounded-circle cambiar2">
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4" wfd-id="76">
+                                <div class="d-flex justify-content-between" wfd-id="77">
+                                </div>
+                            </div>
+
+                            <div class="card-body pt-0" wfd-id="58">
+                                <div class="row" wfd-id="64">
+                                    <div class="col" wfd-id="65">
+                                        <div class="card-profile-stats d-flex justify-content-center" wfd-id="66">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center" wfd-id="59">
+                                    <div class="row ">
+                                        <div class="" id="files">
+                                            {{ form.prodImagen|add_class:"custom-file-input" }}
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <input type="button" value="Subir Archivo" class="btn btn-sm btn-primary"
+                                                   onclick="document.getElementById('id_prodImagen').click()">
+                                        </div>
+
+
+                                        <div class="" id="files">
+                                            {{ form.prodImagen2|add_class:"custom-file-input" }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="button" value="Subir Archivo" class="btn btn-sm btn-primary"
+                                                   onclick="document.getElementById('id_prodImagen2').click()">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xl-9 order-xl-2" wfd-id="15">
+                        <div class="card" wfd-id="16">
+
+                            <div class="card-body" wfd-id="17">
+                                <form wfd-id="18">
+                                    <h6 class="heading-small text-muted mb-4">Informacion del Producto</h6>
+                                    <div class="pl-lg-4" wfd-id="37">
+                                        <div class="row" wfd-id="45">
+                                            <div class="col-lg-6" wfd-id="42">
+                                                <div class="form-group" wfd-id="43">
+                                                    <label class="form-control-label" for="input-first-name"
+                                                           wfd-id="44">Nombre</label>
+                                                    {#                                                    <input type="text" id="input-first-name" class="form-control"#}
+                                                    {#                                                           placeholder="First name" value="Lucky" wfd-id="149">#}
+                                                    {{ form.prodDescripcion }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" wfd-id="39">
+                                                <div class="form-group" wfd-id="40">
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Stock</label>
+                                                    {#                                                    <input type="text" id="input-last-name" class="form-control"#}
+                                                    {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
+                                                    {{ form.prodCantidad }}
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row" wfd-id="38">
+                                            <div class="col-lg-6" wfd-id="49">
+                                                <div class="form-group" wfd-id="50">
+                                                    <label class="form-control-label" for="input-username" wfd-id="51">Precio</label>
+                                                    {{ form.prodPrecio }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" wfd-id="46">
+                                                <div class="form-group" wfd-id="47">
+                                                    <label class="form-control-label" for="input-email"
+                                                           wfd-id="48">Iva</label>
+                                                    {{ form.prodIva }}
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    {{ form.prodEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}
+                </div>
+
+                <div class="col-6">
+
+                    <div class="custom-control ">
+                        {% ifequal action "add" %}
+                            {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}
+                            {{ form.usuaMod|attr:'type:hidden' }}
+                            {{ form.usuaEli|attr:'type:hidden' }}
+                        {% endifequal %}
+                        {% ifequal action "edit" %}
+                            {{ form.usuaReg|attr:'type:hidden' }}
+                            {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}
+                            {{ form.usuaEli|attr:'type:hidden' }}
+                        {% endifequal %}
+
+
+
+                        {#                            {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}#}
+                        {#                            {{ form.usuaEli|attr:'type:hidden'|attr:'value:1' }}#}
+                        {#                            <label class="custom-control-label" for="id_cliEstado">Estado</label>#}
+                    </div>
+
+
+                </div>
+
+                <div class="text-right">
+                    <button class="btn btn-info" type="submit"> Guardar</button>
+
+                    <a href="{{ list_url }}" class="btn btn-danger" role="button" aria-pressed="true">Cancelar</a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        {{ form.prodEstprod|attr:'type:hidden' }}
+        {{ form.prodTipo|attr:'type:hidden' }}
+
+
+    </form>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+
+    {#<script src="{% static 'lib/assets/vendor/select2/dist/js/select2.min.js' %}"></script>#}
+
+    {#    <script src="{% static 'js/insumo/insumo/list.js' %}"></script>#}
+    <script>
+
+        {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+                {% for error in field.errors %}
+                    errors += '{{ error }}\n';
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+            Swal.fire({
+                title: 'Error!',
+                text: errors,
+                icon: 'error'
+            });
+        {% endif %}
+
+        {#$("input[name='insPrecio']").TouchSpin({#}
+        {#    min: 0,#}
+        {#    max: 1000,#}
+        {#    step: 1,#}
+        {#    decimals: 2,#}
+        {#    boostat: 5,#}
+        {#    maxboostedstep: 10,#}
+        {#postfix: '%'#}
+
+
+        $("input[name='prodPrecio']").mask('000.000.000.000.000.00', {reverse: true});
+        $("input[name='prodIva']").mask('000.000.000.000.000.00', {reverse: true});
+        {#    solo cuando envio con ajax#}
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            {#console.log('hola');#}
+            var parameters = new FormData(this);
+            {#console.log(parameters.insPrecio);#}
+            {#console.log(parameters);#}
+            {#parameters.set('insImagen'['name'],'ma.jpg');#}
+            {#console.log(parameters.'insImagen']['name']);#}
+            {#console.log(parameters.get('insImagen')['name']);#}
+
+            parameters.forEach(function (value, key) {
+                console.log(key + ':' + value);
+            });
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                location.href = '{{ list_url }}';
+            });
+        });
+
+        $('#id_prodImagen').on('change', function () {
+            filePreview(this);
+        });
+        $('#id_prodImagen2').on('change', function () {
+            filePreview2(this);
+        });
+
+        $('.mySelect2').select2({
+            {#theme: 'bootstrap4',#}
+            {#theme: "classic",#}
+            dropdownAutoWidth: true,
+
+
+            {#dropdownParent: $('#conte'),#}
+            width: 'auto',
+            {#languaje:'es',#}
+            placeholder: 'Seleccione una opcion',
+
+
+            {#theme: 'bootstrap4',#}
+        });
+        /*$('#exampleFormControlSelect2').select2({
+            {#theme: 'bootstrap4',#}
+            theme: "classic",
+            dropdownAutoWidth: true,
+
+            {#dropdownParent: $('#conte'),#}
+            width: 'auto',
+            {#theme: 'bootstrap4',#}
+        });*/
+    </script>
+
+    {#    <script src="{% static 'js/insumo/insumo/list.js' %}"></script>#}
+{% endblock %}

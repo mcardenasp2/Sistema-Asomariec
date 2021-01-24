@@ -54,7 +54,6 @@ class ProductoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListV
         # context['entity'] = 'V'
         return context
 
-
 class ProductoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Producto
     form_class = ProductoForm
@@ -156,7 +155,6 @@ class ProductoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cre
         context['det']=[]
         # context['gasta']=[]
         return context
-
 
 class ProductoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
     template_name = 'producto/FormProducto.html'
@@ -301,7 +299,6 @@ class ProductoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upd
         # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
         return context
 
-
 class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     template_name = 'producto/DeleteProducto.html'
     model = Producto
@@ -309,7 +306,6 @@ class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Del
     success_url = reverse_lazy('producto:producto_mostrar')
     permission_required = 'delete_producto'
 
-    # @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -351,4 +347,133 @@ class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Del
         context['action'] = 'delete'
         # context['det'] = json.dumps(self.get_details_insumos(), cls=DjangoJSONEncoder)
         # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
+        return context
+
+
+
+class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
+    model = Producto
+    template_name = 'producto/product/ListProduct.html'
+    # permission_required = 'add_producto'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                print('entro')
+                data = []
+                for i in Producto.objects.filter(prodEstado=True, prodEstprod=True, prodTipo=2):
+                    data.append(i.toJSON())
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create_url'] = reverse_lazy('producto:product_create')
+        context['list_url'] = reverse_lazy('producto:product_mostrar')
+        return context
+
+class ProductCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = 'producto/product/FormProduct.html'
+    # permission_required = 'add_producto'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+
+            print(request.POST)
+            print(request.FILES)
+            action = request.POST['action']
+            if action == 'add':
+                form= self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+               data['error'] = str(e)
+        #     para serializar
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['list_url'] = reverse_lazy('producto:product_mostrar')
+        context['action'] = 'add'
+        return context
+
+class ProductUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
+    template_name = 'producto/product/FormProduct.html'
+    model = Producto
+    form_class = ProductoForm
+    success_url = reverse_lazy('producto:product_mostrar')
+    # permission_required = 'change_producto'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            print(request.POST)
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['list_url'] = reverse_lazy('producto:product_mostrar')
+        # context['title'] = 'Edicion de un Insumo'
+        context['action'] = 'edit'
+        return context
+
+class ProductDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
+    template_name = 'producto/product/DeleteProduct.html'
+    model = Producto
+    success_url = reverse_lazy('producto:product_mostrar')
+    # permission_required = 'delete_producto'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'eliminar':
+                prod = self.get_object()
+                prod.prodEstado = False
+                # prod.usuaEli = request.POST['usuaEli']
+                prod.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['action'] = 'eliminar'
+        context['list_url'] = reverse_lazy('producto:product_mostrar')
         return context
