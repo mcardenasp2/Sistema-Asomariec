@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-# Create your views here.
+# Create your view here.
 from proveedor.forms import ProveedorForm
 from proveedor.models import *
 from user.mixins import ValidatePermissionRequiredMixin

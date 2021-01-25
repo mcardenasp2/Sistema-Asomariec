@@ -1,6 +1,7 @@
 from django.urls import path
 
 from producto.views import *
+from producto.view.vwproduccion import *
 
 app_name = 'producto'
 
@@ -16,5 +17,10 @@ urlpatterns = [
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/editar/<int:pk>/', ProductUpdateView.as_view(), name='product_edit'),
     path('product/eliminar/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
+
+    #     produccion
+    path('produccion/mostrar/', ProduccionListView.as_view(), name='produccion_mostrar'),
+    path('produccion/create/', ProducionCreateView.as_view(), name='produccion_create'),
+    path('produccion/eliminar/<int:pk>/', ProduccionDeleteView.as_view(), name='produccion_delete'),
 
 ]

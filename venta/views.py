@@ -6,7 +6,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.shortcuts import render
 
-# Create your views here.
+# Create your view here.
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 

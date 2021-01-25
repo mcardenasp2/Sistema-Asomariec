@@ -4,10 +4,10 @@ from django.db.models import Sum
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-# Create your views here.
+# Create your view here.
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-# from django.views import View
+# from django.view import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View
 

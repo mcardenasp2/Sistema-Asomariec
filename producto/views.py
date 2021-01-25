@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-# Create your views here.
+# Create your view here.
 from producto.models import Producto, DetProducto, GastosAdicionales
 from insumo.models import Insumo
 from producto.forms import ProductoForm

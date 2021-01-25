@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from cliente.forms import *
 
 
-# Create your views here.
+# Create your view here.
 from user.mixins import ValidatePermissionRequiredMixin
 
 

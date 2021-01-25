@@ -68,3 +68,43 @@ class ProductoForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+
+class ProduccionForm(ModelForm):
+    producto = ModelChoiceField(queryset=Producto.objects.filter(prodEstado=1))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model= Produccion
+        fields='__all__'
+        widgets = {
+
+            'prodcFecElab': DateInput(
+                format='%Y-%m-%d',
+                attrs={
+                    'value': datetime.now().strftime('%Y-%m-%d'),
+                    'autocomplete': 'off',
+                    'class': 'form-control datetimepicker-input',
+                    'id': 'prodcFecElab',
+                    'data-target': '#prodcFecElab',
+                    'data-toggle': 'datetimepicker'
+                }
+            ),
+
+            'prodcCantidad': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    # 'disabled':'disabled'
+                },
+            ),
+
+
+            'prodcTotal': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'disabled': 'disabled'
+                },
+            ),
+        }
+        # exclude=['catFecReg','catFecMod']

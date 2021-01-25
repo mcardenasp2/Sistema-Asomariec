@@ -71,6 +71,23 @@ class Produccion(models.Model):
     # referencia si es por contrato o venta normal
     prodcTipo = models.IntegerField(default=1)
 
+    def __str__(self):
+        return self.producto.prodDescripcion
+
+    def toJSON(self):
+        item=model_to_dict(self)
+        item['producto'] = self.producto.toJSON()
+        # item['prodcTotal'] = format((self.prodcTotal*self.prodIva)+self.prodPrecio, '.2f')
+        item['prodcTotal'] = format(self.prodcTotal, '.2f')
+        # item['prodIva'] = format(self.prodIva, '.2f')
+        # item['prodTotal'] = format(self.prodTotal, '.2f')
+        item['prodcFecElab'] = self.prodcFecElab.strftime('%Y-%m-%d')
+        return item
+
+    class Meta:
+        verbose_name='Produccion'
+        verbose_name_plural='Producciones'
+        ordering = ['id']
 
 
 class DetProducto(models.Model):

@@ -12,7 +12,7 @@ from insumo.models import *
 from insumo.forms import *
 
 
-# Create your views here.
+# Create your view here.
 from user.mixins import ValidatePermissionRequiredMixin
 
 

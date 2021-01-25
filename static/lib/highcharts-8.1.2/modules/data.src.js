@@ -263,7 +263,7 @@
         var win = H.win, doc = win.document;
         /**
          * The Data module provides a simplified interface for adding data to
-         * a chart from sources like CVS, HTML tables or grid views. See also
+         * a chart from sources like CVS, HTML tables or grid view. See also
          * the [tutorial article on the Data module](
          * https://www.highcharts.com/docs/working-with-data/data-module).
          *

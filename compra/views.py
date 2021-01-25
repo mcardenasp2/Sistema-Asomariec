@@ -29,7 +29,7 @@ from xhtml2pdf import pisa
 # from django.contrib.staticfiles import finders
 
 
-# Create your views here.
+# Create your view here.
 from user.mixins import ValidatePermissionRequiredMixin
 
 

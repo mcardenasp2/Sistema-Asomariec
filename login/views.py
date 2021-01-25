@@ -3,7 +3,7 @@ import uuid
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
-# Create your views here.
+# Create your view here.
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView

@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title p-0">Lista de Producto</h2>
+            <h2 class="card-title p-0">Lista de Producción</h2>
             <div class="row">
 
                 <div class="table-responsive py-4 ">
@@ -25,9 +25,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Nombre</th>
-                            <th>Stock</th>
-                            {#                            <th>Imagen</th>#}
-                            <th>Imagen</th>
+                            <th>Fecha</th>
+                            <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Accion</th>
 
@@ -38,8 +37,11 @@
                         {#                        {% for object in object_list %}#}
                         {#                            <tr>#}
                         {#                                <td>{{ object.cliApellido }}</td>#}
+                        {#                                <td>{{ object.cliApellido }}</td>#}
+                        {#                                <td>{{ object.cliApellido }}</td>#}
                         {#                                <td>{{ object.catEstado }}</td>#}
                         {#                            </tr>#}
+                        {##}
                         {#                        {% endfor %}#}
 
                         </tbody>
@@ -68,7 +70,44 @@
     <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
     {#funcion del datatable#}
-    <script src="{% static 'js/producto/product/list.js' %}"></script>
+    <script src="{% static 'js/producto/produccion/list.js' %}"></script>
+    {#    <script>#}
+    {#    $(function () {#}
+    {#        $('#table_id').DataTable();#}
+    {##}
+    {#    });#}
+    {#    </script>#}
 
+    <div class="modal fade" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de
+                        detalle de insumo</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive py-4">
+                        <table class="table table-bordered" id="tblDet">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Insumo</th>
+                                <th>Imagen</th>
+                                <th>PVP</th>
+                                <th>Cantidad</th>
+                                <th>Subtotal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
