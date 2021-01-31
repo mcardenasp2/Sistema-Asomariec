@@ -80,7 +80,7 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a href="/compra/compra/eliminar/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
-                    buttons += '<a href="/compra/compra/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
+                    // buttons += '<a href="/compra/compra/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
                     // buttons += '<a href="/compra/compra/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
                     buttons += '<a href="' + data + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
@@ -102,6 +102,9 @@ $(function () {
             var tr = tblCompra.cell($(this).closest('td, li')).index();
             var data = tblCompra.row(tr.row).data();
             console.log(data);
+            console.log()
+            $('#vendedor').html(data.ccoVendedor);
+            $('#cedula').html(data.ccoCedVend);
 
             $('#tblDet').DataTable({
                 responsive: true,

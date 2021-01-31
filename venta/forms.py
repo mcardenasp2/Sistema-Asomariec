@@ -65,6 +65,13 @@ class CabVentaForm(ModelForm):
                 }
 
             ),
+            'ventObservacion':forms.TextInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Ingrese el nombre del contrato',
+                    # 'autofocus':True
+                }
+            )
 
         }
 

@@ -35,17 +35,7 @@
 
                         </tr>
                         </thead>
-                        {#                        <tfoot>#}
-                        {#                        <tr>#}
-                        {#                            <th>Id</th>#}
-                        {#                            <th>Nombre</th>#}
-                        {#                            <th>Apellido</th>#}
-                        {#                            <th>Ruc</th>#}
-                        {#                            <th>Telefono</th>#}
-                        {#                            <th>Accion</th>#}
-                        {##}
-                        {#                        </tr>#}
-                        {#                        </tfoot>#}
+
                         <tbody>
                         {#                        {% for object in object_list %}#}
                         {#                            <tr>#}
@@ -103,6 +93,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <div class="table-responsive py-4">
                         <table class="table table-bordered" id="tblDet">
                             <thead class="thead-light">
@@ -118,6 +109,27 @@
                             </tbody>
                         </table>
                     </div>
+
+
+{#                    <input id="valgast" type="text">#}
+
+
+                    <h5 class="modal-title" id="exampleModalLabel"><b> Gastos Adicionales</b></h5>
+
+                    <div class="table-responsive py-4">
+                        <table class="table table-bordered" id="tblGast">
+                            <thead class="thead-light">
+                            <tr>
+                                <th>Descripcion</th>
+                                <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -128,10 +140,10 @@
     <script>
         $(document).ready(function () {
             {#$(".nav li").on("click", function () {#}
-                $(".itemNav").find(".marco").addClass("show");
-                {#$(".itemNav").find(".marco").addClass("show");#}
-                $(".itemNav a").attr("aria-expanded","true");
-                {#$(this).addClass("activa");#}
+            $(".itemNav").find(".marco").addClass("show");
+            {#$(".itemNav").find(".marco").addClass("show");#}
+            $(".itemNav a").attr("aria-expanded", "true");
+            {#$(this).addClass("activa");#}
 
         });
     </script>

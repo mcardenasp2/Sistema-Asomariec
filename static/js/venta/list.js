@@ -61,7 +61,7 @@ $(function () {
         ],
         columnDefs: [
             {
-                targets:[1, 2],
+                targets: [1, 2],
                 class: 'text-center',
             },
 
@@ -101,6 +101,7 @@ $(function () {
             var tr = tblVenta.cell($(this).closest('td, li')).index();
             var data = tblVenta.row(tr.row).data();
             console.log(data);
+            // $("#valgast").val(data.id);
 
             $('#tblDet').DataTable({
                 responsive: true,
@@ -185,6 +186,74 @@ $(function () {
                 initComplete: function (settings, json) {
 
                 }
+            });
+
+            $('#tblGast').DataTable({
+                responsive: true,
+                autoWidth: false,
+                destroy: true,
+                deferRender: true,
+                // data: data.det,
+                // {#Bolo#}
+                ordering: true,
+                info: true,
+                pageLength: 5,
+                searching: true,
+                responsive: false,
+
+                language: {
+                    processing: 'Procesando...',
+                    // search: 'Buscar:',
+                    search: "Buscar: _INPUT_",
+                    // searchPlaceholder: "Buscar Registros",
+                    lengthMenu: '   Mostrar _MENU_ registros',
+                    info: 'Mostrando desde _START_ al _END_ de _TOTAL_ registros',
+                    infoEmpty: 'Mostrando ningún elemento.',
+                    infoFiltered: '(filtrado _MAX_ elementos total)',
+                    infoPostFix: '',
+                    loadingRecords: 'Cargando registros...',
+                    zeroRecords: 'No se encontraron registros',
+                    emptyTable: 'No hay datos disponibles en la tabla',
+                    paginate: {
+                        first: 'Primero',
+                        previous: '<-',
+                        next: '->',
+                        last: 'Último'
+                    }
+                },
+                ajax: {
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'search_gastos',
+                        'id': data.id
+                    },
+                    dataSrc: ""
+                },
+                columns: [
+                    {"data": "gastdescripcion"},
+                    {"data": "gastprecio"},
+
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        class: 'text-center'
+                    },
+                    {
+                        targets: [-1],
+                        class: 'text-center',
+                        render: function (data, type, row) {
+                            return '$' + parseFloat(data).toFixed(2);
+                        }
+                    },
+
+
+                ],
+                initComplete: function (settings, json) {
+
+                }
+
             });
 
             $('#myModelDet').modal('show');

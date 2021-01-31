@@ -101,6 +101,7 @@ $(function () {
                 render: function (data, type, row) {
                     var buttons = '<a href="/venta/contrato/eliminar/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
                     buttons += '<a href="/venta/contrato/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
+                    buttons += '<a href="/venta/contrato/detalle/' + row.id + '/" class="btn btn-default btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
                     buttons += '<a href="/venta/contrato/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
 

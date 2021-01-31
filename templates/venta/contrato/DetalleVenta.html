@@ -20,6 +20,13 @@
         {#display: block !important;#} white-space: nowrap !important;
             overflow: hidden !important;
         }
+
+        .not-active {
+        {#pointer-events: none;#}{#cursor: default;#} cursor: not-allowed;
+            pointer-events: none;
+        }
+
+
     </style>
 {% endblock %}
 {% block content %}
@@ -50,11 +57,10 @@
                                     <div class="col-md-9">
                                         <div class="form-group">
                                             <label>Nombre del Contrato:</label>
-                                            {{ form.ventObservacion }}
+                                            {{ form.ventObservacion|attr:'disabled:disabled' }}
 
                                         </div>
 
-                                        <hr>
 
                                     </div>
                                     <div class="col-md-3">
@@ -67,52 +73,7 @@
 
 
                                 </div>
-                                <div class="row">
 
-                                    <div class="col-lg-5">
-                                        <div class="form-group">
-                                            <label>Descripcion:</label>
-                                            <input class="form-control" name="descripcionc" type="text"
-                                                   placeholder="Ingrese el nombre del Producto">
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label>Precio:</label>
-                                            <input class="form-control" value="1.00" name="precioc" type="text">
-                                            {#                                            <div class="input-group input-group-sm"><input id="demo4" type="text"#}
-                                            {#                                                                                           value="" name="demo4"#}
-                                            {#                                                                                           class="input-sm">#}
-                                            {#                                            </div>#}
-
-                                        </div>
-                                        {#                                        <div class="input-group input-group-sm">#}
-                                        {#                                            <input id="demo4" type="text" value=""#}
-                                        {#                                                   name="demo4"#}
-                                        {#                                                   class="form-control input-sm">#}
-                                        {#                                        </div>#}
-
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label>Iva:</label>
-                                            <input class="form-control" value="0.12" name="ivac" type="text">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <button class="btn btn-info addcontr">Añadir</button>
-
-                                        </div>
-
-                                    </div>
-
-                                    <hr>
-
-                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         {#                                        <div class="custom-control custom-radio mb-3">#}
@@ -206,7 +167,7 @@
                                         <div class="form-group">
                                             <label>Rango de Fechas:</label>
                                             <div class="input-group">
-                                                {{ form.date_range }}
+                                                {{ form.date_range|attr:'disabled:disabled' }}
                                             </div>
                                         </div>
                                     </div>
@@ -214,17 +175,10 @@
 
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label for="exampleFormControlSelect1">Cliente: <a type="button"
-                                                                                               class="btn btn-success  btnAddClient badge "
-                                                                                               style="color: white">
-                                                <i class=" fas fa-user-plus"></i></a></label>
+                                            <label for="exampleFormControlSelect1">Cliente: </label>
 
-                                            {{ form.cliente }}
-                                            {#                                            <div class="input-group-append">#}
-                                            {#                                                <button class="btn btn-success  btnAddClient" type="button">#}
-                                            {#                                                    <i class="fas fa-user-plus"></i>#}
-                                            {#                                                </button>#}
-                                            {#                                            </div>#}
+                                            {{ form.cliente|attr:'disabled:disabled' }}
+
                                         </div>
 
                                     </div>
@@ -253,7 +207,7 @@
                                                        id="example-text-input" disabled>
                                                 <span class="input-group-append">
                                         <button type="button" class="btn btn-info btn-flat btnGastos"><i
-                                                class="fas fa-plus"></i></button>
+                                                class="fas fa-search"></i></button>
                                                     </span>
 
                                             </div>
@@ -401,67 +355,7 @@
     </form>
 
 
-    <div class="modal fade" id="MyModalClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form id="formClient" enctype="multipart/form-data" method="post">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                            <b><i class="fas fa-user-plus"></i> Nuevo registro de un cliente</b>
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {#                        {% for field in frmClient.visible_fields %}#}
-                        {#                            <div class="form-group">#}
-                        {#                                <label for="email">{{ field.label }}</label>#}
-                        {#                                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}#}
-                        {#                            </div>#}
-                        {##}
-                        {#                        {% endfor %}#}
-                        <div class="form-group">
-                            <label>Nombres:</label>
-                            {{ frmClient.cliNombre }}
-                        </div>
-                        <div class="form-group">
-                            <label>Apellidos:</label>
-                            {{ frmClient.cliApellido }}
-                        </div>
-                        <div class="form-group">
-                            <label>DNI:</label>
-                            {{ frmClient.cliRuc }}
-                        </div>
-                        <div class="form-group">
-                            <label>Teléfono:</label>
-                            {{ frmClient.cliTelefono }}
-                        </div>
-                        <div class="form-group">
-                            <label>Dirección:</label>
-                            {{ frmClient.cliDireccion }}
-                        </div>
-                        <div class="form-group">
-                            <label>Sexo:</label>
-                            {{ frmClient.cliGenero| add_class:"form-control mySelect2" }}
-                        </div>
-                        <div class="form-group">
-                            <label>Email:</label>
-                            {{ frmClient.cliEmail }}
-                        </div>
 
-
-                    </div>
-                    <div class="modal-footer">
-
-                        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Guardar
-                            Cliente
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
 
 {% endblock %}
 
@@ -490,7 +384,11 @@
     <link href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
 
-    <script src="{% static 'js/venta/formcontrato.js' %}"></script>
+    <script src="{% static 'js/venta/detallecontrato.js' %}"></script>
+
+
+
+
 
     <div class="modal fade" id="myModelDet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -507,32 +405,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <div class="form-group">
-                                <label>Descripcion:</label>
-                                <input class="form-control" name="descripcion" type="text"
-                                       placeholder="Ingrese el nombre del Gasto">
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label>Precio:</label>
-                                <input class="form-control" name="preciogasto" type="text" value="0.00">
-                            </div>
-
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <button class="btn btn-info addgast">Añadir</button>
-                            </div>
-
-                        </div>
-
-                    </div>
 
                     <div class="table-responsive py-4">
                         <table class="table table-bordered" id="tblDet">
@@ -555,6 +427,80 @@
     </div>
 
 
+    <div class="modal fade" id="myModelInsumos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {#                    <h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-shopping-cart"></i> Consulta de#}
+                    <h5 class="modal-title" id="exampleModalLabel"><b>
+                        {#                        <i class="fas fa-shopping-cart"></i>#}
+                        Consulta de
+                        detalles de Insumo</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Busqueda del Insumo:</label>
+                                <div class="input-group">
+                                    <select class="form-control select2" style="width: 100%;" name="search">
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="button" class="btn btn-danger btnRemoveAll">
+                                <i class="fas fa-trash"></i> Eliminar todos mis items
+
+                            </button>
+
+                        </div>
+                        <hr>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <!-- Projects table -->
+                                <table class="table align-items-center table-flush" id="tblInsumos">
+                                    <thead class="thead-light text-center">
+                                    <tr>
+                                        <th scope="col">Eliminar</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Unidad de Medida</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Subtotal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
 
 
     <script>
@@ -575,6 +521,7 @@
 
 
     </script>
+{#    <script src="{% static 'js/producto/produccion/form.js' %}"></script>#}
 
     <script>
         {#<script>#}

@@ -133,7 +133,9 @@ var produ = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
+
+                        // return '<a disabled="true" rel="remove" class="btn btn-primary btn-sm btn-flat not-active"  style="color: white"><i class="fas fa-edit"></i></a>';
+                        return '<a rel="detailsinsumos"   class="btn btn-primary btn-sm btn-flat"  style="color: white"><i class="fas fa-edit"></i></a>';
                     }
                 },
                 {
@@ -156,9 +158,12 @@ var produ = {
                     targets: [-2],
                     class: 'text-center',
                     orderable: false,
+                    /*
+
                     render: function (data, type, row) {
                         return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
                     }
+                    */
                 },
                 {
                     targets: [-1],
@@ -266,6 +271,11 @@ var produ = {
 
 
 $(function () {
+
+    $('#tblProducto tbody').on('click', 'a[rel="detailsinsumos"]', function () {
+        $('#myModelInsumos').modal('show');
+
+    });
         // evento calendarip
         // $('#venFechaInici').datetimepicker({
         //     icons: {
