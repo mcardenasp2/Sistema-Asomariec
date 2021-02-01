@@ -19,6 +19,7 @@ class Producto(models.Model):
     # prodTalla=models.CharField(max_length=100)
     prodCaracteristica=models.TextField(max_length=400, null=True, blank=True)
     # estado de la produccion
+    # 1 finalizado; 2 en proceso
     prodEstprod=models.IntegerField(default=1,blank=True)
     # referencia si es por contrato o venta normal
     prodTipo=models.IntegerField(default=2,blank=True)

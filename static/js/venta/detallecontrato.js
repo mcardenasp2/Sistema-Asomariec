@@ -1,3 +1,179 @@
+var tblInsumos;
+var prod = {
+    items: {
+        producto: '',
+        fecha: '',
+        detalle: '',
+        cantidad: 0,
+        precio: 0.00,
+        iva: 0.00,
+        total: 0.00,
+        subtotal: 0.00,
+        totalproduc: 0.00,
+        // subtolagast: 0.00,
+        insumos: [],
+
+    },
+    calculate_invoce: function () {
+
+        var subtotal = 0.00;
+        $.each(this.items.insumos, function (pos, dict) {
+            dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
+            subtotal += dict.subtotal;
+        });
+        this.items.totalproduc = subtotal;
+        // console.log(this.items.totalproduc);
+        $('input[name="prodcTotal"]').val(this.items.totalproduc.toFixed(2));
+        // this.totalp();
+
+    },
+    get_ids: function () {
+        var ids = [];
+        $.each(this.items.insumos, function (key, value) {
+
+            ids.push(value.id);
+
+        })
+        return ids;
+
+    },
+    add: function (item) {
+        // console.clear();
+        // console.log('ban inici ' + band);
+        // $.each(this.items.insumos, function (pos, dict) {
+        //
+        // });
+        // console.log('buenas ' + band);
+        this.items.insumos.push(item);
+
+        this.list();
+
+    },
+    list: function () {
+        this.calculate_invoce();
+        // this.totalp();
+        tblInsumos = $('#tblInsumos').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            data: this.items.insumos,
+            language: {
+                processing: 'Procesando...',
+                // search: 'Buscar:',
+                search: "Buscar: _INPUT_",
+                // searchPlaceholder: "Buscar Registros",
+                lengthMenu: '   Mostrar _MENU_ registros',
+                info: 'Mostrando desde _START_ al _END_ de _TOTAL_ registros',
+                infoEmpty: 'Mostrando ningún elemento.',
+                infoFiltered: '(filtrado _MAX_ elementos total)',
+                infoPostFix: '',
+                loadingRecords: 'Cargando registros...',
+                zeroRecords: 'No se encontraron registros',
+                emptyTable: 'No hay datos disponibles en la tabla',
+                paginate: {
+                    first: 'Primero',
+                    previous: '<-',
+                    next: '->',
+                    last: 'Último'
+                }
+            },
+            columns: [
+                {"data": "id"},
+                {"data": "insDescripcion"},
+                {"data": "insStock"},
+                {"data": "medida.medDescripcion"},
+                {"data": "insPrecio"},
+                // {"data": "pvp"},
+                {"data": "cant"},
+                {"data": "subtotal"},
+            ],
+            columnDefs: [
+                {
+                    targets: [0],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
+                    }
+                },
+                {
+                    targets: [-2],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<input type="text" name="cant" class="form-control form-control-sm input-sm" autocomplete="off" value="' + row.cant + '">';
+                    }
+                },
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '$' + parseFloat(data).toFixed(2);
+                    }
+                },
+            ],
+            rowCallback(row, data, displayNum, displayIndex, dataIndex) {
+                // var ty = data.insStock;
+                var pp = 15;
+                if ($('input[name="action"]').val() == 'add') {
+                    var ty = data.insStock;
+                } else {
+                    var ty = data.cant + data.insStock - ct;
+                }
+
+
+                $(row).find('input[name="cant"]').TouchSpin({
+                    min: 1,
+                    // max: parseInt(pp),
+                    max: parseInt(ty),
+                    // max: 10,
+                    step: 1,
+
+                    verticalbuttons: true,
+                    verticalupclass: 'glyphicon glyphicon-plus',
+                    verticaldownclass: 'glyphicon glyphicon-minus'
+                    // boostat: 5,
+                });
+
+            },
+            initComplete: function (settings, json) {
+
+            }
+        });
+
+        // console.log(this.get_ids());
+
+    },
+
+};
+
+function formatRepo(repo) {
+    if (repo.loading) {
+        return repo.text;
+    }
+
+    var option = $(
+        '<div class="wrapper container">' +
+        '<div class="row">' +
+        '<div class="col-lg-1">' +
+        '<img src="' + repo.insImagen + '" class="img-fluid img-thumbnail d-block mx-auto rounded">' +
+        '</div>' +
+        '<div class="col-lg-11 text-left shadow-sm">' +
+        //'<br>' +
+        '<p style="margin-bottom: 0;">' +
+        '<b>Nombre:</b> ' + repo.insDescripcion + '<br>' +
+        '<b>Stock:</b> ' + repo.insStock + '<br>' +
+        // '<b>PVP:</b> <span class="badge badge-warning">$' + repo.insPrecio + '</span>' +
+        '</p>' +
+        '</div>' +
+        '</div>' +
+        '</div>');
+
+    return option;
+};
+
+
 var date_range = null;
 var date_now = new moment().format('YYYY-MM-DD');
 var fechaini = date_now;
@@ -10,7 +186,7 @@ var produ = {
         fecha: '',
         fechafin: '',
         ventestado: '',
-        observacion:'',
+        observacion: '',
         // precio: 0.00,
         tgsto: 0.00,
         subproductos: 0.00,
@@ -118,9 +294,18 @@ var produ = {
                     last: 'Último'
                 }
             },
+            // ajax: {
+            //     url: window.location.pathname,
+            //     type: 'POST',
+            //     data: {
+            //         'action': 'searchdata'
+            //     },
+            //     dataSrc: ""
+            // },
             columns: [
                 {"data": "id"},
                 {"data": "prodDescripcion"},
+                {"data": "prodEstprod"},
                 {"data": "prodPrecio"},
                 // {"data": "pvp"},
                 {"data": "prodIva"},
@@ -133,9 +318,36 @@ var produ = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
+                        var boton;
+
+                        if (row.prodEstprod == 1) {
+                            boton = '<a rel="detailsinsumos"   class="btn btn-primary btn-sm btn-flat not-active"  style="color: white;background: #80bdff"><i class="fas fa-edit"></i></a>';
+
+                        } else if (row.prodEstprod == 2) {
+                            boton = '<a rel="detailsinsumos"   class="btn btn-primary btn-sm btn-flat"  style="color: white"><i class="fas fa-edit"></i></a>';
+                        }
+                        ;
 
                         // return '<a disabled="true" rel="remove" class="btn btn-primary btn-sm btn-flat not-active"  style="color: white"><i class="fas fa-edit"></i></a>';
-                        return '<a rel="detailsinsumos"   class="btn btn-primary btn-sm btn-flat"  style="color: white"><i class="fas fa-edit"></i></a>';
+                        return boton;
+                    }
+                },
+                {
+                    targets: [2],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var estado;
+                        if (data == 1) {
+                            estado = '<spam class="badge badge-pill badge-success">Finalizado</spam>';
+                        } else if (data == 2) {
+                            estado = '<spam class="badge badge-pill badge-default">En Proceso</spam>';
+                        }
+                        ;
+
+                        // return '<a disabled="true" rel="remove" class="btn btn-primary btn-sm btn-flat not-active"  style="color: white"><i class="fas fa-edit"></i></a>';
+                        return estado;
+
                     }
                 },
                 {
@@ -170,7 +382,9 @@ var produ = {
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        return '$' + parseFloat(data).toFixed(2);
+                        var subt;
+                        subt=row.cant*row.prodPrecio
+                        return '$' + parseFloat(subt).toFixed(2);
                     }
                 },
             ],
@@ -272,10 +486,162 @@ var produ = {
 
 $(function () {
 
-    $('#tblProducto tbody').on('click', 'a[rel="detailsinsumos"]', function () {
-        $('#myModelInsumos').modal('show');
+        //Abrir Modal para poner los insumos
 
-    });
+        $('#tblProducto tbody').on('click', 'a[rel="detailsinsumos"]', function () {
+            var tr = tblProducto.cell($(this).closest('td, li')).index();
+            var data = tblProducto.row(tr.row).data();
+            console.log(data);
+            $('input[name="nomproducto"]').val(data.prodDescripcion);
+            prod.items.producto = data.id;
+            // console.clear();
+            // console.log(prod.items.producto);
+            $('#myModelInsumos').modal('show');
+
+        });
+
+        //Cerrar modal de insumos
+        $('#myModelInsumos').on('hidden.bs.modal', function (e) {
+            // $('#formInsumos').trigger('reset');
+            prod.items.insumos = [];
+            prod.list();
+            // prod.items.insumos=[];
+        });
+        // Buscar insumos en el modal
+        $('select[name="search"]').select2({
+            theme: "bootstrap4",
+            language: 'es',
+            allowClear: true,
+            ajax: {
+                delay: 250,
+                type: 'POST',
+                url: window.location.pathname,
+                data: function (params) {
+                    // console.log(params)
+                    var queryParameters = {
+                        term: params.term,
+                        action: 'search_insumos',
+                        ids: JSON.stringify(prod.get_ids())
+                    };
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+            },
+            placeholder: 'Ingrese una descripcion',
+            minimumInputLength: 1,
+            templateResult: formatRepo,
+
+        })
+            .on('select2:select', function (e) {
+                var data = e.params.data;
+                // console.log(data);
+                // data.stock=10;
+                // data.insStock
+
+                data.cant = 1;
+                ct = data.cant;
+                data.subtotal = 0.00;
+                // console.log(data);
+                // console.log(data.insStock);
+
+
+                prod.add(data);
+                $(this).val('').trigger('change.select2');
+            });
+        //Borrar todos los insumos en el modal
+        $('.btnRemoveAll').on('click', function () {
+            //si no hay productos retorno falso
+            if (prod.items.insumos.length === 0) return false;
+            alerta_action('Notificacion', 'Estas seguro de Eliminar todos los items de tu detalle?', function () {
+                prod.items.insumos = [];
+                prod.list();
+            });
+        });
+        //    evento eiminar insumo del modal
+        $('#tblInsumos tbody')
+            .on('click', 'a[rel="remove"]', function () {
+                //Obtengo la posicion
+                var tr = tblInsumos.cell($(this).closest('td, li')).index();
+                alerta_action('Notificacion', 'Estas seguro de Eliminar el insumo de tu detalle?', function () {
+                    prod.items.insumos.splice(tr.row, 1);
+                    //    actualizams
+                    prod.list();
+                });
+
+            })
+
+            //   evento cambiar cantidad keyup s no pongo el touchspin
+            .on('change', 'input[name="cant"]', function () {
+                console.clear();
+                //obtengo el valor de la cantidd
+                var cant = parseInt($(this).val());
+                //me devuelve la fila para sacar el row
+                var tr = tblInsumos.cell($(this).closest('td, li')).index();
+                console.log(tr);
+                //devuelvo el tr completo mediante la fila
+                // var data= tblInsumos.row(tr.row).node();
+                // console.log(data);
+                prod.items.insumos[tr.row].cant = cant;
+                //actualizo la factura
+                prod.calculate_invoce();
+                // console.log(data);
+                $('td:eq(6)', tblInsumos.row(tr.row).node()).html('$' + prod.items.insumos[tr.row].subtotal.toFixed(2));
+
+            });
+
+
+        //guardar produccion
+        $('#formInsumos').on('submit', function (e) {
+            // alert(x);
+
+            e.preventDefault();
+            if (prod.items.insumos.length === 0) {
+                message_error('Debe al menos tener un item en su detalle');
+                return false;
+            }
+            // prod.items.producto = $('select[name="producto"]').val();
+            // prod.items.detalle = $('textarea[name="prodCaracteristica"]').val();
+            prod.items.cantidad = $('input[name="prodcCantidad"]').val();
+            prod.items.fecha = date_now;
+            prod.items.precio = $('input[name="prodcTotal"]').val();
+            // prod.items.iva = $('input[name="prodIva"]').val();
+            // prod.items.subtolagast = $('input[name="subtolagast"]').val();
+
+            // console.log(prod.items);
+            var parameters = new FormData();
+            parameters.append('action', 'create_produccion');
+            // parameters.append('imagen1',fileInputElement.files[0]);
+            // parameters.append('imagen2', fi);
+            // $('#file')[0].files[0]) una tercera coma para el nombre
+            // parameters.append('imagen1', $('input[name="prodImagen"]')[0].files[0], 'Marco');
+            // parameters.append('imagen1', $('input[name="prodImagen"]')[0].files[0]);
+            // parameters.append('imagen2', $('input[name="prodImagen2"]')[0].files[0]);
+            parameters.append('insumos', JSON.stringify(prod.items));
+            parameters.forEach(function (value, key) {
+                console.log(key + ':' + value);
+
+            });
+            // console.log(parameters);
+            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                // location.href = '/producto/produccion/mostrar/';
+
+                // produ.list();
+
+                // console.log("no se :c")
+                // tblProducto.ajax.reload();
+                // tblProducto.ajax.reload();
+                $('#myModelInsumos').modal('hide');
+                location.href = window.location.pathname;
+                // produ.list();
+
+            });
+
+        });
+
         // evento calendarip
         // $('#venFechaInici').datetimepicker({
         //     icons: {
@@ -525,7 +891,7 @@ $(function () {
             // produ.items.fechafin = $('input[name="venFechaFin"]').val();
             produ.items.cliente = $('select[name="cliente"]').val();
             produ.items.ventestado = $('select[name="venEstVenta"]').val();
-            produ.items.observacion=$('input[name="ventObservacion"]').val();
+            // produ.items.observacion = $('input[name="ventObservacion"]').val();
             console.log(produ.items);
             var parameters = new FormData();
             parameters.append('action', $('input[name="action"]').val());
@@ -551,6 +917,8 @@ $(function () {
 
         produ.list();
         produ.list2();
+
+        prod.list();
 
 
     }
