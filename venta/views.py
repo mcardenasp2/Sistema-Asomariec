@@ -653,29 +653,29 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
 
                     prod = json.loads(request.POST['insumos'])
 
-                    # prcc = Produccion()
-                    # prcc.producto_id = prod['producto']
-                    # prcc.prodcCantidad = prod['cantidad']
-                    # prcc.prodcFecElab = prod['fecha']
-                    # prcc.prodcTotal = float(prod['totalproduc'])
-                    # prcc.save()
-                    # for i in prod['insumos']:
-                    #     det = DetProducto()
-                    #     det.produccion_id = prcc.id
-                    #     det.insumo_id = i['id']
-                    #     det.detCantidad = i['cant']
-                    #     det.detprecio = i['insPrecio']
-                    #     det.detSubtotal = i['subtotal']
-                    #     det.save()
-                    #
-                    #     insumo = Insumo.objects.get(pk=i['id'])
-                    #     insumo.insStock -= int(i['cant'])
-                    #     insumo.save()
-                    #
-                    # cabprod = Producto.objects.get(pk=prcc.producto_id)
-                    # cabprod.prodCantidad += int(prcc.prodcCantidad)
+                    prcc = Produccion()
+                    prcc.producto_id = prod['producto']
+                    prcc.prodcCantidad = prod['cantidad']
+                    prcc.prodcFecElab = prod['fecha']
+                    prcc.prodcTotal = float(prod['totalproduc'])
+                    prcc.save()
+                    for i in prod['insumos']:
+                        det = DetProducto()
+                        det.produccion_id = prcc.id
+                        det.insumo_id = i['id']
+                        det.detCantidad = i['cant']
+                        det.detprecio = i['insPrecio']
+                        det.detSubtotal = i['subtotal']
+                        det.save()
+
+                        insumo = Insumo.objects.get(pk=i['id'])
+                        insumo.insStock -= int(i['cant'])
+                        insumo.save()
+
+                    cabprod = Producto.objects.get(pk=prcc.producto_id)
+                    cabprod.prodCantidad += int(prcc.prodcCantidad)
                     # cabprod.save()
-                    cabprod = Producto.objects.get(pk=prod['producto'])
+                    # cabprod = Producto.objects.get(pk=prod['producto'])
                     cabprod.prodEstprod=1
                     cabprod.save()
 
@@ -686,36 +686,36 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     vent = json.loads(request.POST['ventas'])
                     # print(prod);
                     cabventa = self.get_object()
-                    cabventa.cliente_id = vent['cliente']
+                    # cabventa.cliente_id = vent['cliente']
                     cabventa.venEstVenta = vent['ventestado']
-                    cabventa.venFechaInici = vent['fecha']
-                    cabventa.venFechaFin = vent['fechafin']
+                    # cabventa.venFechaInici = vent['fecha']
+                    # cabventa.venFechaFin = vent['fechafin']
                     # print(float(vent['tgsto']))
 
-                    cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
+                    # cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     # cabventa.ventSubtotal = float(vent['subproductos'])
-                    cabventa.ventImpuesto = float(vent['impuestos'])
+                    # cabventa.ventImpuesto = float(vent['impuestos'])
                     # cabventa.venFechaFin=vent['cliente']
-                    cabventa.ventObservacion = 'Ninguna'
+                    # cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 1
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
+                    # cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
 
                     # a={}
                     # contiene el id del producto
-                    c = []
+                    # c = []
 
                     # for i in DetVenta.objects.filter(venta_id=7):
                     #     print(i.producto_id)
                     #     c.append(i.producto_id)
                     #     print(c)
 
-                    for i in DetVenta.objects.filter(venta_id=self.get_object().id):
+                    # for i in DetVenta.objects.filter(venta_id=self.get_object().id):
                         # for i in DetVenta.objects.filter(venta_id=7):
                         #     print(i.producto_id)
                         #     a['id']=i.producto_id
-                        c.append(i.producto_id)
+                        # c.append(i.producto_id)
                         # print(c)
                         # producto = Producto.objects.get(pk=i.producto_id)
                         # producto.delete();
@@ -725,7 +725,7 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     # p=[]
                     # p=c
 
-                    cabventa.detventa_set.all().delete()
+                    # cabventa.detventa_set.all().delete()
                     # detalle del producto
                     # insu = []
                     # for p in c:
@@ -738,46 +738,46 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     # insumo = Insumo.objects.get(pk=i.insumo_id)
                     # insumo.insStock += i.detCantidad
                     # insumo.save()
-
-                    for i in vent['productos']:
-                        if i['id'] == 0:
-                            print('aggrego')
-                            prd = Producto()
-                            prd.prodDescripcion = i['prodDescripcion']
-                            prd.prodIva = i['prodIva']
-                            prd.prodEstado = False
-                            prd.prodCantidad = i['cant']
-                            prd.prodPrecio = i['prodPrecio']
-                            prd.save()
-
-                            det = DetVenta()
-                            det.venta_id = cabventa.id
-                            det.producto_id = prd.id
-                            det.detCant = i['cant']
-                            det.detPrecio = i['prodPrecio']
-                            det.detSubtotal = i['subtotal']
-                            det.save()
-
-                        elif i['id'] in c:
-                            print('si estas ' + str(i['id']))
-
-                            # edito el produto 16/11/2020
-                            prd = Producto.objects.get(pk=i['id'])
-                            prd.prodDescripcion = i['prodDescripcion']
-                            prd.prodIva = i['prodIva']
-                            prd.prodEstado = False
-                            prd.prodCantidad = i['cant']
-                            prd.prodPrecio = i['prodPrecio']
-                            prd.save()
-
-                            det = DetVenta()
-                            det.venta_id = cabventa.id
-                            det.producto_id = i['id']
-                            det.detCant = i['cant']
-                            det.detPrecio = i['prodPrecio']
-                            det.detSubtotal = i['subtotal']
-                            det.save()
-                            c.remove(i['id'])
+                    #
+                    # for i in vent['productos']:
+                    #     if i['id'] == 0:
+                    #         print('aggrego')
+                    #         prd = Producto()
+                    #         prd.prodDescripcion = i['prodDescripcion']
+                    #         prd.prodIva = i['prodIva']
+                    #         prd.prodEstado = False
+                    #         prd.prodCantidad = i['cant']
+                    #         prd.prodPrecio = i['prodPrecio']
+                    #         prd.save()
+                    #
+                    #         det = DetVenta()
+                    #         det.venta_id = cabventa.id
+                    #         det.producto_id = prd.id
+                    #         det.detCant = i['cant']
+                    #         det.detPrecio = i['prodPrecio']
+                    #         det.detSubtotal = i['subtotal']
+                    #         det.save()
+                    #
+                    #     elif i['id'] in c:
+                    #         print('si estas ' + str(i['id']))
+                    #
+                    #         # edito el produto 16/11/2020
+                    #         prd = Producto.objects.get(pk=i['id'])
+                    #         prd.prodDescripcion = i['prodDescripcion']
+                    #         prd.prodIva = i['prodIva']
+                    #         prd.prodEstado = False
+                    #         prd.prodCantidad = i['cant']
+                    #         prd.prodPrecio = i['prodPrecio']
+                    #         prd.save()
+                    #
+                    #         det = DetVenta()
+                    #         det.venta_id = cabventa.id
+                    #         det.producto_id = i['id']
+                    #         det.detCant = i['cant']
+                    #         det.detPrecio = i['prodPrecio']
+                    #         det.detSubtotal = i['subtotal']
+                    #         det.save()
+                    #         c.remove(i['id'])
 
                             # print('no agrego')
                     # print(p)
@@ -791,18 +791,18 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     #     if v['id'] in c:
                     #         print('si esta '+ str(v['id']))
 
-                    for i in c:
-                        for d in DetProducto.objects.filter(producto_id=i):
-                            insumo = Insumo.objects.get(pk=d.insumo_id)
-                            insumo.insStock += d.detCantidad
-                            insumo.save()
-                        # cabprod = Producto()
-                        # cabprod.detproducto_set.all().delete()
-
-                        producto = Producto.objects.get(pk=i)
-                        producto.detproducto_set.all().delete()
-
-                        producto.delete();
+                    # for i in c:
+                    #     for d in DetProducto.objects.filter(producto_id=i):
+                    #         insumo = Insumo.objects.get(pk=d.insumo_id)
+                    #         insumo.insStock += d.detCantidad
+                    #         insumo.save()
+                    #     # cabprod = Producto()
+                    #     # cabprod.detproducto_set.all().delete()
+                    #
+                    #     producto = Producto.objects.get(pk=i)
+                    #     producto.detproducto_set.all().delete()
+                    #
+                    #     producto.delete();
 
                     # print('este men')
                     # for i in vent['productos']:
@@ -826,16 +826,16 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     # producto.prodCantidad -= int(i['cant'])
                     # producto.save()
 
-                    cabventa.gastadc_set.all().delete()
+                    # cabventa.gastadc_set.all().delete()
 
-                    if vent['gastoad']:
-                        for i in vent['gastoad']:
-                            gast = GastAdc()
-                            gast.venta_id = cabventa.id
-                            gast.gastdescripcion = i['gastDescripcion']
-                            gast.gastprecio = i['gastPrecio']
-                            gast.save()
-
+                    # if vent['gastoad']:
+                    #     for i in vent['gastoad']:
+                    #         gast = GastAdc()
+                    #         gast.venta_id = cabventa.id
+                    #         gast.gastdescripcion = i['gastDescripcion']
+                    #         gast.gastprecio = i['gastPrecio']
+                    #         gast.save()
+                    #
                     data = {'id': cabventa.id}
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'

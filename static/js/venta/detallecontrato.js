@@ -446,7 +446,7 @@ var produ = {
             },
             columns: [
                 // {"data": "id"},
-                {"data": "gastDescripcion"},
+                // {"data": "gastDescripcion"},
                 {"data": "gastDescripcion"},
                 {"data": "gastPrecio"},
                 // {"data": "pvp"},
@@ -454,14 +454,7 @@ var produ = {
                 // {"data": "subtotal"},
             ],
             columnDefs: [
-                {
-                    targets: [0],
-                    class: 'text-center',
-                    orderable: false,
-                    render: function (data, type, row) {
-                        return '<a rel="remove" class="btn btn-danger btn-sm btn-flat" style="color: white"><i class="fas fa-trash-alt"></i></a>';
-                    }
-                },
+
                 {
                     targets: [-1],
                     class: 'text-center',
@@ -493,6 +486,7 @@ $(function () {
             var data = tblProducto.row(tr.row).data();
             console.log(data);
             $('input[name="nomproducto"]').val(data.prodDescripcion);
+            $('input[name="producCantidad"]').val(data.cant);
             prod.items.producto = data.id;
             // console.clear();
             // console.log(prod.items.producto);
@@ -605,7 +599,7 @@ $(function () {
             }
             // prod.items.producto = $('select[name="producto"]').val();
             // prod.items.detalle = $('textarea[name="prodCaracteristica"]').val();
-            prod.items.cantidad = $('input[name="prodcCantidad"]').val();
+            prod.items.cantidad = $('input[name="producCantidad"]').val();
             prod.items.fecha = date_now;
             prod.items.precio = $('input[name="prodcTotal"]').val();
             // prod.items.iva = $('input[name="prodIva"]').val();
