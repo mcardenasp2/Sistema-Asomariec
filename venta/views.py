@@ -534,8 +534,10 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                         prd.prodDescripcion = i['prodDescripcion']
                         prd.prodIva = i['prodIva']
                         prd.prodTipo = 1
+                        prd.prodEstprod=2
                         # prd.prodEstado=False
-                        prd.prodCantidad = i['cant']
+                        # prd.prodCantidad = i['cant']
+                        prd.prodCantidad = 0
                         prd.prodPrecio = i['prodPrecio']
                         prd.save()
 
@@ -701,6 +703,19 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     # cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
+                    print(cabventa.venEstVenta)
+                    if cabventa.venEstVenta=='2':
+                        for i in vent['productos']:
+                            prd = Producto.objects.get(pk=i['id'])
+                            print('Hola')
+                            print(prd.prodCantidad)
+                            print('Chao')
+                            print(i['cant'])
+                            prd.prodCantidad -= i['cant']
+                            prd.save()
+
+
+
 
                     # a={}
                     # contiene el id del producto
