@@ -8,6 +8,7 @@ $(function () {
         destroy: true,
         deferRender: true,
         paging: true,
+        order:[[ 2, "desc" ]],
         // {#Bolo#}
         ordering: true,
         info: true,

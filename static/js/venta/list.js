@@ -1,5 +1,5 @@
 var tblVenta;
-
+var tblGasto;
 
 $(function () {
 
@@ -188,7 +188,7 @@ $(function () {
                 }
             });
 
-            $('#tblGast').DataTable({
+            tblGasto = $('#tblGast').DataTable({
                 responsive: true,
                 autoWidth: false,
                 destroy: true,
@@ -251,10 +251,25 @@ $(function () {
 
                 ],
                 initComplete: function (settings, json) {
+                    console.log(json);
+                    if (json.length === 0) {
+                        // $('input[name="acciongasto"]').val(1);
+                        // console.log('Correcto');
+                        $("#div-gastos-adicionales").hide();
+                    } else {
+                        // $('input[name="acciongasto"]').val(2);
+                        // console.log('Incorrecto');
+                        $("#div-gastos-adicionales").show();
+
+                    }
 
                 }
 
             });
+
+            // var tr = tblGasto.cell($(this).closest('td, li')).index();
+            // var data = tblGasto.index();
+            // console.log(data);
 
             $('#myModelDet').modal('show');
         });

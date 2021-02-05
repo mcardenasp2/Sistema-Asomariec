@@ -37,6 +37,7 @@ class ProduccionListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Lis
                 # for i in Produccion.objects.filter(prodcEstado=True, prodcTipo=2):
                 for i in Produccion.objects.filter(prodcEstado=True, prodcTipo=1):
                     data.append(i.toJSON())
+                # data.sort('prodcFecElab')
 
             elif action == 'search_details_ins':
                 data = []

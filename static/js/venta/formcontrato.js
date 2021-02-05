@@ -514,7 +514,8 @@ $(function () {
             // produ.items.fecha = $('input[name="venFechaInici"]').val();
             // produ.items.fechafin = $('input[name="venFechaFin"]').val();
             produ.items.cliente = $('select[name="cliente"]').val();
-            produ.items.ventestado = $('select[name="venEstVenta"]').val();
+            // produ.items.ventestado = $('select[name="venEstVenta"]').val();
+            produ.items.ventestado = 1;
             produ.items.observacion=$('input[name="ventObservacion"]').val();
             console.log(produ.items);
             var parameters = new FormData();
