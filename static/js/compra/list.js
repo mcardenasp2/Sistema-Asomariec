@@ -83,7 +83,17 @@ $(function () {
                     // buttons += '<a href="/compra/compra/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
                     // buttons += '<a href="/compra/compra/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
-                    buttons += '<a href="' + data + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
+
+                    if (data == '/static/img/empty.png') {
+                        // buttons += data;
+                        buttons += '<a style="color: white" rel="vacio" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
+
+                    } else {
+                        buttons += '<a href="' + data + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
+                    }
+
+                    // buttons += '<a href="' + data + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fa fa-file-archive"></i></a> ';
+
                     //var buttons = '<a href="/erp/sale/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     return buttons;
                 }
@@ -94,6 +104,16 @@ $(function () {
         }
     });
 
+
+    $('#table_id tbody')
+        .on('click', 'a[rel="vacio"]', function () {
+            Swal.fire({
+                title: 'No existe el archivo!',
+                // html: <p></,
+                icon: 'error'
+            });
+
+        });
 
     $('#table_id tbody')
         .on('click', 'a[rel="details"]', function () {
