@@ -37,6 +37,9 @@
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{% static 'lib/assets/css/argon.css' %}" type="text/css">
 
+{#animacioes#}
+    <link rel="stylesheet" href="{% static 'lib/assets/vendor/animate.css/animate.min.css' %}" type="text/css">
+
 
     <!-- Jquery Confirm -->
     <link rel="stylesheet" href="{% static 'lib/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">
@@ -118,6 +121,10 @@
 <script src="{% static 'lib/assets/vendor/chart.js/dist/Chart.extension.js' %}"></script>
 <!-- Argon JS -->
 <script src="{% static 'lib/assets/js/argon.js' %}"></script>
+{#animacion#}
+<script src="{% static 'lib/assets/vendor/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+
 <!-- Select2 -->
 {#<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>#}
 
@@ -166,6 +173,7 @@
             dataType: 'json',
         }).done(function (data) {
             if (!data.hasOwnProperty('error')) {
+                console.log('index');
                 console.log(data);
                 {#graphpie.addSeries(data);#}
                 return false;

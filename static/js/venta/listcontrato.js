@@ -52,7 +52,7 @@ $(function () {
         columns: [
             {"data": "id"},
             {"data": "cliente.cliNombre"},
-            {"data": "venFechaInici"},
+            {"data": "venFechaFin"},
             // {"data": "categoria.catDescripcion"},
             {"data": "venEstVenta"},
             {"data": "ventSubtotal"},
