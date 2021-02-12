@@ -185,7 +185,7 @@ class Notificaciones(TemplateView):
         # context['form'] = Venta.objects.all()
         start_date= datetime.now()
         end_date=start_date + timedelta(days=30)
-        context['form'] = Venta.objects.filter(venFechaFin__range=[start_date, end_date],ventEstado=1,venTipo=1).order_by('venFechaFin')
+        context['form'] = Venta.objects.filter(venFechaFin__range=[start_date, end_date],ventEstado=1,venTipo=1, venEstVenta=1).order_by('venFechaFin')
         # context['graph_sales_year_month'] = self.get_graph_sales_year_month()
         # context['valor'] = { 'venta':'250.30'}
         # context['valor'] = self.valores()

@@ -25,6 +25,7 @@
     <h6 class="text-sm text-muted m-0">Tu tienes <strong class="text-primary">{{ form.count }}</strong>
         recordatorios.</h6>
 </div>
+{% if form.count != 0 %}
 
 <div class="list-group list-group-flush" id="pruebascr" style="height: 330px">
 
@@ -247,6 +248,9 @@
     {#        </div>#}
     {#    </a>#}
 </div>
+
+{% endif %}
+
 
 {% block javascript %}
     {#    <script src="{% static 'lib/assets/vendor/datatables.net/js/jquery.dataTables.min.js' %}"></script>#}

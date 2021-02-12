@@ -156,10 +156,10 @@ function formatRepo(repo) {
     var option = $(
         '<div class="wrapper container">' +
         '<div class="row">' +
-        '<div class="col-lg-1">' +
-        '<img src="' + repo.insImagen + '" class="img-fluid img-thumbnail d-block mx-auto rounded">' +
+        '<div class="col-lg-2">' +
+        '<img src="' + repo.insImagen + '"  style="height: 100px; width: 200px" class="img-fluid img-thumbnail d-block mx-auto rounded">' +
         '</div>' +
-        '<div class="col-lg-11 text-left shadow-sm">' +
+        '<div class="col-lg-10 text-left shadow-sm">' +
         //'<br>' +
         '<p style="margin-bottom: 0;">' +
         '<b>Nombre:</b> ' + repo.insDescripcion + '<br>' +
