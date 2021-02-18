@@ -356,6 +356,7 @@ class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Delet
                 with transaction.atomic():
                     # vent = json.loads(request.POST['ventas'])
                     # print(prod);
+                        # print('Eliminar')
                     cabventa = self.get_object()
                     cabventa.ventEstado = False
                     cabventa.venEstVenta = 1
@@ -707,10 +708,10 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                     if cabventa.venEstVenta=='2':
                         for i in vent['productos']:
                             prd = Producto.objects.get(pk=i['id'])
-                            print('Hola')
-                            print(prd.prodCantidad)
-                            print('Chao')
-                            print(i['cant'])
+                            # print('Hola')
+                            # print(prd.prodCantidad)
+                            # print('Chao')
+                            # print(i['cant'])
                             prd.prodCantidad -= i['cant']
                             prd.save()
 
@@ -1151,6 +1152,90 @@ class VentaContratoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
 
 
 class VentaDeleteContratoView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
+    template_name = 'venta/DeleteVenta.html'
+    model = Venta
+    # form_class = CabVentaForm
+    success_url = reverse_lazy('venta:ventac_mostrar')
+    permission_required = 'delete_venta'
+
+    # @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+
+            if action == 'delete':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                    cabventa = self.get_object()
+                    cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=self.get_object().id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        if producto.prodEstprod==1:
+                            producto.prodTipo=2
+                        producto.save()
+
+                    # c = []
+                    # for i in DetVenta.objects.filter(venta_id=self.get_object().id):
+                    #     c.append(i.producto_id)
+
+                    # for i in DetVenta.objects.filter(venta_id=self.get_object().id):
+                    #     producto = Producto.objects.get(pk=i.producto_id)
+                    #     producto.prodCantidad += i.detCant
+                    #     producto.save()
+                    # print('no')
+                    # cabventa.detventa_set.all().delete()
+                    # print('si')
+
+                    # insu=[]
+                    # for p in c:
+                    #     for i in DetProducto.objects.filter(producto_id=p):
+                            # insu.append(i.insumo_id)
+                            # item = i.insumo.toJSON()
+                            # item['cant'] = i.detCantidad
+                            # insu.append(item)
+                            #
+                            # insumo = Insumo.objects.get(pk=i.insumo_id)
+                            # insumo.insStock += i.detCantidad
+                            # insumo.save()
+
+                    # for i in c:
+                    #     print('yi')
+                    #     producto = Producto.objects.get(pk=i)
+                    #     producto.detproducto_set.all().delete()
+                    #     print('yo')
+                    #     producto.delete();
+                    #     print('yes')
+                    #
+                    # print('ya')
+                    # cabventa.gastadc_set.all().delete()
+
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['title'] = 'Edición de una Venta'
+        # context['entity'] = 'Ventas'
+        context['list_url'] = self.success_url
+        context['action'] = 'delete'
+        # context['det'] = json.dumps(self.get_details_produtos(), cls=DjangoJSONEncoder)
+        # context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
+        return context
+
+
+class VentaDeleteContratoViewno(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     template_name = 'venta/DeleteVenta.html'
     model = Venta
     # form_class = CabVentaForm

@@ -166,3 +166,6 @@ EMAIL_HOST_USER = 'marco.cardenas1702@gmail.com'
 EMAIL_HOST_PASSWORD = 'Marco087742190'
 
 DOMAIN = ''
+
+# pip freeze > requirements.txt
+# pip install -r requirements.txt

@@ -22,6 +22,7 @@ class Producto(models.Model):
     # 1 finalizado; 2 en proceso
     prodEstprod=models.IntegerField(default=1,blank=True)
     # referencia si es por contrato o venta normal
+    # 1 contrato, 2 normal
     prodTipo=models.IntegerField(default=2,blank=True)
     prodEstado = models.BooleanField(default=True, verbose_name='Estado')
     usuaReg = models.IntegerField(blank=True, null=True)

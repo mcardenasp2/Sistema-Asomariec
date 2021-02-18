@@ -182,6 +182,13 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
             if action == 'edit':
                 form = self.get_form()
                 data = form.save()
+
+            elif action =='guardarImagen':
+                form =self.get_object()
+                form.image=request.FILES['image']
+                # print(request.FILES['image'])
+                form.save()
+                # print('Llegaste a guardar imagen')
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

@@ -47,13 +47,13 @@
                                             {#                                                 class="img-fluid img-center img-thumbnail rounded-circle ">#}
                                             <img src="{{ object.image.url }}"
                                                  style="height: 150px; width: 250px"
-                                                 class="rounded-circle cambiar">
+                                                 class="rounded-circle cambiarperfil">
                                             {#                                                                                <img src="{% static 'lib/assets/img/theme/team-4.jpg' %}"#}
                                             {#                                                                                     class="rounded-circle">#}
                                         {% else %}
                                             <img src="{% static 'img/empty.png' %}"
                                                  style="height: 150px; width: 250px"
-                                                 class="rounded-circle cambiar">
+                                                 class="rounded-circle cambiarperfil">
 
                                         {% endif %}
                                         {#                                        </a>#}
@@ -147,7 +147,6 @@
                                             </div>
 
 
-
                                         </div>
                                         <div class="row" wfd-id="38">
 
@@ -170,17 +169,17 @@
                                                 </div>
                                             </div>
 
-{#                                            <div class="col-lg-6" wfd-id="39">#}
-{#                                                <div class="form-group" wfd-id="40">#}
-{#                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Contraseña</label>#}
-                                                    {#                                                    <input type="text" id="input-last-name" class="form-control"#}
-                                                    {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
-{#                                                    {{ form.password|add_class:'form-control' }}#}
-{#                                                </div>#}
-{#                                            </div>#}
+                                            {#                                            <div class="col-lg-6" wfd-id="39">#}
+                                            {#                                                <div class="form-group" wfd-id="40">#}
+                                            {#                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Contraseña</label>#}
+                                            {#                                                    <input type="text" id="input-last-name" class="form-control"#}
+                                            {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
+                                            {#                                                    {{ form.password|add_class:'form-control' }}#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
                                         </div>
                                     </div>
-                                   </form>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -210,8 +209,38 @@
 
     <script>
         $('#id_image').on('change', function () {
-            filePreview(this);
+            filePreviewPerfil(this);
+            var param= new FormData();
+            param.append('action','guardarImagen');
+            param.append('image',$('input[name="image"]')[0].files[0]);
+            param.forEach(function (value, key) {
+                console.log(value);
+
+            });
+
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: param,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+            }).done(function (data) {
+                // console.log(data);
+                if (!data.hasOwnProperty('error')) {
+                    {#callback(data);#}
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+
+            });
+
+
         });
+
 
         {% if form.errors %}
             var errors = '';
