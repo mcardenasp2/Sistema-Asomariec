@@ -13,7 +13,7 @@ class Producto(models.Model):
     prodImagen= models.ImageField(upload_to='producto', blank=True, null=True)
     prodImagen2= models.ImageField(upload_to='producto2', blank=True, null=True)
     prodCantidad=models.IntegerField(default=0, blank=True, null=True)
-    prodPrecio=models.DecimalField(default=1.25,max_digits=9, decimal_places=2)
+    prodPrecio=models.DecimalField(default=0,max_digits=9, decimal_places=2)
     prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2,blank=True, null=True)
     prodIva = models.DecimalField(default=0.12, max_digits=10, decimal_places=2)
     # prodTalla=models.CharField(max_length=100)

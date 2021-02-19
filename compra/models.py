@@ -13,7 +13,7 @@ class CabCompra(models.Model):
     # comprador = models.CharField(max_length=5)
     ccoFecCom = models.DateTimeField(default=datetime.now())
     ccoVendedor=models.CharField(max_length=50, verbose_name='Vendedor')
-    ccoCedVend=models.CharField(max_length=10, verbose_name='Cedula')
+    ccoCedVend=models.CharField(max_length=13, verbose_name='Cedula')
     # ccoReferencia = models.CharField(max_length=20,verbose_name='Referencia')
     # plcTipPag = models.CharField(max_length=20,verbose_name='Tipo Pago')
     # plcTipCom = models.CharField(max_length=20,verbose_name='Tipo Compra')

@@ -57,7 +57,7 @@ class Insumo(models.Model):
     insCod=models.CharField(max_length=100)
     insDescripcion=models.CharField(max_length=50, verbose_name='Descripcion')
     insModelo=models.CharField(max_length=50, verbose_name='Modelo')
-    insPrecio=models.DecimalField(default=1.25,max_digits=10,decimal_places=2)
+    insPrecio=models.DecimalField(default=0,max_digits=10,decimal_places=2)
     # insIva=models.DecimalField(default=0,max_digits=10,decimal_places=2)
     insImagen = models.ImageField(upload_to='fotos/%Y/%m/%d', blank=True, null=True)
     insStock=models.IntegerField(default=0, blank=True, null=True,verbose_name='Stock')

@@ -329,16 +329,16 @@ $(function () {
 
     });
 
-    $('input[name="preciogasto"]').TouchSpin({
-        min: 1,
-        max: 100,
-        step: 0.1,
-        decimals: 2,
-        verticalbuttons: true,
-        verticalupclass: 'glyphicon glyphicon-plus',
-        verticaldownclass: 'glyphicon glyphicon-minus'
-
-    });
+    // $('input[name="preciogasto"]').TouchSpin({
+    //     min: 1,
+    //     max: 100,
+    //     step: 0.1,
+    //     decimals: 2,
+    //     verticalbuttons: true,
+    //     verticalupclass: 'glyphicon glyphicon-plus',
+    //     verticaldownclass: 'glyphicon glyphicon-minus'
+    //
+    // });
 
     //anadir gasto
     $('.addgast').on('click', function () {

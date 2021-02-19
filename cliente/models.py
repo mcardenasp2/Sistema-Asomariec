@@ -8,7 +8,7 @@ class Cliente(models.Model):
     cliNombre= models.CharField(max_length=150, blank=True, verbose_name='Nombre')
     cliApellido= models.CharField(max_length=150, blank=True, verbose_name='Apellido')
     cliRuc=models.CharField(max_length=13,unique=True, verbose_name='Ruc')
-    cliTelefono=models.CharField(max_length=13, blank=True, verbose_name='Telefono')
+    cliTelefono=models.CharField(max_length=25, blank=True, verbose_name='Telefono')
     cliDireccion= models.CharField(max_length=100, blank=True, verbose_name='Direccion')
     cliGenero=models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     cliEmail= models.EmailField(max_length=50,blank=True,verbose_name='Email')

@@ -109,13 +109,16 @@ class InsumoForm(ModelForm):
 
                 ),
             'insPrecio': TextInput(
+
                 attrs={
                     'class': 'form-control',
-                    # 'value':'0.jh00'
+                    # 'value':'1',
+
                     # 'data-mask' : '00/00/0000'
                     # 'disabled': 'disabled'
-                    # 'placeholder': 'Ingre,
+                    # 'placeholder': 'Ingre',
                 },
+
 
             ),
             'insCod': TextInput(

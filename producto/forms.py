@@ -4,6 +4,7 @@ from producto.models import *
 
 
 class ProductoForm(ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['prodDescripcion'].widget.attrs['autofocus'] = True
@@ -71,7 +72,9 @@ class ProductoForm(ModelForm):
 
 
 class ProduccionForm(ModelForm):
-    producto = ModelChoiceField(queryset=Producto.objects.filter(prodEstado=1))
+    # producto = ModelChoiceField(queryset=Producto.objects.filter(prodEstado=1))
+    # producto = ModelChoiceField(queryset=Producto.objects.filter(prodEstado=1, prodTipo=2, prodEstprod=1))
+    producto = ModelChoiceField(queryset=Producto.objects.filter(prodEstado=1, prodTipo=2))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -32,7 +32,7 @@ class Proveedor(models.Model):
     proRuc= models.CharField(max_length=13, verbose_name='Ruc')
     proDireccion = models.CharField(max_length=80, verbose_name='Direccion')
     proDescripcion = models.CharField(max_length=200,null=True, verbose_name='Descripcion')
-    proTelefono = models.CharField(max_length=25, verbose_name='Telefono')
+    proTelefono = models.CharField(max_length=25,blank=True, verbose_name='Telefono')
     proEmail = models.EmailField(max_length=80, verbose_name='Email')
     proEstado = models.BooleanField(default=True, verbose_name='Estado')
     usuaReg = models.IntegerField(blank=True, null=True)

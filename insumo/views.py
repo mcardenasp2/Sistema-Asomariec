@@ -291,6 +291,13 @@ class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
     success_url = reverse_lazy('insumo:insumo_mostrar')
     permission_required = 'add_insumo'
 
+    # def get_form(self, form_class=None):
+    #     instance=self.get_object()
+    #     print(instance)
+    #     form=InsumoForm(instance=instance)
+    #     form.fields['insPrecio'].queryset=0.00
+    #     return form
+
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -315,7 +322,7 @@ class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
-        context['title'] = 'Creacion de un Insumo'
+        context['title'] = 'Creación de un Insumo'
         context['action'] = 'add'
         return context
 
