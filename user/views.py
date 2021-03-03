@@ -240,7 +240,7 @@ class UserChangePasswordView(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición de Password'
+        context['title'] = 'Edición de Contraseña'
         context['entity'] = 'Password'
         context['list_url'] = self.success_url
         context['action'] = 'edit'

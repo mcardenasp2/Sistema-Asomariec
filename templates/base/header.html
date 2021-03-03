@@ -1,4 +1,44 @@
 {% load static %}
+<style>
+    .icon-button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        color: #333333;
+        background: #dddddd;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+    }
+
+    .icon-button:hover {
+        cursor: pointer;
+    }
+
+    .icon-button:active {
+        background: #cccccc;
+    }
+
+    .icon-button__badge {
+        font-weight: bold;
+        font-size: 10px;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 15px;
+        background: #f5365c;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+</style>
 <!-- Topnav -->
 <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
     <div class="container-fluid">
@@ -39,23 +79,27 @@
 
 
                 <li class="nav-item dropdown">
-                    <a  id="btnnotificacion" class="nav-link animated swing" href="#" role="button" data-toggle="dropdown"
+                    <a id="btnnotificacion" class="nav-link animated swing " href="#" role="button"
+                       data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false">
-{#                        <h1 class="animated infinite bounce">ffgfgfgf</h1>#}
-{#                        <i class="ni ni-watch-time"></i>#}
-                        <i class="fas fa-clock"></i>
-{#                        <i class="fas fa-clock "></i>#}
+                        {#                        <h1 class="animated infinite bounce">ffgfgfgf</h1>#}
+                        {#                        <i class="ni ni-watch-time"></i>#}
+                        <i class="fas fa-clock fa-lg"></i>
+                        <div id="contrecordatorio">
+                            <span class="icon-button__badge" id="valorcont"></span>
+                        </div>
+
+                        {#                        <i class="fas fa-clock "></i>#}
                     </a>
                     <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
                         <!-- Dropdown header -->
-{#                        <div class="px-3 py-3">#}
-{#                            <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong>#}
-{#                                notifications.</h6>#}
-{#                        </div>#}
+                        {#                        <div class="px-3 py-3">#}
+                        {#                            <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong>#}
+                        {#                                notifications.</h6>#}
+                        {#                        </div>#}
 
                         <div id="notificaciones">
-
 
 
                         </div>

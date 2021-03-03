@@ -99,6 +99,13 @@ class DashboardView(LoginRequiredMixin,TemplateView):
                     'name':'Marco',
                     'apellido':'Cardenas'
                 }
+            elif action=='prueba2':
+                start_date = datetime.now()
+                end_date = start_date + timedelta(days=30)
+                contador=Venta.objects.filter(venFechaFin__range=[start_date, end_date],ventEstado=1,venTipo=1, venEstVenta=1).order_by('venFechaFin').count()
+                data={
+                    'contador':contador
+                }
             else:
                 data['error'] = 'Ha ocurrido un error'
         except:

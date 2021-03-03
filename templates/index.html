@@ -65,6 +65,9 @@
     #files {
         display: none;
     }
+    #contrecordatorio {
+        display: none;
+    }
 </style>
 <body>
 {% include 'base/sidebar.html' %}
@@ -167,7 +170,8 @@
             url: '/login/dashboard/', //'/login/dashboard/'
             type: 'POST',
             data: {
-                'action': 'prueba'
+                {#'action': 'prueba'#}
+                'action': 'prueba2'
                 {#'anio':anio#}
             },
             dataType: 'json',
@@ -175,6 +179,12 @@
             if (!data.hasOwnProperty('error')) {
                 console.log('index');
                 console.log(data);
+                if (data.contador>0){
+                    $('#contrecordatorio').show();
+                    $('#valorcont').html(data.contador);
+                }else {
+                    $('#contrecordatorio').hide();
+                }
                 {#graphpie.addSeries(data);#}
                 return false;
             }
@@ -188,6 +198,7 @@
     }
 
     $(function () {
+        $('#contrecordatorio').hide();
 
         $('#btnnotificacion').click(function () {
             {#alert('c');#}
