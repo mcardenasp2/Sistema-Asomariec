@@ -78,10 +78,10 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/venta/normal/delete/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
+                    var buttons = '<a title="Eliminar" href="/venta/normal/delete/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
                     // buttons += '<a href="/venta/normal/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
-                    buttons += '<a href="/venta/normal/invoice/pdf/' + row.id + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
+                    buttons += '<a title="Ver" rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
+                    buttons += '<a title="Imprimir" href="/venta/normal/invoice/pdf/' + row.id + '" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
 
                     //var buttons = '<a href="/erp/sale/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     return buttons;

@@ -60,8 +60,8 @@ function getData() {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="#" rel="edit" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="#" type="button" rel="delete" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    var buttons = '<a title="Editar" href="#" rel="edit" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
+                    buttons += '<a title="Eliminar" href="#" type="button" rel="delete" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     // var buttons = '<a href="/insumo/categoria/editar/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     // buttons += '<a href="/insumo/categoria/eliminar/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
 

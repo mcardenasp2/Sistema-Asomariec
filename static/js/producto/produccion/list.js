@@ -98,7 +98,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
+                    var buttons = '<a title="Visualizar" rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
                     // buttons += '<a href="/producto/produccion/eliminar/' + row.id + '/" type="button" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
