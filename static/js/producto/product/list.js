@@ -44,6 +44,7 @@ $(function () {
         columns: [
             {"data": "id"},
             {"data": "prodDescripcion"},
+            {"data": "categoria.catDescripcion"},
             {"data": "prodCantidad"},
             {"data": "prodImagen"},
             {"data": "prodPrecioTotal"},
@@ -52,11 +53,11 @@ $(function () {
         ],
         columnDefs: [
             {
-                targets: [1, 3],
+                targets: [1, 2],
                 class: 'text-center',
             },
             {
-                targets:[2],
+                targets:[3],
                 class: 'text-center',
                 render: function (data,type,row) {
                     var dato;

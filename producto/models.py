@@ -6,9 +6,24 @@ from insumo.models import Insumo
 # Create your models here.
 from django.forms import model_to_dict
 
+class Categoria(models.Model):
+    catDescripcion = models.CharField(max_length=100, verbose_name='CategoriaDescripcion')
+    catEstado=models.BooleanField(default=True, verbose_name='Estado')
+    def __str__(self):
+        return self.catDescripcion
+
+    def toJSON(self):
+        item= model_to_dict(self)
+        return item
+    class Meta:
+        verbose_name='Categoria'
+        verbose_name_plural = 'Categorias'
+        ordering = ['id']
+
 
 class Producto(models.Model):
     prodDescripcion = models.CharField(max_length=100, verbose_name='Descripcion')
+    categoria=models.ForeignKey(Categoria,on_delete=models.PROTECT)
     # prodFecElab=models.DateTimeField(default=datetime.now())
     prodImagen= models.ImageField(upload_to='producto', blank=True, null=True)
     prodImagen2= models.ImageField(upload_to='producto2', blank=True, null=True)
@@ -39,6 +54,7 @@ class Producto(models.Model):
         item=model_to_dict(self)
         item['prodImagen'] = self.get_image()
         item['prodImagen2'] = self.get_image2()
+        item['categoria']=self.categoria.toJSON()
         item['prodPrecioTotal'] = format((self.prodPrecio*self.prodIva)+self.prodPrecio, '.2f')
         item['prodPrecio'] = format(self.prodPrecio, '.2f')
         item['prodIva'] = format(self.prodIva, '.2f')

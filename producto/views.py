@@ -396,8 +396,8 @@ class ProductCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Crea
         data = {}
         try:
 
-            print(request.POST)
-            print(request.FILES)
+            # print(request.POST)
+            # print(request.FILES)
             action = request.POST['action']
             if action == 'add':
                 form= self.get_form()

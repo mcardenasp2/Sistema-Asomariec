@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title p-0">Lista de Producto</h2>
+            <h2 class="card-title p-0">Lista de Categoria de Productos</h2>
             <div class="row">
 
                 <div class="table-responsive py-4 ">
@@ -25,23 +25,10 @@
                         <tr>
                             <th>Id</th>
                             <th>Nombre</th>
-                            <th>Categoria</th>
-                            <th>Stock</th>
-                            {#                            <th>Imagen</th>#}
-                            <th>Imagen</th>
-                            <th>Precio</th>
                             <th>Accion</th>
-
-
                         </tr>
                         </thead>
                         <tbody>
-                        {#                        {% for object in object_list %}#}
-                        {#                            <tr>#}
-                        {#                                <td>{{ object.cliApellido }}</td>#}
-                        {#                                <td>{{ object.catEstado }}</td>#}
-                        {#                            </tr>#}
-                        {#                        {% endfor %}#}
 
                         </tbody>
                     </table>
@@ -69,7 +56,7 @@
     <script src="{% static 'lib/assets/vendor/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
     <script src="{% static 'lib/assets/vendor/datatables.net-select/js/dataTables.select.min.js' %}"></script>
     {#funcion del datatable#}
-    <script src="{% static 'js/producto/product/list.js' %}"></script>
+    <script src="{% static 'js/producto/categoria/list.js' %}"></script>
 
 
 {% endblock %}
