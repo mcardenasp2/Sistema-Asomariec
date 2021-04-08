@@ -525,10 +525,14 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
                     cabventa.ventObservacion = vent['observacion']
+
+
                     cabventa.venTipo = 1
                     cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + +float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
+
+
 
                     for i in vent['productos']:
                         prd = Producto()
