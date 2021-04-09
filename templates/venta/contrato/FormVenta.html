@@ -51,19 +51,20 @@
                                         <div class="form-group">
                                             <label>Nombre del Contrato:</label>
                                             {{ form.ventObservacion }}
+                                            {#                                            {{ form.contratoDescripcion }}#}
 
                                         </div>
 
                                         <hr>
 
                                     </div>
-{#                                    <div class="col-md-3">#}
-{#                                        <div class="form-group">#}
-{#                                            <label for="id_venEstVenta">Estado:</label>#}
-{#                                            {{ form.venEstVenta }}#}
-{#                                        </div>#}
-{##}
-{#                                    </div>#}
+                                    {#                                    <div class="col-md-3">#}
+                                    {#                                        <div class="form-group">#}
+                                    {#                                            <label for="id_venEstVenta">Estado:</label>#}
+                                    {#                                            {{ form.venEstVenta }}#}
+                                    {#                                        </div>#}
+                                    {##}
+                                    {#                                    </div>#}
 
 
                                 </div>
@@ -113,6 +114,20 @@
                                     <hr>
 
                                 </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Categoria:</label>
+                                            {{ frmProducto.categoria|add_class:'form-control mySelect2' }}
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
                                 <div class="row">
                                     <div class="col-lg-6">
                                         {#                                        <div class="custom-control custom-radio mb-3">#}

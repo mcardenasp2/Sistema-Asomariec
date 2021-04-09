@@ -313,14 +313,17 @@ $(function () {
             gast.prodDescripcion = $('input[name="descripcionc"]').val();
             gast.prodPrecio = $('input[name="precioc"]').val();
             gast.prodIva = $('input[name="ivac"]').val();
+            gast.categoria = $('select[name="categoria"]').val();
             gast.id = 0;
             gast.cant = 1;
             gast.subtotal = 0.00;
-            if (gast.prodDescripcion === '' || gast.prodPrecio === '') return false;
+            if (gast.prodDescripcion === '' || gast.prodPrecio === ''||gast.categoria==='' ) return false;
             //
+            console.log(gast)
             produ.add(gast);
 
             $('input[name="descripcionc"]').val('');
+            // $('select[name="categoria"]').val="";
             $('input[name="precioc"]').val('1.00');
             $('input[name="ivac"]').val('0.12');
             produ.list();
@@ -497,7 +500,7 @@ $(function () {
         });
 
 
-        //evento guardar
+        //evento guardar Venta
         $('#frmVentaContrato').on('submit', function (e) {
             e.preventDefault();
             if (produ.items.productos.length === 0) {

@@ -1,5 +1,5 @@
 from django.forms import *
-from cliente.models import Cliente
+from cliente.models import Cliente, Contrato
 
 class ClienteForm(ModelForm):
     # def __init__(self, *args, **kwargs):
@@ -79,4 +79,18 @@ class ClienteForm(ModelForm):
             data['error'] = str(e)
         return data
 
+
+class ContratoForm(ModelForm):
+    class Meta:
+        model=Contrato
+        fields='__all__'
+        widgets={
+            'contratoDescripcion': TextInput(
+                attrs={
+                    'class': 'form-control',
+                    # 'placeholder': 'Ingrese un Nombre',
+                    # 'autocomplete':'off'
+                }
+            )
+        }
 

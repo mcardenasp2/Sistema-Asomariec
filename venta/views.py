@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-from cliente.forms import ClienteForm
+from cliente.forms import ClienteForm, ContratoForm
 from insumo.models import Insumo
 from producto.models import Producto, DetProducto, Produccion
 from user.mixins import ValidatePermissionRequiredMixin
@@ -22,6 +22,10 @@ from venta.models import *
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
 
 from venta.forms import CabVentaForm
+
+
+from cliente.models import Contrato
+from producto.forms import ProductoForm
 
 import os
 from django.conf import settings
@@ -527,10 +531,18 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     cabventa.ventObservacion = vent['observacion']
 
 
+
                     cabventa.venTipo = 1
                     cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + +float(vent['impuestos'])
                     cabventa.ventEstado = 1
                     cabventa.save()
+                    # Aggreo a la tabla contratos
+                    contrato=Contrato()
+                    contrato.cliente_id=vent['cliente']
+                    contrato.contratoDescripcion=vent['observacion']
+                    contrato.contratoFec_Inicio=vent['fecha']
+                    contrato.contratoFec_Fin=vent['fechafin']
+                    contrato.save()
 
 
 
@@ -544,6 +556,8 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                         # prd.prodCantidad = i['cant']
                         prd.prodCantidad = 0
                         prd.prodPrecio = i['prodPrecio']
+
+                        prd.categoria_id=i['categoria']
                         prd.save()
 
                         det = DetVenta()
@@ -602,6 +616,7 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
         context['action'] = 'add'
         # context['create_url'] = 'add'
         context['frmClient'] = ClienteForm()
+        context['frmProducto'] =ProductoForm()
         context['det'] = []
         context['gasta'] = []
         return context
@@ -718,8 +733,6 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                             # print(i['cant'])
                             prd.prodCantidad -= i['cant']
                             prd.save()
-
-
 
 
                     # a={}
@@ -886,9 +899,11 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
             pass
         return data
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['frmClient'] = ClienteForm()
+        # context['frmContrato'] = ContratoForm.
         # context['title'] = 'Edición de una Venta'
         # context['entity'] = 'Ventas'
         context['list_url'] = self.success_url

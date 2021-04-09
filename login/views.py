@@ -94,6 +94,18 @@ class DashboardView(LoginRequiredMixin,TemplateView):
                     'colorByPoint': True,
                     'data': self.get_graph_sales_products_year_month()
                 }
+            elif action=='get_ultimas_ventas':
+                data=[]
+                venta=Venta.objects.filter(ventEstado=True, venTipo=2)[0:4]
+                for i in venta:
+                    data.append([
+
+                        i.cliente.cliNombre+' '+i.cliente.cliApellido,
+                        i.venFechaFin.strftime('%Y-%m-%d'),
+                        format(i.ventSubtotal, '.2f'),
+                        format(i.ventImpuesto, '.2f'),
+                        format(i.ventTotal, '.2f'),
+                    ])
             elif action=='prueba':
                 data={
                     'name':'Marco',
