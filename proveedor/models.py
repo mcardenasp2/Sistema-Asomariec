@@ -45,9 +45,12 @@ class Proveedor(models.Model):
     def __str__(self):
         return self.proEmpresa
 
+    def get_full_name(self):
+        return '{} / {}'.format(self.proEmpresa, self.proRuc)
 
     def toJSON(self):
         item=model_to_dict(self)
+        item['full_name']=self.get_full_name()
         item['provincia']= self.provincia.toJSON()
         return item
 

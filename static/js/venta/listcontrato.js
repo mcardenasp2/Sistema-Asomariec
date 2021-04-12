@@ -51,7 +51,7 @@ $(function () {
 
         columns: [
             {"data": "id"},
-            {"data": "cliente.cliNombre"},
+            {"data": "cliente.full_name"},
             {"data": "venFechaFin"},
             // {"data": "categoria.catDescripcion"},
             {"data": "venEstVenta"},

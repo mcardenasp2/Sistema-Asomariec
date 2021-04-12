@@ -49,7 +49,7 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "proveedor.proEmpresa"},
+            {"data": "proveedor.full_name"},
             {"data": "ccoFecCom"},
             // {"data": "categoria.catDescripcion"},
             {"data": "ccoSubtotal"},
