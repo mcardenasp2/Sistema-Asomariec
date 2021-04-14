@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'venta',
     'login',
     'reports',
-    'user'
+    'user',
+    'seguridad'
 ]
 
 MIDDLEWARE = [

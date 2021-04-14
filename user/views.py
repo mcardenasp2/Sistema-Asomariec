@@ -98,11 +98,16 @@ class UserUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateV
             if action == 'edit':
                 form = self.get_form()
                 data = form.save()
+            #     esto es mio para eleiminar la sesion
+
+
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

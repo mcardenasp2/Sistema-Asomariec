@@ -61,6 +61,8 @@ class UserForm(ModelForm):
                         u.set_password(pwd)
                 u.save()
                 u.groups.clear()
+                # puse para eliminar la sesion
+
                 for g in self.cleaned_data['groups']:
                     u.groups.add(g)
             else:
@@ -68,6 +70,8 @@ class UserForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+
 
 
 class UserProfileForm(ModelForm):

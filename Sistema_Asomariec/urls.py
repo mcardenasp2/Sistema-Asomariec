@@ -29,6 +29,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    # path('hola/prueba/', mostrar2),
     path('admin/', admin.site.urls),
     path('hola/', mostrar),
     # path('hola/prueba/', mostrar2),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('login/', include('login.urls')),
     path('reports/', include('reports.urls')),
     path('user/', include('user.urls')),
+    path('seguridad/', include('seguridad.urls')),
 
 
 ]
