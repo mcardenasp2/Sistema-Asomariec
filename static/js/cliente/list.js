@@ -65,4 +65,36 @@ $(function () {
 
         }
     });
+
+
+
+    function Delete(url) {
+    swal({
+        title: "Esta seguro de borrar?",
+        text: "Este contenido no se puede recuperar!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, borrar!",
+        closeOnconfirm: true
+    }, function () {
+        $.ajax({
+            // type: 'DELETE',
+            type: 'POST',
+            data:{'id':1, 'action':'eliminar'},
+            url: url,
+            success: function (data) {
+                if (data.success) {
+                    toastr.success(data.message);
+                    dataTable.ajax.reload();
+                } else {
+                    toastr.error(data.message);
+                }
+            }
+        });
+    });
+}
+
+
+
 });

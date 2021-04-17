@@ -46,28 +46,18 @@
 
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Nombre del Contrato:</label>
-                                            {{ form.ventObservacion }}
-                                            {#                                            {{ form.contratoDescripcion }}#}
-
-                                        </div>
-
-                                        <hr>
-
-                                    </div>
-                                    {#                                    <div class="col-md-3">#}
-                                    {#                                        <div class="form-group">#}
-                                    {#                                            <label for="id_venEstVenta">Estado:</label>#}
-                                    {#                                            {{ form.venEstVenta }}#}
-                                    {#                                        </div>#}
-                                    {##}
-                                    {#                                    </div>#}
-
-
-                                </div>
+                                {#                                <div class="row">#}
+                                {#                                    <div class="col-md-12">#}
+                                {#                                        <div class="form-group">#}
+                                {#                                            <label>Nombre del Contrato:</label>#}
+                                {#                                            {{ form.ventObservacion }}#}
+                                {#                                            {{ form.contratoDescripcion }}#}
+                                {##}
+                                {#                                        </div>#}
+                                {##}
+                                {#                                    </div>#}
+                                {##}
+                                {#                                </div>#}
                                 <div class="row">
 
                                     <div class="col-lg-5">
@@ -105,20 +95,20 @@
                                     </div>
                                     <div class="col-lg-2">
                                         <div class="form-group">
-                                            <button class="btn btn-info addcontr">Añadir</button>
+                                            <button class="btn btn-primary addcontr">Añadir</button>
 
                                         </div>
 
                                     </div>
 
-                                    <hr>
+                                    {#                                    <hr>#}
 
                                 </div>
 
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label>Categoria:</label>
+                                            <label>Categoría:</label>
                                             {{ frmProducto.categoria|add_class:'form-control mySelect2' }}
 
                                         </div>
@@ -126,10 +116,11 @@
 
 
                                 </div>
+{#                                <hr>#}
 
 
-                                <div class="row">
-                                    <div class="col-lg-6">
+{#                                <div class="row">#}
+{#                                    <div class="col-lg-6">#}
                                         {#                                        <div class="custom-control custom-radio mb-3">#}
                                         {#                                            <input type="radio" id="customRadio1" name="customRadio"#}
                                         {#                                                   class="custom-control-input">#}
@@ -144,9 +135,9 @@
                                         {#                                            <input type="checkbox" class="custom-control-input" id="customCheck1">#}
                                         {#                                            <label class="custom-control-label" for="customCheck1">Pagado</label>#}
                                         {#                                        </div>#}
-
-                                    </div>
-                                </div>
+{##}
+{#                                    </div>#}
+{#                                </div>#}
                                 <br>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -217,6 +208,18 @@
 
                                         {#                                        </div>#}
                                     </div>
+{#                                    <div class="row">#}
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Nombre del Contrato:</label>
+                                                {{ form.ventObservacion }}
+                                                {#                                            {{ form.contratoDescripcion }}#}
+
+                                            </div>
+
+                                        </div>
+
+{#                                    </div>#}
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Rango de Fechas:</label>
@@ -267,7 +270,7 @@
                                                        name="gastoadicionales"
                                                        id="example-text-input" disabled>
                                                 <span class="input-group-append">
-                                        <button type="button" class="btn btn-info btn-flat btnGastos"><i
+                                        <button type="button" class="btn btn-primary btn-flat btnGastos"><i
                                                 class="fas fa-plus"></i></button>
                                                     </span>
 
@@ -401,7 +404,7 @@
 
                 </div>
                 <div class="text-right">
-                    <button class="btn btn-info" type="submit"> Guardar</button>
+                    <button class="btn btn-primary" type="submit"> Guardar</button>
                     {#                <a type="button" class="btn btn-danger"role="button" aria-pressed="true">Cancelar</a>#}
                     <a href="{{ list_url }}" class="btn btn-danger" role="button" aria-pressed="true">Cancelar</a>
                     {#                <button class="btn btn-danger" type="submit"> </button>#}
@@ -542,7 +545,7 @@
                         </div>
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <button class="btn btn-info addgast">Añadir</button>
+                                <button class="btn btn-primary addgast">Añadir</button>
                             </div>
 
                         </div>

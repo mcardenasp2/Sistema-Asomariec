@@ -11,7 +11,7 @@ from insumo.models import Insumo
 class CabCompra(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT)
     # comprador = models.CharField(max_length=5)
-    ccoFecCom = models.DateTimeField(default=datetime.now())
+    ccoFecCom = models.DateField(default=datetime.now)
     ccoVendedor=models.CharField(max_length=50, verbose_name='Vendedor')
     ccoCedVend=models.CharField(max_length=13, verbose_name='Cedula')
     # ccoReferencia = models.CharField(max_length=20,verbose_name='Referencia')

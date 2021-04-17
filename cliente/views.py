@@ -80,7 +80,7 @@ class ClienteCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('cliente:cliente_listar')
         context['action'] = 'add'
-        context['title'] = 'Creacion de un Cliente'
+        context['title'] = 'Creación de un Cliente'
         return context
 
 

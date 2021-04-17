@@ -13,8 +13,8 @@ from venta.tipventa import vent_choices, vent_estado
 class Venta(models.Model):
     cliente=models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ventnum=models.CharField(max_length=20)
-    venFechaInici=models.DateTimeField(default=datetime.now())
-    venFechaFin=models.DateTimeField(default=datetime.now(),blank=True, null=True)
+    venFechaInici=models.DateField(default=datetime.now)
+    venFechaFin=models.DateField(default=datetime.now,blank=True, null=True)
     ventObservacion=models.CharField(max_length=100)
     venTipo=models.CharField(max_length=20, choices=vent_choices, default='2')
     #  pendiente, pagado
