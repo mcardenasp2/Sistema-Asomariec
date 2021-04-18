@@ -19,7 +19,7 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Cliente
     template_name = 'cliente/ListarCliente.html'
-    permission_required = 'view_cliente'
+    permission_required = 'view_cliente, delete_cliente'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -35,6 +35,17 @@ class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,List
                 # for i in Cliente.objects.all():
                 for i in Cliente.objects.filter(cliEstado=True):
                     data.append(i.toJSON())
+            elif action == 'eliminar':
+                cliente = Cliente.objects.get(pk=request.POST['id'])
+                cliente.cliEstado = 0
+                cliente.save()
+
+                # usuario = self.get_object()
+                # usuario.cliEstado = False
+                # usuario.usuaEli = request.POST['usuaEli']
+                # usuario.save()
+
+
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

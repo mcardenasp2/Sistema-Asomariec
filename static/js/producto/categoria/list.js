@@ -51,7 +51,7 @@ function getDatacat() {
         columns: [
             {"data": "id"},
             {"data": "catDescripcion"},
-            {"data": "catEstado"},
+            {"data": "id"},
             // {"data": "desc"},
         ],
         columnDefs: [
@@ -61,7 +61,8 @@ function getDatacat() {
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a title="Editar" href="#" rel="edit" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a title="Eliminar" href="#" type="button" rel="delete" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    // buttons += '<a title="Eliminar" href="#" type="button" rel="delete" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    buttons += '<a title="Eliminar" href="#" onclick=Delete("' + row.id + '") type="button" rel="delete" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     // var buttons = '<a href="/insumo/categoria/editar/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
                     // buttons += '<a href="/insumo/categoria/eliminar/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
 
@@ -113,30 +114,30 @@ $(function () {
             // console.log(data);
 
 
-        })
-        .on('click', 'a[rel="delete"]', function () {
-            // alert('x');
-            //toma el valor si llega a ver un tr o li
-            // var tr= tblCategoria.cell($(this).closest('td, li')).index();
-            //otra forma de tomar datos
-            // var data=  tblCategoria.row(tr.row).data();
-            //para tomarme los datos
-            var data = tblCategoria.row($(this).parents('tr')).data();
-
-            // console.log(data);
-            var user1 = $("#user1").val();
-            // console.log(url);
-            var parameters = new FormData();
-            parameters.append('action', 'delete');
-            parameters.append('id', data.id);
-            parameters.append('user1', user1);
-            submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
-
-                tblCategoria.ajax.reload();
-            });
-
-
         });
+        // .on('click', 'a[rel="delete"]', function () {
+        //     // alert('x');
+        //     //toma el valor si llega a ver un tr o li
+        //     // var tr= tblCategoria.cell($(this).closest('td, li')).index();
+        //     //otra forma de tomar datos
+        //     // var data=  tblCategoria.row(tr.row).data();
+        //     //para tomarme los datos
+        //     var data = tblCategoria.row($(this).parents('tr')).data();
+        //
+        //     // console.log(data);
+        //     var user1 = $("#user1").val();
+        //     // console.log(url);
+        //     var parameters = new FormData();
+        //     parameters.append('action', 'delete');
+        //     parameters.append('id', data.id);
+        //     parameters.append('user1', user1);
+        //     submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+        //
+        //         tblCategoria.ajax.reload();
+        //     });
+        //
+        //
+        // });
 
 
     $('#form_IDcat').on('submit', function (e) {
@@ -158,3 +159,39 @@ $(function () {
 
 });
 
+function Delete(id) {
+    Swal.fire({
+        title: "Esta seguro de borrar?",
+        text: "Este contenido no se puede recuperar!",
+        // type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, borrar!",
+        cancelButtonText:"Cancelar"
+        // preConfirm: true
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                url: window.location.pathname,
+                data: {'id': id, 'action': 'delete'},
+                success: function (data) {
+                    Swal.fire(
+                        'Borrado!',
+                        'Tu registro fue borrado con éxito.',
+                        'success'
+                    )
+                    tblCategoria.ajax.reload();
+                    // if (data.success) {
+                    //     toastr.success(data.message);
+                    //     dataTable.ajax.reload();
+                    // } else {
+                    //     toastr.error(data.message);
+                    // }
+                }
+            });
+            // For more information about handling dismissals please visit
+            // https://sweetalert2.github.io/#handling-dismissals
+        }
+    });
+}

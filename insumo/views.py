@@ -253,7 +253,7 @@ class MedidaView(TemplateView):
 class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Insumo
     template_name = 'insumo/insumo/ListarInsumo.html'
-    permission_required = 'view_insumo'
+    permission_required = 'view_insumo,delete_insumo'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -270,6 +270,11 @@ class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVie
                     data.append(i.toJSON())
 
                 # print(data)
+            elif action == 'eliminar':
+                insumo= Insumo.objects.get(pk=request.POST['id'])
+                insumo.insEstado=False
+                # usuario.usuaEli=request.POST['usuaEli']
+                insumo.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

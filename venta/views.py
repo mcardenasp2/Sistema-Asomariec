@@ -61,6 +61,21 @@ class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVie
                 data = []
                 for i in GastAdc.objects.filter(venta_id=request.POST['id']):
                     data.append(i.toJSON())
+            elif action == 'eliminar':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                        # print('Eliminar')
+                    # cabventa = self.get_object()
+                    cabventa = Venta.objects.get(pk=request.POST['id'])
+                    cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        producto.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -485,6 +500,22 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
                 data = []
                 for i in DetVenta.objects.filter(venta_id=request.POST['id']):
                     data.append(i.toJSON())
+            elif action == 'eliminar':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                    # cabventa = self.get_object()
+                    cabventa = Venta.objects.get(pk=request.POST['id'])
+                    cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        if producto.prodEstprod==1:
+                            producto.prodTipo=2
+                        producto.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

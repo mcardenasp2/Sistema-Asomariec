@@ -354,7 +354,7 @@ class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Del
 class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Producto
     template_name = 'producto/product/ListProduct.html'
-    # permission_required = 'add_producto'
+    permission_required = 'add_producto, delete_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -369,6 +369,12 @@ class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVi
                 data = []
                 for i in Producto.objects.filter(prodEstado=True, prodEstprod=True, prodTipo=2):
                     data.append(i.toJSON())
+            elif action == 'eliminar':
+
+                prod = Producto.objects.get(pk=request.POST['id'])
+                prod.prodEstado = False
+                # prod.usuaEli = request.POST['usuaEli']
+                prod.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

@@ -14,7 +14,7 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Proveedor
     template_name = 'proveedor/proveedor/ListarProveedor.html'
-    permission_required = 'view_proveedor'
+    permission_required = 'view_proveedor,delete_proveedor'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -29,7 +29,11 @@ class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Li
                 data=[]
                 for i in Proveedor.objects.filter(proEstado=1):
                     data.append(i.toJSON())
-
+            elif action=='eliminar':
+                proveedor= Proveedor.objects.get(pk=request.POST['id'])
+                proveedor.proEstado=False
+                # proveedor.usuaEli=request.POST['usuaEli']
+                proveedor.save()
             else:
                 data['error']='Ha ocurrido un error'
         except Exception as e:

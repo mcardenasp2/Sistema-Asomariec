@@ -56,6 +56,28 @@ class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListV
                 data = []
                 for i in DetCompra.objects.filter(cabCompra_id=request.POST['id']):
                     data.append(i.toJSON())
+
+            elif action == 'eliminar':
+                with transaction.atomic():
+                    # comp = json.loads(request.POST['compras'])
+                    # print('hola anadiendo 2')
+                    # cabcompra = self.get_object()
+                    cabcompra = CabCompra.objects.get(pk=request.POST['id'])
+                    cabcompra.ccoEstado = False
+                    cabcompra.save()
+                    # cabcompra.detcompra_set.all().delete()
+
+                    # for i in DetCompra.objects.filter(cabCompra_id=self.get_object().id):
+                    for i in DetCompra.objects.filter(cabCompra_id=cabcompra.id):
+                        # det = DetCompra()
+                        insumo = Insumo.objects.get(pk=i.insumo_id)
+                        insumo.insStock -= i.dcoCantidad
+                        insumo.save()
+
+                        # det.save()
+                    # cabcompra.detcompra_set.all().delete()
+                    # cabcompra.detcompra_set
+
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

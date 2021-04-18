@@ -9,7 +9,7 @@ urlpatterns = [
     path('normal/mostrar/', VentaListView.as_view(), name='venta_mostrar'),
     path('normal/create/', VentaCreateView.as_view(), name='venta_create'),
     path('normal/editar/<int:pk>/', VentaUpdateView.as_view(), name='venta_edit'),
-    path('normal/delete/<int:pk>/', VentaDeleteView.as_view(), name='venta_delete'),
+    # path('normal/delete/<int:pk>/', VentaDeleteView.as_view(), name='venta_delete'),
     # path('normal/delete/<int:pk>/', VentaDeleteContratoView.as_view(), name='venta_delete'),
     path('normal/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='venta_invoice_pdf'),
 
