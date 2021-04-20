@@ -54,6 +54,7 @@ $(function () {
             // {"data": "categoria.catDescripcion"},
             {"data": "ventSubtotal"},
             {"data": "ventImpuesto"},
+            {"data": "ventTotalDescuento"},
 
             {"data": "ventTotal"},
             {"data": "ventTotal"},
@@ -65,8 +66,9 @@ $(function () {
                 class: 'text-center',
             },
 
+
             {
-                targets: [-2, -3, -4],
+                targets: [-2,-3, -4, -5],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -88,6 +90,18 @@ $(function () {
                     return buttons;
                 }
             },
+            // {
+            //     targets:[-3],
+            //     class: 'text-center',
+            //     orderable: false,
+            //     render:function (data, type, row) {
+            //         var totaldesc=row.ventSubtotal*row.ventDescuento;
+            //
+            //
+            //         return '$' + parseFloat(totaldesc).toFixed(2);
+            //
+            //     }
+            // }
         ],
         initComplete: function (settings, json) {
 

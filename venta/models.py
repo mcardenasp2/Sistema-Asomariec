@@ -15,6 +15,8 @@ class Venta(models.Model):
     ventnum=models.CharField(max_length=20)
     venFechaInici=models.DateField(default=datetime.now)
     venFechaFin=models.DateField(default=datetime.now,blank=True, null=True)
+    ventDescuento=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
+    ventTotalDescuento=models.DecimalField(default=0.00,max_digits=9, decimal_places=2)
     ventObservacion=models.CharField(max_length=100)
     venTipo=models.CharField(max_length=20, choices=vent_choices, default='2')
     #  pendiente, pagado
@@ -32,6 +34,7 @@ class Venta(models.Model):
         item['cliente']=self.cliente.toJSON()
         item['ventTotal']=format(self.ventTotal, '.2f')
         item['ventSubtotal']=format(self.ventSubtotal, '.2f')
+        item['ventDescuento']=format(self.ventDescuento, '.2f')
         item['ventImpuesto']=format(self.ventImpuesto, '.2f')
         item['venFechaInici']=self.venFechaInici.strftime('%Y-%m-%d')
         item['venFechaFin']=self.venFechaFin.strftime('%Y-%m-%d')

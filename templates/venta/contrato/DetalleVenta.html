@@ -193,6 +193,28 @@
                                     {#                                                   id="example-text-input" disabled>#}
                                     {#                                        </div>#}
 
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input"
+                                                   class="form-control-label">Descuento:</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group-sm">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                                </div>
+{#                                                <input class="form-control" type="text" value="0.00"#}
+{#                                                       aria-describedby="basic-addon1" name="descuento"#}
+{#                                                       id="example-text-input" disabled>#}
+                                                {{ form.ventDescuento|add_class:'form-control'|attr:'disabled:disabled,aria-describedby:basic-addon1'|attr:'type:text' }}
+                                            </div>
+
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -202,7 +224,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="form-group-sm">
                                             <div class="input-group">
                                                 <input class="form-control" type="text" value="0.00"
                                                        name="gastoadicionales"
@@ -223,7 +245,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="form-group-sm">
                                             <input class="form-control" type="text" value="0.0" name="subtotal"
                                                    id="example-text-input" disabled>
                                         </div>
@@ -236,12 +258,29 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="form-group-sm">
 
                                             <input class="form-control" name="iva" type="text" value="0.0"
                                                    id="example-text-input" disabled>
                                         </div>
                                     </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Total
+                                                Descuento:</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group-sm">
+
+                                            <input class="form-control" name="Total-descuento" type="text" value="0.0"
+                                                   id="example-text-input" disabled>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Total a

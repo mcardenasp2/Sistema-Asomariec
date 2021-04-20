@@ -3,6 +3,7 @@ var datos;
 var table;
 var name = 'hola';
 var date_now = new moment().format('YYYY-MM-DD');
+
 var param = {
     'start_date': date_now,
     'end_date': date_now,
@@ -11,6 +12,7 @@ var param = {
 
 function repo() {
     $('.imprimirPdf').on('click', function () {
+        // var tipo = $('#tipocontrato').val();
         // alert('x');
         // window.open('/reports/invoice/pdf/' + param['start_date'] + '&' + param['end_date'] + '/', '_blank')
         window.open('/reports/venta/pdf/' + param['start_date'] + '&' + param['end_date'] + '&'+param['tipo'], '_blank')
@@ -33,10 +35,11 @@ function generate_report() {
         param['start_date'] = parameters['start_date'];
         parameters['end_date'] = date_range.endDate.format('YYYY-MM-DD');
         param['end_date'] = parameters['end_date'];
-        param['tipo']=parameters['tipo'];
+        // param['tipo']=parameters['tipo'];
         // param = parameters;
 
     }
+    param['tipo']=parameters['tipo'];
 
     table = $('#datatable-buttons').DataTable({
         // dom:'b',
@@ -147,7 +150,7 @@ function generate_report() {
         columnDefs: [
 
             {
-                targets: [-1, -2, -3],
+                targets: [-1, -2, -3, -4],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -172,6 +175,7 @@ function generate_report() {
 
 $(function () {
     $('#tipocontrato').on('change', function () {
+        // alert('xx');
         generate_report();
         repo();
         // $('.applyBtn').click();

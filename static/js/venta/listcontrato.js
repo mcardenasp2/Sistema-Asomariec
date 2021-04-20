@@ -57,6 +57,7 @@ $(function () {
             {"data": "venEstVenta"},
             {"data": "ventSubtotal"},
             {"data": "ventImpuesto"},
+            {"data": "ventTotalDescuento"},
 
             {"data": "ventTotal"},
             {"data": "ventTotal"},
@@ -88,7 +89,7 @@ $(function () {
             },
 
             {
-                targets: [-3, -4, -5],
+                targets: [-2,-3, -4, -5],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {

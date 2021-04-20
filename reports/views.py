@@ -112,11 +112,13 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                         s.venFechaFin.strftime('%Y-%m-%d'),
                         format(s.ventSubtotal, '.2f'),
                         format(s.ventImpuesto, '.2f'),
+                        format(s.ventTotalDescuento, '.2f'),
                         format(s.ventTotal, '.2f'),
                     ])
 
                 subtotal = search.aggregate(r=Coalesce(Sum('ventSubtotal'), 0)).get('r')
                 iva = search.aggregate(r=Coalesce(Sum('ventImpuesto'), 0)).get('r')
+                descuento = search.aggregate(r=Coalesce(Sum('ventTotalDescuento'), 0)).get('r')
                 total = search.aggregate(r=Coalesce(Sum('ventTotal'), 0)).get('r')
                 #
                 data.append([
@@ -125,6 +127,7 @@ class ReportVentaView(LoginRequiredMixin,TemplateView):
                     '---',
                     format(subtotal, '.2f'),
                     format(iva, '.2f'),
+                    format(descuento, '.2f'),
                     format(total, '.2f'),
                 ])
             else:
@@ -301,6 +304,7 @@ class VentaPdfView(View):
             start_date = self.kwargs['start_date']
             end_date = self.kwargs['end_date']
             tipo = self.kwargs['tipo']
+            print(tipo)
             search = Venta.objects.all()
             descr = ''
             if len(start_date) and len(end_date):
@@ -322,15 +326,18 @@ class VentaPdfView(View):
                     s.venFechaInici.strftime('%Y-%m-%d'),
                     format(s.ventSubtotal, '.2f'),
                     format(s.ventImpuesto, '.2f'),
+                    format(s.ventTotalDescuento, '.2f'),
                     format(s.ventTotal, '.2f'),
                 ])
 
             subtotal = search.aggregate(r=Coalesce(Sum('ventSubtotal'), 0)).get('r')
             iva = search.aggregate(r=Coalesce(Sum('ventImpuesto'), 0)).get('r')
+            descuento = search.aggregate(r=Coalesce(Sum('ventTotalDescuento'), 0)).get('r')
             total = search.aggregate(r=Coalesce(Sum('ventTotal'), 0)).get('r')
 
             subtotal1=format(subtotal, '.2f')
             iva=format(iva, '.2f')
+            descuento=format(descuento, '.2f')
             total=format(total, '.2f')
 
             # print(request.POST['param'])
@@ -340,7 +347,7 @@ class VentaPdfView(View):
                        'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador','tipo':descr},
                        'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
                        'report':data,
-                       'totales':{'subtotal':subtotal1,'iva':iva,'total':total}
+                       'totales':{'subtotal':subtotal1,'iva':iva,'total':total,'descuento':descuento}
                        # se utiliza con collectstatic
                        # 'icon':'{}{}'.format(settings.STATIC_URL, 'img/logo2.jpeg')
 
@@ -364,4 +371,4 @@ class VentaPdfView(View):
         except:
             print('pdf no imprime nada de nada')
             pass
-        return HttpResponseRedirect(reverse_lazy('venta:venta_mostrar'))
+        return HttpResponseRedirect(reverse_lazy('reports:venta_report'))

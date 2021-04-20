@@ -10,11 +10,13 @@ var produ = {
         fecha: '',
         fechafin: '',
         ventestado: '',
-        observacion:'',
+        observacion: '',
         // precio: 0.00,
         tgsto: 0.00,
         subproductos: 0.00,
         impuestos: 0.00,
+        descuento: 0.00,
+        totaldescuento: 0.00,
         productos: [],
         gastoad: [],
     },
@@ -43,6 +45,7 @@ var produ = {
 
     },
     calculate_invoice: function () {
+        var descuento = $('input[name="descuento"]').val();
         var subtotal = 0.00;
         var impuesto = 0.00;
         $.each(this.items.productos, function (pos, dict) {
@@ -53,9 +56,12 @@ var produ = {
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
+        // this.items.descuento = this.items.subproductos * descuento;
+        this.items.totaldescuento = this.items.subproductos * descuento;
         this.items.impuestos = impuesto;
         console.log(this.items.subproductos);
 
+        $('input[name="Total-descuento"]').val(this.items.totaldescuento.toFixed(2));
         $('input[name="subtotal"]').val(this.items.subproductos.toFixed(2));
         $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
         this.tpago();
@@ -82,10 +88,12 @@ var produ = {
         var st = 0.00;
         var t = 0.00;
         var iva = 0.00;
+        var td = 0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
         iva = parseFloat($('input[name="iva"]').val());
-        t = ga + st + iva;
+        td = parseFloat($('input[name="Total-descuento"]').val());
+        t = ga + st + iva-td;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -317,7 +325,7 @@ $(function () {
             gast.id = 0;
             gast.cant = 1;
             gast.subtotal = 0.00;
-            if (gast.prodDescripcion === '' || gast.prodPrecio === ''||gast.categoria==='' ) return false;
+            if (gast.prodDescripcion === '' || gast.prodPrecio === '' || gast.categoria === '') return false;
             //
             console.log(gast)
             produ.add(gast);
@@ -414,6 +422,13 @@ $(function () {
                 });
 
             });
+
+
+        //anadir descuento
+        $('input[name="descuento"]').on('change', function () {
+            produ.calculate_invoice();
+
+        });
 
         //Rango de Fechas
         // fechaini = $('#venFechaInici').val();
@@ -517,9 +532,10 @@ $(function () {
             // produ.items.fecha = $('input[name="venFechaInici"]').val();
             // produ.items.fechafin = $('input[name="venFechaFin"]').val();
             produ.items.cliente = $('select[name="cliente"]').val();
+            produ.items.descuento = $('input[name="descuento"]').val();
             // produ.items.ventestado = $('select[name="venEstVenta"]').val();
             produ.items.ventestado = 1;
-            produ.items.observacion=$('input[name="ventObservacion"]').val();
+            produ.items.observacion = $('input[name="ventObservacion"]').val();
             console.log(produ.items);
             var parameters = new FormData();
             parameters.append('action', $('input[name="action"]').val());

@@ -9,6 +9,7 @@ var prod = {
         iva: 0.00,
         total: 0.00,
         subtotal: 0.00,
+        descuento: 0.00,
         totalproduc: 0.00,
         // subtolagast: 0.00,
         insumos: [],
@@ -17,12 +18,16 @@ var prod = {
     calculate_invoce: function () {
 
         var subtotal = 0.00;
+
         $.each(this.items.insumos, function (pos, dict) {
             dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
             subtotal += dict.subtotal;
         });
         this.items.totalproduc = subtotal;
+
         // console.log(this.items.totalproduc);
+
+        $('input[name="prodcTotal"]').val(this.items.totalproduc.toFixed(2));
         $('input[name="prodcTotal"]').val(this.items.totalproduc.toFixed(2));
         // this.totalp();
 
@@ -219,6 +224,7 @@ var produ = {
 
     },
     calculate_invoice: function () {
+        var descuento = $('input[name="ventDescuento"]').val();
         var subtotal = 0.00;
         var impuesto = 0.00;
         $.each(this.items.productos, function (pos, dict) {
@@ -230,8 +236,11 @@ var produ = {
         });
         this.items.subproductos = subtotal;
         this.items.impuestos = impuesto;
+        descuento=this.items.subproductos*descuento;
+
         console.log(this.items.subproductos);
 
+        $('input[name="Total-descuento"]').val(descuento.toFixed(2));
         $('input[name="subtotal"]').val(this.items.subproductos.toFixed(2));
         $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
         this.tpago();
@@ -258,10 +267,12 @@ var produ = {
         var st = 0.00;
         var t = 0.00;
         var iva = 0.00;
+        var td = 0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
         iva = parseFloat($('input[name="iva"]').val());
-        t = ga + st + iva;
+        td = parseFloat($('input[name="Total-descuento"]').val());
+        t = ga + st + iva -td;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -383,7 +394,7 @@ var produ = {
                     orderable: false,
                     render: function (data, type, row) {
                         var subt;
-                        subt=row.cant*row.prodPrecio
+                        subt = row.cant * row.prodPrecio
                         return '$' + parseFloat(subt).toFixed(2);
                     }
                 },

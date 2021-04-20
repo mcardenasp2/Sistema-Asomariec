@@ -159,9 +159,11 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
                     cabventa.venFechaInici = vent['fecha']
                     cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
+                    cabventa.ventDescuento = float(vent['descuento'])
+                    cabventa.ventTotalDescuento = float(vent['totaldescuento'])
                     cabventa.ventObservacion = 'Ninguna'
                     cabventa.venTipo = 2
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + float(vent['impuestos'])-float(vent['totaldescuento'])
                     cabventa.ventEstado = 1
                     cabventa.venEstVenta = 2
                     cabventa.save()
@@ -559,12 +561,14 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     cabventa.venFechaFin = vent['fechafin']
                     cabventa.ventSubtotal = float(vent['subproductos']) + float(vent['tgsto'])
                     cabventa.ventImpuesto = float(vent['impuestos'])
+                    cabventa.ventDescuento = float(vent['descuento'])
+                    cabventa.ventTotalDescuento = float(vent['totaldescuento'])
                     cabventa.ventObservacion = vent['observacion']
 
 
 
                     cabventa.venTipo = 1
-                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + +float(vent['impuestos'])
+                    cabventa.ventTotal = float(vent['tgsto']) + float(vent['subproductos']) + +float(vent['impuestos'])-float(vent['totaldescuento'])
                     cabventa.ventEstado = 1
                     cabventa.save()
                     # Aggreo a la tabla contratos

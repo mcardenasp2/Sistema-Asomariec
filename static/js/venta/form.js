@@ -14,6 +14,8 @@ var produ = {
         tgsto: 0.00,
         subproductos: 0.00,
         impuestos: 0.00,
+        descuento: 0.00,
+        totaldescuento: 0.00,
         productos: [],
         gastoad: [],
     },
@@ -51,6 +53,7 @@ var produ = {
     calculate_invoice: function () {
         var subtotal = 0.00;
         var impuesto = 0.00;
+        var descuento = $('input[name="descuento"]').val();
         $.each(this.items.productos, function (pos, dict) {
             // console.log(pos);
             // console.log(dict);
@@ -59,10 +62,13 @@ var produ = {
             subtotal += dict.subtotal;
         });
         this.items.subproductos = subtotal;
+        this.items.totaldescuento=this.items.subproductos*descuento;
+        // descuento=this.items.subproductos*descuento;
         this.items.impuestos = impuesto;
         // console.log(this.items.subproductos);
         // console.log(impuesto);
 
+        $('input[name="Total-descuento"]').val(this.items.totaldescuento.toFixed(2));
         $('input[name="subtotal"]').val(this.items.subproductos.toFixed(2));
         $('input[name="iva"]').val(this.items.impuestos.toFixed(2));
         this.tpago();
@@ -89,10 +95,12 @@ var produ = {
         var st = 0.00;
         var t = 0.00;
         var im = 0.00;
+        var td = 0.00;
         ga = parseFloat($('input[name="gastoadicionales"]').val());
         st = parseFloat($('input[name="subtotal"]').val());
         im = parseFloat($('input[name="iva"]').val());
-        t = ga + st + im;
+        td = parseFloat($('input[name="Total-descuento"]').val());
+        t = ga + st + im - td;
         $('input[name="topagar"]').val(t.toFixed(2));
 
     },
@@ -365,6 +373,12 @@ $(function () {
 
         });
 
+    //anadir descuento
+    $('input[name="descuento"]').on('change', function () {
+        produ.calculate_invoice();
+
+    });
+
 
     //eliminar un producto
     $('#tblProducto tbody')
@@ -513,6 +527,7 @@ $(function () {
         }
         produ.items.fecha = $('input[name="venFechaFin"]').val();
         produ.items.cliente = $('select[name="cliente"]').val();
+        produ.items.descuento = $('input[name="descuento"]').val();
         console.log(produ.items);
         var parameters = new FormData();
         parameters.append('action', $('input[name="action"]').val());

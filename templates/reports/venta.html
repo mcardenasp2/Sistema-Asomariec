@@ -153,6 +153,7 @@
 
         <th style="width: 15%;">SUBTOTAL</th>
         <th style="width: 15%;">IVA</th>
+        <th style="width: 15%;">DESCUENTO</th>
         <th style="width: 15%;">TOTAL</th>
         {#        <th style="width: 15%;">TOTAL</th>#}
     </tr>
@@ -180,6 +181,7 @@
             {#            <td class="text-center">{{ d.detCant }}</td>#}
             <td class="text-center">${{ d.4 }}</td>
             <td class="text-center">${{ d.5 }}</td>
+            <td class="text-center">${{ d.6 }}</td>
         </tr>
     {% endfor %}
     <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
@@ -190,6 +192,7 @@
         <td class="text-center" style="color: red"><b>${{ totales.subtotal }}</b></td>
         {#            <td class="text-center">{{ d.detCant }}</td>#}
         <td class="text-center" style="color: red"><b>${{ totales.iva }}</b></td>
+        <td class="text-center" style="color: red"><b>${{ totales.descuento }}</b></td>
         <td class="text-center" style="color: red"><b>${{ totales.total }}</b></td>
     </tr>
     {#gasto #}

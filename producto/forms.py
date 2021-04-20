@@ -35,6 +35,7 @@ class CategoriaForm(ModelForm):
 
 
 class ProductoForm(ModelForm):
+    categoria = ModelChoiceField(queryset=Categoria.objects.filter(catEstado=1))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
