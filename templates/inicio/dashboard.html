@@ -19,8 +19,10 @@
 {% block content %}
     <form method="post" action="." enctype="multipart/form-data">
 
-        <div class="card">
-            <div class="card-body">
+        {#        <div class="card">#}
+        <div class="">
+            <div class="">
+                {#            <div class="card-body">#}
                 {#                <h1>Estado</h1>#}
                 {% csrf_token %}
                 <input type="hidden" name="action" value="{{ action }}">
@@ -183,6 +185,7 @@
                                                 <th>Fecha</th>
                                                 <th>Subtotal</th>
                                                 <th>Iva</th>
+                                                <th>Descuento</th>
                                                 <th>Total</th>
 
 
@@ -199,6 +202,7 @@
                     </div>
                     <div class="col-xl-6 col-md-6">
                         <div class="card bg-default">
+
                             <div class="chart">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -212,18 +216,27 @@
                     </div>
 
                 </div>
-                <br>
+{#                <br>#}
 
-                <div class="card bg-default">
-                    <div class="chart">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div id="container"></div>
+                <div class="row mt-5">
+                    <div class="col">
+                        <div class="card bg-default">
+                            <div class="chart">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="container"></div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
                     </div>
+
+
                 </div>
+
+
                 <br>
                 <br>
                 {#                <div class="card bg-default">#}
@@ -568,7 +581,7 @@
 
                 columnDefs: [
                     {
-                        targets: [-1, -2, -3],
+                        targets: [-1, -2, -3, -4],
                         class: 'text-center',
                         orderable: false,
                         render: function (data, type, row) {

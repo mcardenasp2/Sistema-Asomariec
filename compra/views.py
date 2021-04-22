@@ -96,7 +96,8 @@ class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListV
 class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = CabCompra
     form_class = CabCompraForm
-    template_name = 'compra/FormCompra.html'
+    # template_name = 'compra/FormCompra.html'
+    template_name = 'compra/FormCompraNuevo.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
     permission_required = 'add_cabcompra'
 

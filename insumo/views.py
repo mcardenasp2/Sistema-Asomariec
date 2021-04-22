@@ -378,7 +378,7 @@ class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Updat
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
-        context['title'] = 'Edicion de un Insumo'
+        context['title'] = 'Edición de un Insumo'
         context['action'] = 'edit'
         return context
 

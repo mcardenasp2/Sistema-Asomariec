@@ -94,7 +94,8 @@ class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVie
 class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = Venta
     form_class = CabVentaForm
-    template_name = 'venta/normal/FormVenta.html'
+    # template_name = 'venta/normal/FormVenta.html'
+    template_name = 'venta/normal/FormVentaNuevo.html'
     permission_required = 'add_venta'
 
     @method_decorator(csrf_exempt)
@@ -534,7 +535,7 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
 
 
 class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
-    template_name = 'venta/contrato/FormVenta.html'
+    template_name = 'venta/contrato/FormVentaNuevo.html'
     form_class = CabVentaForm
     model = Venta
     permission_required = 'add_venta'
@@ -658,7 +659,7 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
 
 
 class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
-    template_name = 'venta/contrato/DetalleVenta.html'
+    template_name = 'venta/contrato/DetalleVentaNuevo.html'
     model = Venta
     form_class = CabVentaForm
     success_url = reverse_lazy('venta:ventac_mostrar')

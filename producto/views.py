@@ -418,6 +418,7 @@ class ProductCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Crea
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('producto:product_mostrar')
+        context['title'] = 'Creación de un Producto'
         context['action'] = 'add'
         return context
 
@@ -449,7 +450,7 @@ class ProductUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('producto:product_mostrar')
-        # context['title'] = 'Edicion de un Insumo'
+        context['title'] = 'Edición de un Producto'
         context['action'] = 'edit'
         return context
 

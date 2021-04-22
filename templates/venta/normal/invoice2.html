@@ -297,6 +297,16 @@
         {#        <td colspan="4"><b>IVA 12%</b></td>#}
         <td style="text-align: right;">{{ sale.ventImpuesto }}</td>
     </tr>
+
+      <tr style="padding-top: 0px;">
+        <td style="width: 40%;"></td>
+        <td style="width: 20%;"></td>
+        <td style="width: 10%;"></td>
+        <td class="text-center" style="width: 15%;"><b>DESCUENTO</b></td>
+        {#        <td colspan="4"><b>IVA 12%</b></td>#}
+        <td style="text-align: right;">- {{ sale.ventTotalDescuento }}</td>
+    </tr>
+
     <tr style="padding-top: 0px;">
         <td style="width: 40%;"></td>
         <td style="width: 20%;"></td>

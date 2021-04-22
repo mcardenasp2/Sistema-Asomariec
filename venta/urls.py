@@ -17,7 +17,7 @@ urlpatterns = [
     path('contrato/create/', VentaContratoCreateView.as_view(), name='ventacont_create'),
     path('contrato/mostrar/', VentaContratoListView.as_view(), name='ventac_mostrar'),
     path('contrato/editar/<int:pk>/', VentaContratoUpdateView.as_view(), name='ventac_edit'),
-
+    # Detalle del COntrato
     path('contrato/detalle/<int:pk>/', VentaContratoDetalleView.as_view(), name='ventac_detalle'),
 
     path('contrato/eliminar/<int:pk>/', VentaDeleteContratoView.as_view(), name='ventac_delete'),

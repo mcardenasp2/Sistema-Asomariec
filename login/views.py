@@ -104,6 +104,7 @@ class DashboardView(LoginRequiredMixin,TemplateView):
                         i.venFechaFin.strftime('%Y-%m-%d'),
                         format(i.ventSubtotal, '.2f'),
                         format(i.ventImpuesto, '.2f'),
+                        format(i.ventTotalDescuento, '.2f'),
                         format(i.ventTotal, '.2f'),
                     ])
             elif action=='prueba':
