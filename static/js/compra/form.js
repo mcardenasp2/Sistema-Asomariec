@@ -246,7 +246,7 @@ $(function () {
 
         width: 'auto',
 
-        placeholder: 'Seleccione una opcion',
+        placeholder: 'Seleccione una opción',
 
 
     });

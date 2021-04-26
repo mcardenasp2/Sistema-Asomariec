@@ -44,12 +44,14 @@ class CabCompraForm(ModelForm):
             'ccoVendedor': TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder':'Nombre del Expendedor'
 
                 }
             ),
             'ccoCedVend': TextInput(
                 attrs={
                     'class': 'form-control',
+                    'placeholder': 'Cedula del Expendedor',
                     'minlength': '10'
                 }
             ),
