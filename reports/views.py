@@ -14,7 +14,7 @@ from django.views.generic import TemplateView, View
 from compra.models import CabCompra
 from reports.forms import ReportForm
 from venta.models import Venta
-
+from empresa.models import Empresa
 
 import os
 from django.conf import settings
@@ -226,10 +226,13 @@ class SaleInvoicePdfView(View):
 
 
             # print(request.POST['param'])
+            empresa = Empresa.objects.get(pk=1).toJSON()
+
             template = get_template('reports/invoice.html')
             # context = {'sale': CabCompra.objects.get(pk=self.kwargs['pk']),
             context = {'sale': CabCompra.objects.get(pk=1),
-                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       # 'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       'comp': empresa,
                        'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
                        'report':data,
                        'totales':{'subtotal':subtotal1,'iva':iva,'total':total}
@@ -340,11 +343,19 @@ class VentaPdfView(View):
             descuento=format(descuento, '.2f')
             total=format(total, '.2f')
 
+            # empresa = []
+            #             # for i in Empresa.objects.all():
+            #             #     # for i in Empresa.objects.filter(cliEstado=True):
+            #             #     empresa.append(i.toJSON())
+            empresa=Empresa.objects.get(pk=1).toJSON()
+
+            # print(empresa)
             # print(request.POST['param'])
             template = get_template('reports/venta.html')
             # context = {'sale': CabCompra.objects.get(pk=self.kwargs['pk']),
             context = {'sale': CabCompra.objects.get(pk=1),
-                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador','tipo':descr},
+                       # 'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador','tipo':descr},
+                       'comp': empresa,
                        'icon':'{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
                        'report':data,
                        'totales':{'subtotal':subtotal1,'iva':iva,'total':total,'descuento':descuento}

@@ -23,6 +23,8 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView, V
 
 from venta.forms import CabVentaForm
 
+from empresa.models import Empresa
+
 
 from cliente.models import Contrato
 from producto.forms import ProductoForm
@@ -452,9 +454,12 @@ class SaleInvoicePdfView(View):
             for i in GastAdc.objects.filter(venta=self.kwargs['pk']):
                 gast.append(i)
 
+            empresa = Empresa.objects.get(pk=1).toJSON()
+
             context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
                        # context = {'sale': data,
-                       'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       # 'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
+                       'comp': empresa,
                        'icon': '{}{}'.format(settings.MEDIA_URL, 'logo2.jpeg'),
                        'nfact': data['nfact'],
                        'fec': data['venFechaInici'],
