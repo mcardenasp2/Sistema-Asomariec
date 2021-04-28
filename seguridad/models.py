@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from django.forms import model_to_dict
+
 # Create your models here.
 class Modulo(models.Model):
     url = models.CharField(max_length=100)
@@ -11,6 +13,10 @@ class Modulo(models.Model):
 
     def __str__(self):
         return '{}'.format(self.nombre)
+
+    def toJSON(self):
+        item=model_to_dict(self)
+        return  item
 
     class Meta:
         verbose_name = 'Módulo'
@@ -28,6 +34,12 @@ class ModuloGrupo(models.Model):
     def __str__(self):
         return '{}'.format(self.nombre)
 
+    def toJSON(self):
+        item=model_to_dict(self)
+        item['grupos'] = [{'id': g.id, 'nombre': g.name} for g in self.grupos.all()]
+        item['modulos'] = [{'id': g.id, 'nombre': g.nombre} for g in self.modulos.all()]
+        return  item
+
     class Meta:
         verbose_name = 'Grupo de Módulos'
         verbose_name_plural = 'Grupos de Módulos'
@@ -35,3 +47,11 @@ class ModuloGrupo(models.Model):
 
     def modulos_activos(self):
         return self.modulos.filter(activo=True).order_by('orden')
+
+
+# class Group(Group):
+#     def toJSON(self):
+#         item=model_to_dict(self)
+#         # item['grupos'] = [{'id': g.id, 'nombre': g.name} for g in self.grupos.all()]
+#         item['permissions'] = [{'id': g.id, 'name': g.name} for g in self.permissions.all()]
+#         return  item
