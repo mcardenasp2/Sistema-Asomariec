@@ -18,7 +18,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'dashboard' %}">
-                            <i class="ni ni-tv-2 text-dark"></i>
+                            <i class="fas fa-tachometer-alt text-dark"></i>
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
@@ -28,113 +28,127 @@
 
 
 
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'compra:compra_listar' %}">
-                                    <i class="ni ni-bullet-list-67 text-dark"></i>
-                                    <span class="nav-link-text">Compra</span>
+                            <li class="nav-item itemNav">
+                                <a class="nav-link collapsed" href="#navbar-mantenimiento" data-toggle="collapse"
+                                   role="button"
+                                   aria-expanded="false" aria-controls="navbar-tables">
+                                    <i class="fa fa-briefcase text-dark"></i>
+                                    <span class="nav-link-text">Mantenimiento</span>
                                 </a>
+                                <div class="collapse marco" id="navbar-mantenimiento" style="">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item ">
+                                            <a href="{% url 'cliente:cliente_listar' %}" class="nav-link">
+
+                                                <span class="sidenav-normal">Cliente</span>
+{#                                                <i class="ni ni-cart text-dark text-right"></i>#}
+
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'proveedor:proveedor_listar' %}" class="nav-link">
+                                                {#                                        <span class="sidenav-mini-icon"> S </span>#}
+                                                <span class="sidenav-normal">Proveedor</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'insumo:insumo_mostrar' %}" class="nav-link">
+                                                <span class="sidenav-normal">Insumo</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'insumo:detalle_mostrar' %}" class="nav-link">
+                                                <span class="sidenav-normal">Detalle Insumo</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'producto:product_mostrar' %}" class="nav-link">
+                                                <span class="sidenav-normal">Producto</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'producto:categoria_mostrar' %}" class="nav-link">
+                                                <span class="sidenav-normal">Categoría Producto</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
 
-
-
                             <li class="nav-item itemNav">
-                                <a class="nav-link collapsed" href="#navbar-tables" data-toggle="collapse" role="button"
+                                <a class="nav-link collapsed" href="#navbar-transaccionales" data-toggle="collapse"
+                                   role="button"
                                    aria-expanded="false" aria-controls="navbar-tables">
-                                    <i class="ni ni-cart text-dark"></i>
-                                    <span class="nav-link-text">Venta</span>
+                                    <i class="ni ni-building text-dark"></i>
+                                    <span class="nav-link-text">Transaccionales</span>
                                 </a>
-                                <div class="collapse marco" id="navbar-tables" style="">
+                                <div class="collapse marco" id="navbar-transaccionales" style="">
                                     <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item ">
+                                            <a href="{% url 'compra:compra_listar' %}" class="nav-link">
+                                                {#                                        <span class="sidenav-mini-icon"> T </span>#}
+                                                <span class="sidenav-normal"> Compra </span>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item ">
+                                            <a href="{% url 'producto:produccion_mostrar' %}" class="nav-link">
+                                                {#                                        <span class="sidenav-mini-icon"> T </span>#}
+                                                <span class="sidenav-normal"> Producción </span>
+                                            </a>
+                                        </li>
                                         <li class="nav-item ">
                                             <a href="{% url 'venta:venta_mostrar' %}" class="nav-link">
                                                 {#                                        <span class="sidenav-mini-icon"> T </span>#}
-                                                <span class="sidenav-normal"> Sin Cotrato </span>
+                                                <span class="sidenav-normal"> Venta</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="{% url 'venta:ventac_mostrar' %}" class="nav-link">
                                                 {#                                        <span class="sidenav-mini-icon"> S </span>#}
-                                                <span class="sidenav-normal"> Contrato </span>
+                                                <span class="sidenav-normal">Venta Contrato </span>
                                             </a>
                                         </li>
-                                        {#                                <li class="nav-item">#}
-                                        {#                                    <a href="../../pages/tables/datatables.html" class="nav-link">#}
-                                        {#                                        <span class="sidenav-mini-icon"> D </span>#}
-                                        {#                                        <span class="sidenav-normal"> Datatables </span>#}
-                                        {#                                    </a>#}
-                                        {#                                </li>#}
                                     </ul>
                                 </div>
                             </li>
 
 
 
-
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'producto:product_mostrar' %}">
-                                    <i class="ni ni-building text-dark"></i>
-                                    <span class="nav-link-text">Producto</span>
-                                </a>
-                            </li>
-
-
-                            {#vale#}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'producto:produccion_mostrar' %}">
-                                    <i class="ni ni-building text-dark"></i>
-                                    <span class="nav-link-text">Produccion</span>
-                                </a>
-                            </li>
-
-
-                            <li class="nav-item">
-                                <a class="nav-link collapsed" href="#navbar-administracion" data-toggle="collapse"
+                                <a class="nav-link collapsed" href="#navbar-seguridad" data-toggle="collapse"
                                    role="button"
                                    aria-expanded="false" aria-controls="navbar-tables">
-                                    <i class="ni ni-shop text-dark"></i>
-                                    <span class="nav-link-text">Administracion</span>
+                                    <i class="fa fa-lock text-dark"></i>
+                                    <span class="nav-link-text">Seguridad</span>
                                 </a>
-                                <div class="collapse" id="navbar-administracion" style="">
+                                <div class="collapse" id="navbar-seguridad" style="">
                                     <ul class="nav nav-sm flex-column">
 
 
                                         <li class="nav-item">
-                                            <a class="nav-link collapsed" href="#navbar-tabl" data-toggle="collapse"
-                                               role="button"
-                                               aria-expanded="false" aria-controls="navbar-tables">
-                                                {#                                        <i class="ni ni-align-left-2 text-default"></i>#}
-                                                <span class="nav-link-text">Insumos</span>
-                                            </a>
-                                            <div class="collapse" id="navbar-tabl" style="">
-                                                <ul class="nav nav-sm flex-column">
-                                                    <li class="nav-item">
-                                                        <a href="{% url 'insumo:insumo_mostrar' %}" class="nav-link">
-                                                            {#                                                    <span class="sidenav-mini-icon"> T </span>#}
-                                                            <span class="sidenav-normal"> Insumo </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a href="{% url 'insumo:detalle_mostrar' %}" class="nav-link">
-                                                            {#                                                    <span class="sidenav-mini-icon"> S </span>#}
-                                                            <span class="sidenav-normal"> Detalle </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="{% url 'cliente:cliente_listar' %}" class="nav-link">
+                                            <a href="{% url 'user:user_list' %}" class="nav-link">
                                                 {#                                        <span class="sidenav-mini-icon"> T </span>#}
-                                                <span class="sidenav-normal"> Cliente </span>
+                                                <span class="sidenav-normal"> Usuario </span>
                                             </a>
                                         </li>
 
                                         <li class="nav-item">
-                                            <a href="{% url 'proveedor:proveedor_listar' %}" class="nav-link">
+                                            <a href="{% url 'seguridad:mostrar_grupo_modulo' %}" class="nav-link">
                                                 {#                                        <span class="sidenav-mini-icon"> S </span>#}
-                                                <span class="sidenav-normal"> Proveedor </span>
+                                                <span class="sidenav-normal"> Grupos de Módulos </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'seguridad:mostrar_modulo' %}" class="nav-link">
+                                                {#                                        <span class="sidenav-mini-icon"> S </span>#}
+                                                <span class="sidenav-normal"> Módulos </span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{% url 'seguridad:mostrar_grupo' %}" class="nav-link">
+                                                {#                                        <span class="sidenav-mini-icon"> S </span>#}
+                                                <span class="sidenav-normal"> Roles y Permisos </span>
                                             </a>
                                         </li>
                                     </ul>
@@ -156,9 +170,9 @@
                                     <ul class="nav nav-sm flex-column">
 
                                         <li class="nav-item">
-                                            <a href="{% url 'user:user_list' %}" class="nav-link">
+                                            <a href="{% url 'empresa:empresa_listar' %}" class="nav-link">
                                                 {#                                        <span class="sidenav-mini-icon"> T </span>#}
-                                                <span class="sidenav-normal"> Usuarios </span>
+                                                <span class="sidenav-normal"> Empresa </span>
                                             </a>
                                         </li>
 
