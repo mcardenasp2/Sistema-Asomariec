@@ -86,6 +86,7 @@ class ProductoForm(ModelForm):
 
         }
         # exclude=['catFecReg','catFecMod']
+        exclude=['user_creation', 'user_updated']
 
     def save(self, commit=True):
         data = {}
@@ -141,4 +142,5 @@ class ProduccionForm(ModelForm):
                 },
             ),
         }
+        exclude=['user_updated', 'user_creation']
         # exclude=['catFecReg','catFecMod']

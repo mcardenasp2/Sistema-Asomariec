@@ -5,12 +5,13 @@ from django.db import models
 # Create your models here.
 from django.forms import model_to_dict
 
+from Sistema_Asomariec.models import BaseModel
 from producto.models import Producto
 from cliente.models import Cliente
 from venta.tipventa import vent_choices, vent_estado
+from crum import get_current_user
 
-
-class Venta(models.Model):
+class Venta(BaseModel):
     cliente=models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ventnum=models.CharField(max_length=20)
     venFechaInici=models.DateField(default=datetime.now)
@@ -28,6 +29,16 @@ class Venta(models.Model):
 
     def __str__(self):
         return self.cliente.cliNombre
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(Venta,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)

@@ -75,3 +75,5 @@ class CabVentaForm(ModelForm):
 
         }
 
+        exclude=['user_creation','user_updated']
+

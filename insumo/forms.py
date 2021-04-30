@@ -30,6 +30,8 @@ class CategoriaForm(ModelForm):
             # ),
         }
 
+        exclude=['user_creation','user_updated']
+
     # solo cuando voy a enviar con ajax
     def save(self, commit=True):
         data = {}
@@ -70,6 +72,8 @@ class MedidaForm(ModelForm):
             # ),
         }
 
+        exclude=['user_updated','user_creation']
+
     # solo cuando voy a enviar con ajax
     def save(self, commit=True):
         data = {}
@@ -91,7 +95,7 @@ class InsumoForm(ModelForm):
         # for form in self.visible_fields():
         #     form.field.widget.attrs['class'] = 'form-control'
         #     form.field.widget.attrs['autocomplete'] = 'off'
-        # self.fields['medDescripcion'].widget.attrs['autofocus'] = True
+        self.fields['insDescripcion'].widget.attrs['autofocus'] = True
 
     class Meta:
         model= Insumo
@@ -146,6 +150,8 @@ class InsumoForm(ModelForm):
 
             ),
         }
+
+        exclude=['user_updated','user_creation']
         #     'medDescripcion': TextInput(
         #         attrs={
         #             'placeholder': 'Ingrese un nombre',

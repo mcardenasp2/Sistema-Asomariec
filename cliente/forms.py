@@ -66,6 +66,8 @@ class ClienteForm(ModelForm):
 
         }
 
+        exclude=['user_creation','user_updated']
+
     def save(self, commit=True):
         data = {}
         form = super()

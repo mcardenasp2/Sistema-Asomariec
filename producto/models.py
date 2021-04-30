@@ -1,4 +1,10 @@
+from django.utils import timezone
+
 from datetime import datetime
+
+from crum import get_current_user
+
+from Sistema_Asomariec.models import BaseModel
 from Sistema_Asomariec.settings import MEDIA_URL, STATIC_URL
 from django.db import models
 
@@ -6,11 +12,27 @@ from insumo.models import Insumo
 # Create your models here.
 from django.forms import model_to_dict
 
-class Categoria(models.Model):
+class Categoria(BaseModel):
     catDescripcion = models.CharField(max_length=100, verbose_name='CategoriaDescripcion')
     catEstado=models.BooleanField(default=True, verbose_name='Estado')
+
+
     def __str__(self):
         return self.catDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        print(self.user_creation)
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+
+            else:
+                self.user_updated = user
+                # self.date_updated=timezone.now()
+        # self.modified_by = user
+        super(Categoria,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)
@@ -21,7 +43,7 @@ class Categoria(models.Model):
         ordering = ['id']
 
 
-class Producto(models.Model):
+class Producto(BaseModel):
     prodDescripcion = models.CharField(max_length=100, verbose_name='Descripcion')
     categoria=models.ForeignKey(Categoria,on_delete=models.PROTECT)
     # prodFecElab=models.DateTimeField(default=datetime.now())
@@ -40,15 +62,29 @@ class Producto(models.Model):
     # 1 contrato, 2 normal
     prodTipo=models.IntegerField(default=2,blank=True)
     prodEstado = models.BooleanField(default=True, verbose_name='Estado')
-    usuaReg = models.IntegerField(blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    prodFecReg = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    prodFecMod = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    prodFecEli = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    # usuaReg = models.IntegerField(blank=True, null=True)
+    # usuaMod = models.IntegerField(blank=True, null=True)
+    # usuaEli = models.IntegerField(blank=True, null=True)
+    # prodFecReg = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    # prodFecMod = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    # prodFecEli = models.DateTimeField(default=datetime.now(), blank=True, null=True)
 
     def __str__(self):
         return self.prodDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        print(self.user_creation)
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+
+            else:
+                self.user_updated = user
+                # self.date_updated=timezone.now()
+        # self.modified_by = user
+        super(Producto,self).save()
 
     def toJSON(self):
         item=model_to_dict(self)
@@ -78,7 +114,7 @@ class Producto(models.Model):
         ordering = ['id']
 
 
-class Produccion(models.Model):
+class Produccion(BaseModel):
     producto=models.ForeignKey(Producto,on_delete=models.PROTECT)
     prodcFecElab = models.DateTimeField(default=datetime.now())
     prodcCantidad = models.IntegerField(default=1)
@@ -91,6 +127,20 @@ class Produccion(models.Model):
 
     def __str__(self):
         return self.producto.prodDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        print(self.user_creation)
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+
+            else:
+                self.user_updated = user
+                # self.date_updated=timezone.now()
+        # self.modified_by = user
+        super(Produccion,self).save()
 
     def toJSON(self):
         item=model_to_dict(self)

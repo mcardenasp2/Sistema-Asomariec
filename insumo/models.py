@@ -1,22 +1,35 @@
 from django.db import models
+
+from Sistema_Asomariec.models import BaseModel
 from Sistema_Asomariec.settings import MEDIA_URL, STATIC_URL
 # from settings import MEDIA_URL, STATIC_URL
 from django.forms import model_to_dict
 # Create your models here.
 from datetime import datetime
+from crum import get_current_user
 # Create your models here.
-class Categoria(models.Model):
+class Categoria(BaseModel):
     catDescripcion=models.CharField(max_length=50, verbose_name='Descripcion')
     catEstado = models.BooleanField(default=True, verbose_name='Estado')
-    usuaReg = models.IntegerField(blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    catFecReg=models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    catFecMod=models.DateTimeField(auto_now=True, blank=True, null=True)
+    # usuaReg = models.IntegerField(blank=True, null=True)
+    # usuaMod = models.IntegerField(blank=True, null=True)
+    # usuaEli = models.IntegerField(blank=True, null=True)
+    # catFecReg=models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    # catFecMod=models.DateTimeField(auto_now=True, blank=True, null=True)
     # catFecEli=models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     def __str__(self):
         return self.catDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(Categoria,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)
@@ -28,18 +41,28 @@ class Categoria(models.Model):
         ordering = ['id']
 
 
-class UnidadMedidad(models.Model):
+class UnidadMedidad(BaseModel):
     medDescripcion=models.CharField(max_length=50,verbose_name='Medidad')
     medEstado = models.BooleanField(default=True, verbose_name='Estado')
-    usuaReg = models.IntegerField(blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    medFecReg = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    medFecMod = models.DateTimeField(auto_now=True, blank=True, null=True)
+    # usuaReg = models.IntegerField(blank=True, null=True)
+    # usuaMod = models.IntegerField(blank=True, null=True)
+    # usuaEli = models.IntegerField(blank=True, null=True)
+    # medFecReg = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    # medFecMod = models.DateTimeField(auto_now=True, blank=True, null=True)
     # medFecEli = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     def __str__(self):
         return self.medDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(UnidadMedidad,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)
@@ -51,7 +74,7 @@ class UnidadMedidad(models.Model):
         ordering = ['id']
 
 
-class Insumo(models.Model):
+class Insumo(BaseModel):
     medida=models.ForeignKey(UnidadMedidad,on_delete=models.PROTECT)
     categoria=models.ForeignKey(Categoria, on_delete=models.PROTECT)
     insCod=models.CharField(max_length=100)
@@ -62,14 +85,24 @@ class Insumo(models.Model):
     insImagen = models.ImageField(upload_to='fotos/%Y/%m/%d', blank=True, null=True)
     insStock=models.IntegerField(default=0, blank=True, null=True,verbose_name='Stock')
     insEstado = models.BooleanField(default=True, verbose_name='Estado')
-    usuaReg = models.IntegerField(blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    insFecReg = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    insFecMod = models.DateTimeField(auto_now=True, blank=True, null=True)
+    # usuaReg = models.IntegerField(blank=True, null=True)
+    # usuaMod = models.IntegerField(blank=True, null=True)
+    # usuaEli = models.IntegerField(blank=True, null=True)
+    # insFecReg = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    # insFecMod = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return self.insDescripcion
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(Insumo,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)

@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="id_proTelefono">Telefono:</label>
+                            <label for="id_proTelefono">Teléfono:</label>
 
                             {#                            {{ form.proTelefono|add_class:"form-control"|attr:'type:text' }}#}
                             {{ form.proTelefono }}
@@ -121,26 +121,6 @@
                     </div>
 
                     <div class="col-6">
-
-                        <div class="custom-control ">
-                            {% ifequal action "add" %}
-                                {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}
-                                {{ form.usuaMod|attr:'type:hidden' }}
-                                {{ form.usuaEli|attr:'type:hidden' }}
-                            {% endifequal %}
-                            {% ifequal action "edit" %}
-                                {{ form.usuaReg|attr:'type:hidden' }}
-                                {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}
-                                {{ form.usuaEli|attr:'type:hidden' }}
-                            {% endifequal %}
-
-
-
-                            {#                            {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}#}
-                            {#                            {{ form.usuaEli|attr:'type:hidden'|attr:'value:1' }}#}
-                            {#                            <label class="custom-control-label" for="id_cliEstado">Estado</label>#}
-                        </div>
-
 
                     </div>
 
@@ -240,7 +220,7 @@
             {#dropdownParent: $('#conte'),#}
             width: 'auto',
             {#languaje:'es',#}
-            placeholder: 'Seleccione una opcion',
+            placeholder: 'Seleccione una opción',
 
 
             {#theme: 'bootstrap4',#}

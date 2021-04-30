@@ -78,8 +78,8 @@ class ClienteCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
             if action == 'add':
                 # print('hola')
                 form = self.get_form()
-                form.cliFecMod=""
-                form.cliFecEli = ""
+                # form.cliFecMod=""
+                # form.cliFecEli = ""
                 data = form.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
@@ -113,12 +113,8 @@ class ClienteUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
             if action == 'edit':
                 # print('hola')
                 form = self.get_form()
-                # form.cliFecMod = datetime.now()
-                # form.cliEstado
-                # print(form)
-                # form("cli")
-                # form.cliEstado=True
-                # form['cliEstado']=True
+                # print(form.user_creation)
+
                 data = form.save()
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'

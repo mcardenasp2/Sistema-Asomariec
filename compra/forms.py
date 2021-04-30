@@ -76,6 +76,7 @@ class CabCompraForm(ModelForm):
             #     }
             # ),
         }
+        exclude=['user_creation','user_updated']
 
     # solo cuando voy a enviar con ajax
     # def save(self, commit=True):

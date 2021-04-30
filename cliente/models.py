@@ -1,12 +1,14 @@
 from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
-from cliente.choices import gender_choices
 
+from Sistema_Asomariec.models import BaseModel
+from cliente.choices import gender_choices
+from crum import get_current_user
 # Create your models here.
 
 
-class Cliente(models.Model):
+class Cliente(BaseModel):
     cliNombre= models.CharField(max_length=150, blank=True, verbose_name='Nombre')
     cliApellido= models.CharField(max_length=150, blank=True, verbose_name='Apellido')
     cliRuc=models.CharField(max_length=13,unique=True, verbose_name='Ruc')
@@ -15,12 +17,6 @@ class Cliente(models.Model):
     cliGenero=models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     cliEmail= models.EmailField(max_length=50,blank=True,verbose_name='Email')
     cliEstado = models.BooleanField(default=True,blank=True,null=True, verbose_name='Estado')
-    usuaReg=models.IntegerField(blank=True, null=True)
-    cliFecReg=models.DateTimeField(auto_now_add=True,blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    cliFecMod = models.DateTimeField(auto_now=True,blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    # cliFecEli = models.DateTimeField(default=datetime.now(), blank=True, null=True)
 
     def __str__(self):
         # return self.cliNombre
@@ -29,6 +25,15 @@ class Cliente(models.Model):
     def get_full_name(self):
         return '{} {} / {}'.format(self.cliNombre, self.cliApellido, self.cliRuc)
         # return '{} {}'.format(self.cliNombre, self.cliApellido)
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(Cliente,self).save()
 
     def toJSON(self):
         item=model_to_dict(self)

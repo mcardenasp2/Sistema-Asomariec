@@ -183,21 +183,12 @@
 
                                 {{ form.medEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}
 
-                                {% ifequal action "add" %}
-                                    {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}
-                                    {{ form.usuaMod|attr:'type:hidden' }}
-                                    {{ form.usuaEli|attr:'type:hidden' }}
-                                {% endifequal %}
-                                {% ifequal action "edit" %}
-                                    {{ form.usuaReg|attr:'type:hidden' }}
-                                    {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}
-                                    {{ form.usuaEli|attr:'type:hidden' }}
-                                {% endifequal %}
+
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
@@ -235,21 +226,12 @@
 
                                 {{ form2.catEstado|attr:'checked'|attr:'type:hidden'|attr:'value:True' }}
 
-                                {% ifequal action "add" %}
-                                    {{ form2.usuaReg|attr:'type:hidden'|attr:'value:1' }}
-                                    {{ form2.usuaMod|attr:'type:hidden' }}
-                                    {{ form2.usuaEli|attr:'type:hidden' }}
-                                {% endifequal %}
-                                {% ifequal action "edit" %}
-                                    {{ form2.usuaReg|attr:'type:hidden' }}
-                                    {{ form2.usuaMod|attr:'type:hidden'|attr:'value:1' }}
-                                    {{ form2.usuaEli|attr:'type:hidden' }}
-                                {% endifequal %}
+
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>

@@ -124,12 +124,12 @@ $(function () {
             var data = tblCategoria.row($(this).parents('tr')).data();
 
             // console.log(data);
-            var user1 = $("#user1").val();
+            // var user1 = $("#user1").val();
             // console.log(url);
             var parameters = new FormData();
             parameters.append('action', 'deletecat');
             parameters.append('id', data.id);
-            parameters.append('user1', user1);
+            // parameters.append('user1', user1);
             submit_with_ajax(window.location.pathname, 'Notification', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
                 // location.href = '{{ list_url }}';
                 // location.reload();

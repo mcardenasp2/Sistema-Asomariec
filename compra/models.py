@@ -4,11 +4,14 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 
+from Sistema_Asomariec.models import BaseModel
 from Sistema_Asomariec.settings import MEDIA_URL, STATIC_URL
 from proveedor.models import Proveedor
 from insumo.models import Insumo
+
+from crum import get_current_user
 #
-class CabCompra(models.Model):
+class CabCompra(BaseModel):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT)
     # comprador = models.CharField(max_length=5)
     ccoFecCom = models.DateField(default=datetime.now)
@@ -25,15 +28,25 @@ class CabCompra(models.Model):
 
     ccoDocumento=models.FileField(upload_to='documento/%Y/%m/%d', blank=True, null=True)
 
-    usuaReg = models.IntegerField(blank=True, null=True)
-    usuaMod = models.IntegerField(blank=True, null=True)
-    usuaEli = models.IntegerField(blank=True, null=True)
-    ccoFecReg = models.DateTimeField(default=datetime.now())
-    ccoFecMod = models.DateTimeField(default=datetime.now())
-    ccoFecEli = models.DateTimeField(default=datetime.now())
+    # usuaReg = models.IntegerField(blank=True, null=True)
+    # usuaMod = models.IntegerField(blank=True, null=True)
+    # usuaEli = models.IntegerField(blank=True, null=True)
+    # ccoFecReg = models.DateTimeField(default=datetime.now())
+    # ccoFecMod = models.DateTimeField(default=datetime.now())
+    # ccoFecEli = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.proveedor.proEmpresa
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        user = get_current_user()
+        if user is not None:
+            if not self.pk:
+                self.user_creation = user
+            else:
+                self.user_updated = user
+        super(CabCompra,self).save()
 
     def toJSON(self):
         item= model_to_dict(self)

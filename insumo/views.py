@@ -39,11 +39,11 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
                     data.append(i.toJSON())
 
             elif action=='add':
-                # print('Hola')
+                print('Hola amigos')
                 med= UnidadMedidad()
                 med.medDescripcion=request.POST['medDescripcion']
                 med.medEstado=request.POST['medEstado']
-                med.usuaReg=request.POST['usuaReg']
+                # med.usuaReg=request.POST['usuaReg']
                 med.save()
                 # pass
             elif action=='edit':
@@ -51,7 +51,7 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
                 med= UnidadMedidad.objects.get(pk=request.POST['id'])
                 med.medDescripcion=request.POST['medDescripcion']
                 med.medEstado=request.POST['medEstado']
-                med.usuaMod=request.POST['user1']
+                # med.usuaMod=request.POST['user1']
                 med.save()
 
             elif action=='delete':
@@ -69,15 +69,15 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
                 cat = Categoria()
                 cat.catDescripcion = request.POST['catDescripcion']
                 cat.catEstado = request.POST['catEstado']
-                cat.usuaReg = request.POST['usuaReg']
+                # cat.usuaReg = request.POST['usuaReg']
                 cat.save()
 
             elif action == 'editcat':
                 cat = Categoria.objects.get(pk=request.POST['id'])
                 cat.catDescripcion = request.POST['catDescripcion']
                 cat.catEstado = request.POST['catEstado']
-                cat.usuaMod = request.POST['user1']
-                print(request.POST['user1'])
+                # cat.usuaMod = request.POST['user1']
+                # print(request.POST['user1'])
                 cat.save()
 
             elif action == 'deletecat':

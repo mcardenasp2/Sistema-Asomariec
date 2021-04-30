@@ -9,7 +9,7 @@ class ProveedorForm(ModelForm):
         # for form in self.visible_fields():
         #     form.field.widget.attrs['class'] = 'form-control'
         #     form.field.widget.attrs['autocomplete'] = 'off'
-        # self.fields['catDescripcion'].widget.attrs['autofocus'] = True
+        self.fields['proEmpresa'].widget.attrs['autofocus'] = True
 
     class Meta:
         model= Proveedor
@@ -32,13 +32,13 @@ class ProveedorForm(ModelForm):
             'proDireccion': TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese la Direccion'
+                    'placeholder': 'Ingrese la Dirección'
                 }
             ),
             'proTelefono': TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese el N Telefonico',
+                    'placeholder': 'Ingrese el N Telefónico',
                     'minlength': '10'
                 }
             ),
@@ -61,6 +61,8 @@ class ProveedorForm(ModelForm):
                 }
             )
         }
+
+        exclude=['user_creation','user_updated']
         # widgets = {
         #     'catDescripcion': TextInput(
         #         attrs={

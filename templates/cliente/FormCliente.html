@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="id_cliTelefono">Telefono:</label>
+                            <label for="id_cliTelefono">Teléfono:</label>
 
                             {#                            {{ form.cliTelefono|add_class:"form-control"|attr:'type:text' }}#}
                             {{ form.cliTelefono }}
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="id_cliGenero">Sexo</label>
+                            <label for="id_cliGenero">Sexo:</label>
 
                             {{ form.cliGenero|add_class:"form-control mySelect2" }}
 
@@ -92,7 +92,7 @@
 
                     <div class="col">
                         <div class="form-group">
-                            <label for="id_cliEmail">Email</label>
+                            <label for="id_cliEmail">Email:</label>
                             {#                            {{ form.cliEmail|add_class:"form-control"|attr:'placeholder:name@example.com' }}#}
                             {{ form.cliEmail }}
                             {#                            <input type="email" class="form-control" id="exampleFormControlInput1"#}
@@ -119,24 +119,6 @@
 
                     <div class="col-6">
 
-                        <div class="custom-control ">
-                            {% ifequal action "add" %}
-                                {{ form.usuaReg|attr:'type:hidden'|attr:'value:1' }}
-                                {{ form.usuaMod|attr:'type:hidden' }}
-                                {{ form.usuaEli|attr:'type:hidden' }}
-                            {% endifequal %}
-                            {% ifequal action "edit" %}
-                                {{ form.usuaReg|attr:'type:hidden' }}
-                                {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}
-                                {{ form.usuaEli|attr:'type:hidden' }}
-                            {% endifequal %}
-
-
-
-                            {#                            {{ form.usuaMod|attr:'type:hidden'|attr:'value:1' }}#}
-                            {#                            {{ form.usuaEli|attr:'type:hidden'|attr:'value:1' }}#}
-                            {#                            <label class="custom-control-label" for="id_cliEstado">Estado</label>#}
-                        </div>
 
 
                     </div>
