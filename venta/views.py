@@ -727,7 +727,8 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
                         det.produccion_id = prcc.id
                         det.insumo_id = i['id']
                         det.detCantidad = i['cant']
-                        det.detprecio = i['insPrecio']
+                        # det.detprecio = i['insPrecio']
+                        det.detprecio = i['instotalprecio']
                         det.detSubtotal = i['subtotal']
                         det.save()
 

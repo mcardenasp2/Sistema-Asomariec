@@ -142,7 +142,7 @@
                                             <div class="col-lg-6" wfd-id="42">
                                                 <div class="form-group" wfd-id="43">
                                                     <label class="form-control-label" for="input-first-name"
-                                                           wfd-id="44">Nombre</label>
+                                                           wfd-id="44">Nombre:</label>
                                                     {#                                                    <input type="text" id="input-first-name" class="form-control"#}
                                                     {#                                                           placeholder="First name" value="Lucky" wfd-id="149">#}
                                                     {{ form.insDescripcion }}
@@ -150,7 +150,7 @@
                                             </div>
                                             <div class="col-lg-6" wfd-id="39">
                                                 <div class="form-group" wfd-id="40">
-                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Modelo</label>
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Modelo:</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
                                                     {{ form.insModelo }}
@@ -162,7 +162,7 @@
                                         <div class="row" wfd-id="38">
                                             <div class="col-lg-6" wfd-id="49">
                                                 <div class="form-group" wfd-id="50">
-                                                    <label class="form-control-label" for="input-username" wfd-id="51">Codigo</label>
+                                                    <label class="form-control-label" for="input-username" wfd-id="51">Código:</label>
                                                     {#                                                    <input type="text" id="input-username" class="form-control"#}
                                                     {#                                                           placeholder="Username" value="lucky.jesse" wfd-id="151">#}
                                                     {{ form.insCod }}
@@ -170,7 +170,7 @@
                                             </div>
                                             <div class="col-lg-6" wfd-id="46">
                                                 <div class="form-group" wfd-id="47">
-                                                    <label class="form-control-label" for="input-email" wfd-id="48">Stock</label>
+                                                    <label class="form-control-label" for="input-email" wfd-id="48">Stock:</label>
                                                     {#                                                    <input type="text" id="input-email" class="form-control"#}
                                                     {#                                                           placeholder="jesse@example.com" wfd-id="150"#}
                                                     {#                                                           kl_ab.original_type="email">#}
@@ -180,7 +180,7 @@
 
                                             <div class="col-lg-6" wfd-id="39">
                                                 <div class="form-group" wfd-id="40">
-                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Precio</label>
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Precio:</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
                                                     {{ form.insPrecio }}
@@ -188,7 +188,15 @@
                                             </div>
                                             <div class="col-lg-6" wfd-id="39">
                                                 <div class="form-group" wfd-id="40">
-                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Medida</label>
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Iva:</label>
+                                                    {#                                                    <input type="text" id="input-last-name" class="form-control"#}
+                                                    {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
+                                                    {{ form.insIva }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6" wfd-id="39">
+                                                <div class="form-group" wfd-id="40">
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Medida:</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
                                                      {{ form.medida|add_class:"form-control mySelect2" }}
@@ -196,7 +204,7 @@
                                             </div>
                                             <div class="col-lg-6" wfd-id="39">
                                                 <div class="form-group" wfd-id="40">
-                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Categoria</label>
+                                                    <label class="form-control-label" for="input-last-name" wfd-id="41">Categoría:</label>
                                                     {#                                                    <input type="text" id="input-last-name" class="form-control"#}
                                                     {#                                                           placeholder="Last name" value="Jesse" wfd-id="148">#}
                                                      {{ form.categoria|add_class:"form-control mySelect2" }}
@@ -482,6 +490,7 @@
 
 
         $("input[name='insPrecio']").mask('000.000.000.000.000.00', {reverse: true});
+        $("input[name='insIva']").mask('000.000.000.000.000.00', {reverse: true});
         {#    solo cuando envio con ajax#}
         $('form').on('submit', function (e) {
             e.preventDefault();

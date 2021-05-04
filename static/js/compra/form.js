@@ -61,19 +61,23 @@ var comp = {
     calculate_invoce: function () {
         //contiene la suma total
         var subtotal = 0.00;
-        var iva = $('input[name="ccoIva"]').val();
+        // var iva = $('input[name="ccoIva"]').val();
+        var iva=0.00;
         //por cada item de insumo, me devuelve posicion y valor
         $.each(this.items.insumos, function (pos, dict) {
             // console.log(pos);
             // console.log(dict);
+            // iva+=dict.insIva;
             dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
             subtotal += dict.subtotal;
+            iva += dict.subtotal*dict.insIva;
         });
         // console.log(subtotal);
         //cambie y multilique or 0.88
         this.items.subtotal = subtotal;
         //cambie y puse lo de abajo
-        this.items.iva = this.items.subtotal * 0.12;
+        // this.items.iva = this.items.subtotal * 0.12;
+        this.items.iva = iva;
         // this.items.iva = subtotal * 0.12;
         this.items.total = this.items.subtotal + this.items.iva;
         // console.log(subtotal);

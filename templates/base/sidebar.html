@@ -41,7 +41,7 @@
                                             <a href="{% url 'cliente:cliente_listar' %}" class="nav-link">
 
                                                 <span class="sidenav-normal">Cliente</span>
-{#                                                <i class="ni ni-cart text-dark text-right"></i>#}
+                                                {#                                                <i class="ni ni-cart text-dark text-right"></i>#}
 
                                             </a>
                                         </li>
@@ -222,6 +222,7 @@
                             {% if grupos.count > 0 %}
 
                                 {% for grupo in grupos %}
+                                    {#                                {% for grupo in request.user.groups.modulogrupo.all %}#}
 
                                     <li class="nav-item itemNav">
                                         <a class="nav-link collapsed" href="#{{ grupo.nombre }}" data-toggle="collapse"

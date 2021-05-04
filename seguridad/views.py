@@ -17,6 +17,15 @@ from seguridad.models import *
 from django.core.serializers.json import DjangoJSONEncoder
 import json
 
+# from django import template
+#
+# register = template.Library()
+#
+# @register.filter(name="has_group")
+# def has_group(request):
+#     print('dddd')
+#     return ModuloGrupo.objects.filter(grupos=request.session['group'].id, activo=True).order_by('prioridad')
+
 def sidebar(request):
     data = {}
     try:
@@ -27,7 +36,7 @@ def sidebar(request):
         #     'grupos':ModuloGrupo.objects.filter(grupos=request.session['group'].id).order_by('prioridad')
         #
         # }
-        data['grupos'] = ModuloGrupo.objects.filter(grupos=request.session['group'].id).order_by('prioridad')
+        data['grupos'] = ModuloGrupo.objects.filter(grupos=request.session['group'].id, activo=True).order_by('prioridad')
         # data['grupos'] = ModuloGrupo.objects.filter(grupos=request.session['group'].id,
         #                                             grupos__in=request.user.groups.all()).order_by('prioridad')
         # print('Estamos')
@@ -178,9 +187,13 @@ class GrupoModuloListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in ModuloGrupo.objects.all():
-                # for i in Empresa.objects.filter(cliEstado=True):
+                # for i in ModuloGrupo.objects.all():
+                for i in ModuloGrupo.objects.filter(activo=True):
                     data.append(i.toJSON())
+            elif action == 'eliminar':
+                gmodulo = ModuloGrupo.objects.get(pk=request.POST['id'])
+                gmodulo.activo = False
+                gmodulo.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:

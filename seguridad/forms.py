@@ -43,13 +43,13 @@ class ModuloForm(ModelForm):
                     'placeholder': 'Ingrese la Descripción',
                 }
             ),
-            'activo': TextInput(
-                attrs={
-                    'class': 'form-control',
-                    # 'placeholder': 'name@example.com',
-                    'autocomplete': 'off'
-                }
-            ),
+            # 'activo': TextInput(
+            #     attrs={
+            #         'class': 'form-control',
+            #         # 'placeholder': 'name@example.com',
+            #         'autocomplete': 'off'
+            #     }
+            # ),
             'orden': TextInput(
                 attrs={
                     'class': 'form-control',
@@ -59,6 +59,8 @@ class ModuloForm(ModelForm):
             ),
 
         }
+        exclude=['activo']
+
 
     def save(self, commit=True):
         data = {}

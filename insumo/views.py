@@ -57,7 +57,7 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
             elif action=='delete':
                 med= UnidadMedidad.objects.get(pk=request.POST['id'])
                 med.medEstado=0
-                med.usuaEli=request.POST['user1']
+                # med.usuaEli=request.POST['user1']
                 med.save()
 
             elif action == 'searchdatacat':
@@ -83,7 +83,7 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
             elif action == 'deletecat':
                 cat = Categoria.objects.get(pk=request.POST['id'])
                 cat.catEstado = 0
-                cat.usuaEli = request.POST['user1']
+                # cat.usuaEli = request.POST['user1']
                 cat.save()
 
             else:

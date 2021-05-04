@@ -125,6 +125,18 @@ class InsumoForm(ModelForm):
 
 
             ),
+            'insIva': TextInput(
+
+                attrs={
+                    'class': 'form-control',
+                    # 'value':'1',
+
+                    # 'data-mask' : '00/00/0000'
+                    # 'disabled': 'disabled'
+                    # 'placeholder': 'Ingre',
+                },
+
+            ),
             'insCod': TextInput(
                 attrs={
                     'class': 'form-control',

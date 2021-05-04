@@ -81,7 +81,7 @@ class Insumo(BaseModel):
     insDescripcion=models.CharField(max_length=50, verbose_name='Descripcion')
     insModelo=models.CharField(max_length=50, verbose_name='Modelo')
     insPrecio=models.DecimalField(default=0,max_digits=10,decimal_places=2)
-    # insIva=models.DecimalField(default=0,max_digits=10,decimal_places=2)
+    insIva=models.DecimalField(default=0.12,max_digits=10,decimal_places=2)
     insImagen = models.ImageField(upload_to='fotos/%Y/%m/%d', blank=True, null=True)
     insStock=models.IntegerField(default=0, blank=True, null=True,verbose_name='Stock')
     insEstado = models.BooleanField(default=True, verbose_name='Estado')
@@ -108,6 +108,7 @@ class Insumo(BaseModel):
         item= model_to_dict(self)
         item['medida']=self.medida.toJSON()
         item['insImagen'] = self.get_image()
+        item['instotalprecio'] = format (self.insPrecio+(self.insPrecio*self.insIva), '.2f')
         item['categoria']= self.categoria.toJSON()
         return item
 

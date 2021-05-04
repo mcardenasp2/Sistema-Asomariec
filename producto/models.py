@@ -49,6 +49,7 @@ class Producto(BaseModel):
     # prodFecElab=models.DateTimeField(default=datetime.now())
     prodImagen= models.ImageField(upload_to='producto', blank=True, null=True)
     prodImagen2= models.ImageField(upload_to='producto2', blank=True, null=True)
+    # stock
     prodCantidad=models.IntegerField(default=0, blank=True, null=True)
     prodPrecio=models.DecimalField(default=0,max_digits=9, decimal_places=2)
     prodTotal=models.DecimalField(default=0.00,max_digits=9, decimal_places=2,blank=True, null=True)

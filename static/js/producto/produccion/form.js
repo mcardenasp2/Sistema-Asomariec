@@ -61,7 +61,7 @@ var prod = {
         $.each(this.items.insumos, function (pos, dict) {
             // console.log(pos);
             // console.log(dict);
-            dict.subtotal = dict.cant * parseFloat(dict.insPrecio);
+            dict.subtotal = dict.cant * parseFloat(dict.instotalprecio);
             subtotal += dict.subtotal;
         });
         this.items.totalproduc = subtotal;
@@ -106,12 +106,16 @@ var prod = {
                 {"data": "insDescripcion"},
                 {"data": "insStock"},
                 {"data": "medida.medDescripcion"},
-                {"data": "insPrecio"},
+                {"data": "instotalprecio"},
                 // {"data": "pvp"},
                 {"data": "cant"},
                 {"data": "subtotal"},
             ],
             columnDefs: [
+                {
+                    targets: [1,2,3,4],
+                    class: 'text-center',
+                },
                 {
                     targets: [0],
                     class: 'text-center',

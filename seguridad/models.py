@@ -30,6 +30,7 @@ class ModuloGrupo(models.Model):
     modulos = models.ManyToManyField(Modulo)
     grupos = models.ManyToManyField(Group)
     prioridad = models.IntegerField(null=True, blank=True)
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
         return '{}'.format(self.nombre)
