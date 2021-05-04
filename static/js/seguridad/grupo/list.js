@@ -99,7 +99,8 @@ function Delete(id) {
         if (result.value) {
             $.ajax({
                 type: 'POST',
-                url: window.location.pathname,
+                // url: window.location.pathname,
+                url: '/seguridad/grupo/eliminar/',
                 data: {'id': id, 'action': 'eliminar'},
                 success: function (data) {
                     Swal.fire(

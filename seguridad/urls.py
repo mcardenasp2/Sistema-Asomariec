@@ -21,6 +21,8 @@ urlpatterns = [
     path('grupo/mostrar', GrupoListarView.as_view(), name='mostrar_grupo'),
     path('grupo/crear', GrupoCreateView.as_view(), name='crear_grupo'),
     path('grupo/editar/<int:pk>/', GrupoUpdateView.as_view(), name='editar_grupo'),
+    path('grupo/eliminar/', DeleteGrupo.as_view(), name='eliminar_grupo'),
+
 
     # path('logout/', LogoutView.as_view(), name='logout'),
     # path('dashboard/', DashboardView.as_view(), name='dashboard'),

@@ -4,9 +4,9 @@ from django.forms import model_to_dict
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from user.mixins import ValidatePermissionRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -419,3 +419,27 @@ class GrupoListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVi
         context['list_url'] = reverse_lazy('seguridad:mostrar_grupo')
         # context['entity'] = 'Clientes'
         return context
+
+# class GrupoListarView(DeleteView):
+#     template_name =
+
+
+class DeleteGrupo(LoginRequiredMixin, View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    # def pos(self, request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # anadimos la sesion
+            # request.session['group'] = Group.objects.get(pk=self.kwargs['pk'])
+            # grupo = Group.objects.get(pk=self.kwargs['pk'])
+            grupo = Group.objects.get(pk=request.POST['id'])
+            grupo.delete()
+            # request.session['group'] =self.kwargs['pk']
+            # print(self.kwargs)
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('seguridad:mostrar_grupo'))
