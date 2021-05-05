@@ -19,7 +19,8 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Cliente
     template_name = 'cliente/ListarCliente.html'
-    permission_required = 'view_cliente, delete_cliente'
+    permission_required = [('view_cliente','delete_cliente')]
+    # permission_required = 'view_cliente'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)

@@ -25,8 +25,8 @@ urlpatterns = [
     #     produccion
     path('produccion/mostrar/', ProduccionListView.as_view(), name='produccion_mostrar'),
     path('produccion/create/', ProducionCreateView.as_view(), name='produccion_create'),
-    path('produccion/crear/<int:pk>/', ProducionCreateView.as_view(), name='produccion_create'),
-    path('produccion/eliminar/<int:pk>/', ProduccionDeleteView.as_view(), name='produccion_delete'),
+    # path('produccion/crear/<int:pk>/', ProducionCreateView.as_view(), name='produccion_create'),
+    # path('produccion/eliminar/<int:pk>/', ProduccionDeleteView.as_view(), name='produccion_delete'),
 
 
 

@@ -65,7 +65,7 @@ def addUserData(request, data):
 class ModuloListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Modulo
     template_name = 'seguridad/ListarModulo.html'
-    # permission_required = 'view_cliente, delete_cliente'
+    permission_required = 'view_modulo','delete_modulo'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -107,7 +107,7 @@ class ModuloCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Create
     form_class = ModuloForm
     template_name = 'seguridad/FormModulo.html'
     success_url = reverse_lazy('seguridad:mostrar_modulo')
-    # permission_required = 'add_cliente'
+    permission_required = 'add_modulo'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -142,7 +142,7 @@ class ModuloUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Updat
     form_class = ModuloForm
     template_name = 'seguridad/FormModulo.html'
     success_url = reverse_lazy('seguridad:mostrar_modulo')
-    # permission_required = 'change_cliente'
+    permission_required = 'change_modulo'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -174,7 +174,7 @@ class ModuloUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Updat
 class GrupoModuloListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = ModuloGrupo
     template_name = 'seguridad/grupomodulo/ListarGrupoModulo.html'
-    # permission_required = 'view_cliente, delete_cliente'
+    permission_required = 'view_modulogrupo','delete_modulogrupo'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -216,7 +216,7 @@ class GrupoModuloCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
     form_class = GrupoModuloForm
     template_name = 'seguridad/grupomodulo/FormGrupoModulo.html'
     success_url = reverse_lazy('seguridad:mostrar_grupo_modulo')
-    # permission_required = 'add_user'
+    permission_required = 'add_modulogrupo'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -249,7 +249,7 @@ class GrupoModuloUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
     form_class = GrupoModuloForm
     template_name = 'seguridad/grupomodulo/FormGrupoModulo.html'
     success_url = reverse_lazy('seguridad:mostrar_grupo_modulo')
-    # permission_required = 'change_user'
+    permission_required = 'change_modulogrupo'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -289,7 +289,7 @@ class GrupoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
     form_class = GrupoForm
     template_name = 'seguridad/grupo/FormGrupo.html'
     success_url = reverse_lazy('seguridad:mostrar_grupo')
-    # permission_required = 'add_user'
+    permission_required = 'add_group'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -322,7 +322,7 @@ class GrupoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
     form_class = GrupoForm
     template_name = 'seguridad/grupo/FormGrupo.html'
     success_url = reverse_lazy('seguridad:mostrar_grupo')
-    # permission_required = 'change_user'
+    permission_required = 'change_group'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -362,7 +362,7 @@ class GrupoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Update
 class GrupoListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Group
     template_name = 'seguridad/grupo/ListarGrupo.html'
-    # permission_required = 'view_cliente, delete_cliente'
+    permission_required = 'view_group'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -424,7 +424,9 @@ class GrupoListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVi
 #     template_name =
 
 
-class DeleteGrupo(LoginRequiredMixin, View):
+class DeleteGrupo(LoginRequiredMixin,ValidatePermissionRequiredMixin, View):
+    permission_required = 'delete_group'
+
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

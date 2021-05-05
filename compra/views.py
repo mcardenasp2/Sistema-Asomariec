@@ -36,7 +36,7 @@ from user.mixins import ValidatePermissionRequiredMixin
 class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = CabCompra
     template_name = 'compra/ListarCompra.html'
-    permission_required = 'view_cabcompra'
+    permission_required = 'view_cabcompra','delete_cabcompra'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

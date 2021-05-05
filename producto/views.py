@@ -354,7 +354,7 @@ class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Del
 class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Producto
     template_name = 'producto/product/ListProduct.html'
-    permission_required = 'add_producto, delete_producto'
+    permission_required = 'view_producto','delete_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -391,7 +391,7 @@ class ProductCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Crea
     model = Producto
     form_class = ProductoForm
     template_name = 'producto/product/FormProduct.html'
-    # permission_required = 'add_producto'
+    permission_required = 'add_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -427,7 +427,7 @@ class ProductUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
     model = Producto
     form_class = ProductoForm
     success_url = reverse_lazy('producto:product_mostrar')
-    # permission_required = 'change_producto'
+    permission_required = 'change_producto'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

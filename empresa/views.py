@@ -16,7 +16,7 @@ from empresa.forms import EmpresaForm
 class EmpresaListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Empresa
     template_name = 'empresa/ListarEmpresa.html'
-    # permission_required = 'view_cliente, delete_cliente'
+    permission_required = 'view_empresa'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -53,7 +53,7 @@ class EmpresaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
     form_class = EmpresaForm
     template_name = 'empresa/FormEmpresa.html'
     success_url = reverse_lazy('empresa:empresa_listar')
-    # permission_required = 'change_cliente'
+    permission_required = 'change_empresa'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

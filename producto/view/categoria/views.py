@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -7,10 +8,12 @@ from django.views.generic import TemplateView
 
 from producto.models import Categoria
 from producto.forms import CategoriaForm
+from user.mixins import ValidatePermissionRequiredMixin
 
 
-class DetalleCategoriaView(TemplateView):
+class DetalleCategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateView):
     template_name = 'producto/categoria/FormCategoria.html'
+    permission_required = 'view_categoria','delete_categoria','change_categoria','add_categoria'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

@@ -16,7 +16,7 @@ from user.models import User
 class UserListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model=User
     template_name = 'user/ListarUser.html'
-    permission_required = 'view_user,delete_user'
+    permission_required = 'view_user','delete_user'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

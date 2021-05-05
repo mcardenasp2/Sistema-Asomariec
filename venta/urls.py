@@ -20,6 +20,6 @@ urlpatterns = [
     # Detalle del COntrato
     path('contrato/detalle/<int:pk>/', VentaContratoDetalleView.as_view(), name='ventac_detalle'),
 
-    path('contrato/eliminar/<int:pk>/', VentaDeleteContratoView.as_view(), name='ventac_delete'),
+    # path('contrato/eliminar/<int:pk>/', VentaDeleteContratoView.as_view(), name='ventac_delete'),
     path('contrato/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='ventac_invoice_pdf'),
 ]

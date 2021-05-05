@@ -9,7 +9,7 @@ urlpatterns = [
     # cabcompra
     path('compra/crear/', CabCompraCreateView.as_view(), name='compra_crear'),
     path('compra/mostrar/', CabComprListView.as_view(), name='compra_listar'),
-    path('compra/editar/<int:pk>/', CabCompraUpdateView.as_view(), name='compra_editar'),
+    # path('compra/editar/<int:pk>/', CabCompraUpdateView.as_view(), name='compra_editar'),
     # path('compra/eliminar/<int:pk>/', CabCompraDeleteView.as_view(), name='compra_delete'),
     path('compra/invoice/pdf/<int:pk>/', SaleInvoicePdfView.as_view(), name='compra_invoice_pdf'),
 

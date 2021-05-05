@@ -14,7 +14,8 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Proveedor
     template_name = 'proveedor/proveedor/ListarProveedor.html'
-    permission_required = 'view_proveedor,delete_proveedor'
+    permission_required = 'view_proveedor','delete_proveedor'
+    # , 'delete_proveedor'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

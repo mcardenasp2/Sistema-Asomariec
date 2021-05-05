@@ -39,7 +39,7 @@ from xhtml2pdf import pisa
 class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/normal/ListarVenta.html'
     model = Venta
-    permission_required = 'view_venta'
+    permission_required = 'view_venta','delete_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -488,7 +488,7 @@ class SaleInvoicePdfView(View):
 class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/contrato/ListarVenta.html'
     model = Venta
-    permission_required = 'view_venta'
+    permission_required = 'view_venta','delete_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

@@ -20,7 +20,7 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ProduccionListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model=Produccion
     template_name = 'producto/produccion/ListarProduccion.html'
-    # permission_required = 'view_producto'
+    permission_required = 'view_produccion'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -65,7 +65,7 @@ class ProducionCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cr
     model = Produccion
     form_class = ProduccionForm
     template_name = 'producto/produccion/FormProduccion.html'
-    # permission_required = 'add_producto'
+    permission_required = 'add_produccion'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

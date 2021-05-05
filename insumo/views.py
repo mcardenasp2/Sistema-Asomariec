@@ -11,7 +11,6 @@ from insumo.models import *
 # Form
 from insumo.forms import *
 
-
 # Create your view here.
 from user.mixins import ValidatePermissionRequiredMixin
 
@@ -19,10 +18,11 @@ from user.mixins import ValidatePermissionRequiredMixin
 def mostrar(request):
     return render(request, 'index.html')
 
+
 # Detalle Insumo Modal este utilizo
-class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateView):
+class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin, TemplateView):
     template_name = 'insumo/detalle_insumo/DetalleList.html'
-    permission_required = 'view_unidadmedidad'
+    permission_required = 'view_unidadmedidad', 'delete_unidadmedidad', 'change_unidadmedidad', 'add_unidadmedidad', 'view_categoria', 'delete_categoria','add_categoria','change_categoria'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -38,25 +38,25 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
                 for i in UnidadMedidad.objects.filter(medEstado=1):
                     data.append(i.toJSON())
 
-            elif action=='add':
+            elif action == 'add':
                 print('Hola amigos')
-                med= UnidadMedidad()
-                med.medDescripcion=request.POST['medDescripcion']
-                med.medEstado=request.POST['medEstado']
+                med = UnidadMedidad()
+                med.medDescripcion = request.POST['medDescripcion']
+                med.medEstado = request.POST['medEstado']
                 # med.usuaReg=request.POST['usuaReg']
                 med.save()
                 # pass
-            elif action=='edit':
+            elif action == 'edit':
                 # print('Hola')
-                med= UnidadMedidad.objects.get(pk=request.POST['id'])
-                med.medDescripcion=request.POST['medDescripcion']
-                med.medEstado=request.POST['medEstado']
+                med = UnidadMedidad.objects.get(pk=request.POST['id'])
+                med.medDescripcion = request.POST['medDescripcion']
+                med.medEstado = request.POST['medEstado']
                 # med.usuaMod=request.POST['user1']
                 med.save()
 
-            elif action=='delete':
-                med= UnidadMedidad.objects.get(pk=request.POST['id'])
-                med.medEstado=0
+            elif action == 'delete':
+                med = UnidadMedidad.objects.get(pk=request.POST['id'])
+                med.medEstado = 0
                 # med.usuaEli=request.POST['user1']
                 med.save()
 
@@ -94,13 +94,14 @@ class DetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateVi
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form']= MedidaForm()
+        context['form'] = MedidaForm()
         context['form2'] = CategoriaForm()
         context['action'] = 'add'
         return context
 
+
 # Categoria Modal no utilizo
-class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,TemplateView):
+class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin, TemplateView):
     # model = Categoria
     permission_required = 'view_categoria'
     # template_name = 'insumo/detalle_insumo/DetalleList.html'
@@ -120,12 +121,12 @@ class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Template
                 for i in Categoria.objects.filter(catEstado=1):
                     data.append(i.toJSON())
 
-            elif action=='add':
+            elif action == 'add':
                 print('Hola')
-                cat= Categoria()
-                cat.catDescripcion=request.POST['catDescripcion']
-                cat.catEstado=request.POST['catEstado']
-                cat.usuaReg=request.POST['usuaReg']
+                cat = Categoria()
+                cat.catDescripcion = request.POST['catDescripcion']
+                cat.catEstado = request.POST['catEstado']
+                cat.usuaReg = request.POST['usuaReg']
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
                 # cat.catFecReg=request.POST['catFecReg']
@@ -133,12 +134,12 @@ class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Template
                 # print(cat)
                 cat.save()
                 # pass
-            elif action=='edit':
+            elif action == 'edit':
                 # print('Hola')
-                cat= Categoria.objects.get(pk=request.POST['id'])
-                cat.catDescripcion=request.POST['catDescripcion']
-                cat.catEstado=request.POST['catEstado']
-                cat.usuaMod=request.POST['user1']
+                cat = Categoria.objects.get(pk=request.POST['id'])
+                cat.catDescripcion = request.POST['catDescripcion']
+                cat.catEstado = request.POST['catEstado']
+                cat.usuaMod = request.POST['user1']
                 print(request.POST['user1'])
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
@@ -147,12 +148,12 @@ class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Template
                 # print(cat)
                 cat.save()
                 # pass
-            elif action=='delete':
+            elif action == 'delete':
                 # print('Hola')
-                cat= Categoria.objects.get(pk=request.POST['id'])
+                cat = Categoria.objects.get(pk=request.POST['id'])
                 # cat.catDescripcion=request.POST['catDescripcion']
-                cat.catEstado=0
-                cat.usuaEli=request.POST['user1']
+                cat.catEstado = 0
+                cat.usuaEli = request.POST['user1']
                 # print(request.POST['user1'])
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
@@ -170,10 +171,11 @@ class CategoriaView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Template
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:categoria_mostrar')
-        context['form']= CategoriaForm()
+        context['form'] = CategoriaForm()
         context['action'] = 'add'
         # context['create_url'] = reverse_lazy('insumo:categoria_create')
         return context
+
 
 # Modal Medida no utilizo
 class MedidaView(TemplateView):
@@ -193,12 +195,12 @@ class MedidaView(TemplateView):
                 for i in UnidadMedidad.objects.filter(medEstado=1):
                     data.append(i.toJSON())
 
-            elif action=='add':
+            elif action == 'add':
                 # print('Hola')
-                med= UnidadMedidad()
-                med.medDescripcion=request.POST['medDescripcion']
-                med.medEstado=request.POST['medEstado']
-                med.usuaReg=request.POST['usuaReg']
+                med = UnidadMedidad()
+                med.medDescripcion = request.POST['medDescripcion']
+                med.medEstado = request.POST['medEstado']
+                med.usuaReg = request.POST['usuaReg']
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
                 # cat.catFecReg=request.POST['catFecReg']
@@ -206,12 +208,12 @@ class MedidaView(TemplateView):
                 # print(cat)
                 med.save()
                 # pass
-            elif action=='edit':
+            elif action == 'edit':
                 # print('Hola')
-                med= UnidadMedidad.objects.get(pk=request.POST['id'])
-                med.medDescripcion=request.POST['medDescripcion']
-                med.medEstado=request.POST['medEstado']
-                med.usuaMod=request.POST['user1']
+                med = UnidadMedidad.objects.get(pk=request.POST['id'])
+                med.medDescripcion = request.POST['medDescripcion']
+                med.medEstado = request.POST['medEstado']
+                med.usuaMod = request.POST['user1']
                 # print(request.POST['user1'])
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
@@ -220,12 +222,12 @@ class MedidaView(TemplateView):
                 # print(cat)
                 med.save()
                 # pass
-            elif action=='delete':
+            elif action == 'delete':
                 # print('Hola')
-                med= UnidadMedidad.objects.get(pk=request.POST['id'])
+                med = UnidadMedidad.objects.get(pk=request.POST['id'])
                 # cat.catDescripcion=request.POST['catDescripcion']
-                med.medEstado=0
-                med.usuaEli=request.POST['user1']
+                med.medEstado = 0
+                med.usuaEli = request.POST['user1']
                 # print(request.POST['user1'])
                 # cat.usuaMod=request.POST['usuaMod']
                 # cat.usuaEli=request.POST['usuaEli']
@@ -243,17 +245,18 @@ class MedidaView(TemplateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         # context['list_url'] = reverse_lazy('insumo:categoria_mostrar')
-        context['form']= MedidaForm()
+        context['form'] = MedidaForm()
         context['action'] = 'add'
         # context['create_url'] = reverse_lazy('insumo:categoria_create')
         return context
 
+
 # Insumo
 
-class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
+class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     model = Insumo
     template_name = 'insumo/insumo/ListarInsumo.html'
-    permission_required = 'view_insumo,delete_insumo'
+    permission_required = 'view_insumo', 'delete_insumo'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -271,8 +274,8 @@ class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVie
 
                 # print(data)
             elif action == 'eliminar':
-                insumo= Insumo.objects.get(pk=request.POST['id'])
-                insumo.insEstado=False
+                insumo = Insumo.objects.get(pk=request.POST['id'])
+                insumo.insEstado = False
                 # usuario.usuaEli=request.POST['usuaEli']
                 insumo.save()
             else:
@@ -289,7 +292,8 @@ class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVie
         context['entity'] = 'Clientes'
         return context
 
-class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
+
+class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     model = Insumo
     form_class = InsumoForm
     template_name = 'insumo/insumo/FormInsumo.html'
@@ -302,7 +306,6 @@ class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
     #     form=InsumoForm(instance=instance)
     #     form.fields['insPrecio'].queryset=0.00
     #     return form
-
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -333,7 +336,8 @@ class InsumoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
 
     # success_url = redirect()
 
-class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,UpdateView):
+
+class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
     model = Insumo
     form_class = InsumoForm
     template_name = 'insumo/insumo/FormInsumo.html'
@@ -382,7 +386,8 @@ class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Updat
         context['action'] = 'edit'
         return context
 
-class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
+
+class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     model = Insumo
     # form_class = ClienteForm
     template_name = 'insumo/insumo/DeleteInsumo.html'
@@ -401,12 +406,12 @@ class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Delet
             action = request.POST['action']
             if action == 'eliminar':
                 # print('hola')
-                usuario= self.get_object()
-                usuario.insEstado=False
+                usuario = self.get_object()
+                usuario.insEstado = False
                 # print('Hola')
                 # fec=usuario.cliFecMod
                 # print(fec)
-                usuario.usuaEli=request.POST['usuaEli']
+                usuario.usuaEli = request.POST['usuaEli']
                 # usuario.cliFecMod = fec
                 # usuario.cliFecEli = datetime.now()
                 # usuario.cliFecEli=datetime.now()
@@ -425,6 +430,7 @@ class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Delet
         context['action'] = 'eliminar'
         context['list_url'] = reverse_lazy('insumo:insumo_mostrar')
         return context
+
 
 # no utilizo
 
@@ -457,7 +463,7 @@ class CategoriaListView(ListView):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:categoria_mostrar')
         context['action'] = 'searchdata'
-        context['create_url']=reverse_lazy('insumo:categoria_create')
+        context['create_url'] = reverse_lazy('insumo:categoria_create')
         return context
 
 
@@ -528,7 +534,7 @@ class CategoriaUpdateView(UpdateView):
 class CategoriaDelete(DeleteView):
     model = Categoria
     template_name = 'insumo/CategoriaBorrar.html'
-    success_url =reverse_lazy('insumo:categoria_mostrar')
+    success_url = reverse_lazy('insumo:categoria_mostrar')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -546,4 +552,3 @@ class CategoriaDelete(DeleteView):
         context = super().get_context_data(**kwargs)
         context['list_url'] = reverse_lazy('insumo:categoria_mostrar')
         return context
-
