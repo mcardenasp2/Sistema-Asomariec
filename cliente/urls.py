@@ -9,6 +9,7 @@ urlpatterns = [
     path('cliente/mostrar/', ClienteListarView.as_view(), name='cliente_listar'),
     path('cliente/crear/', ClienteCrearView.as_view(), name='cliente_crear'),
     path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
+    path('cliente/eliminar/', ClienteDelete.as_view(), name='cliente_eliminar'),
     # path('cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
 
     # path('categoria/mostrar/', CategoriaListView.as_view(), name='categoria_mostrar'),

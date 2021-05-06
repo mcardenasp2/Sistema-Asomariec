@@ -42,11 +42,16 @@ class ValidatePermissionRequiredMixin(object):
         if 'group' in request.session:
             group = request.session['group']
             perms = self.get_perms()
+
             for p in perms:
                 if not group.permissions.filter(codename=p).exists():
+                    # print('estoy en permisos1')
                     messages.error(request, 'No tiene permiso para ingresar a este módulo')
+                    # print('estoy en permisos2')
                     return HttpResponseRedirect(self.get_url_redirect())
+                # print('estoy en permisos3')
             return super().dispatch(request, *args, **kwargs)
+        # print('estoy en permisos5')
         messages.error(request, 'No tiene permiso para ingresar a este módulo')
         return HttpResponseRedirect(self.get_url_redirect())
 

@@ -143,7 +143,7 @@ class InsumoForm(ModelForm):
                     # 'value':'0.jh00'
                     # 'data-mask' : '00/00/0000'
                     # 'disabled': 'disabled'
-                    'placeholder': 'Ingrese el Codigo',
+                    'placeholder': 'Ingrese el Código',
                 },
 
             ),

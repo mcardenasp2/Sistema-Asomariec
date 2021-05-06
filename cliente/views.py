@@ -4,12 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cliente.models import *
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
-from django.http import JsonResponse
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
+from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from cliente.forms import *
+
+from django.contrib.auth.decorators import permission_required
 
 
 # Create your view here.
@@ -19,8 +21,8 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Cliente
     template_name = 'cliente/ListarCliente.html'
-    permission_required = [('view_cliente','delete_cliente')]
-    # permission_required = 'view_cliente'
+    # permission_required = [('view_cliente','delete_cliente')]
+    permission_required = 'view_cliente'
 
     # @method_decorator(login_required)
     @method_decorator(csrf_exempt)
@@ -36,10 +38,10 @@ class ClienteListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,List
                 # for i in Cliente.objects.all():
                 for i in Cliente.objects.filter(cliEstado=True):
                     data.append(i.toJSON())
-            elif action == 'eliminar':
-                cliente = Cliente.objects.get(pk=request.POST['id'])
-                cliente.cliEstado = 0
-                cliente.save()
+            # elif action == 'eliminar':
+            #     cliente = Cliente.objects.get(pk=request.POST['id'])
+            #     cliente.cliEstado = 0
+            #     cliente.save()
 
                 # usuario = self.get_object()
                 # usuario.cliEstado = False
@@ -130,7 +132,49 @@ class ClienteUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
         context['action'] = 'edit'
         return context
 
+# @permission_required('delete_cliente')
+class ClienteDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_cliente'
+    # url_redirect = success_url
 
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                cliente = Cliente.objects.get(pk=request.POST['id'])
+                cliente.cliEstado = 0
+                cliente.save()
+                data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
+
+
+    # def get(self, request, *args, **kwargs):
+    #     try:
+    #         # anadimos la sesion
+    #         request.session['group'] = Group.objects.get(pk=self.kwargs['id'])
+    #         # request.session['group'] =self.kwargs['pk']
+    #         # print(self.kwargs)
+    #     except:
+    #         pass
+    #     return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
 
 class ClienteDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     model = Cliente
