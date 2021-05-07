@@ -1,4 +1,4 @@
-var tblCompra;
+var tbl;
 
 
 $(function () {
@@ -6,7 +6,7 @@ $(function () {
     // $('.select2-selection--multiple').select2();
 
 
-    tblCompra = $('#table_id').DataTable({
+    tbl = $('#table_id').DataTable({
         responsive: true,
         autoWidth: false,
         destroy: true,
@@ -80,7 +80,8 @@ $(function () {
                 orderable: false,
                 render: function (data, type, row) {
                     // var buttons = '<a href="/compra/compra/eliminar/' + row.id + '/" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
-                    var buttons = '<a href="#" onclick=Delete("' + row.id + '") class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
+                    // var buttons = '<a href="#" onclick=Delete("' + row.id + '") class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
+                    var buttons = '<a href="#" onclick=Deletes("' + row.id + '","/compra/compra/eliminar/") class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a> ';
                     // buttons += '<a href="/compra/compra/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a rel="details" class="btn btn-success btn-sm btn-flat"><i class="fas fa-search"></i></a> ';
                     // buttons += '<a href="/compra/compra/invoice/pdf/'+row.id+'" target="_blank" class="btn btn-info btn-sm btn-flat"><i class="fas fa-file-pdf"></i></a> ';
@@ -120,8 +121,8 @@ $(function () {
         .on('click', 'a[rel="details"]', function () {
             // alert('x');
             // console.log('hola');
-            var tr = tblCompra.cell($(this).closest('td, li')).index();
-            var data = tblCompra.row(tr.row).data();
+            var tr = tbl.cell($(this).closest('td, li')).index();
+            var data = tbl.row(tr.row).data();
             console.log(data);
             console.log()
             $('#vendedor').html(data.ccoVendedor);
@@ -215,40 +216,40 @@ $(function () {
 
 
 
-function Delete(id) {
-    console.log(id);
-    Swal.fire({
-        title: "Esta seguro de borrar?",
-        text: "Este contenido no se puede recuperar!",
-        // type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, borrar!",
-        cancelButtonText:"Cancelar"
-        // preConfirm: true
-    }).then((result) => {
-        if (result.value) {
-            $.ajax({
-                type: 'POST',
-                url: window.location.pathname,
-                data: {'id': id, 'action': 'eliminar'},
-                success: function (data) {
-                    Swal.fire(
-                        'Borrado!',
-                        'Tu registro fue borrado con éxito.',
-                        'success'
-                    )
-                    tblCompra.ajax.reload();
-                    // if (data.success) {
-                    //     toastr.success(data.message);
-                    //     dataTable.ajax.reload();
-                    // } else {
-                    //     toastr.error(data.message);
-                    // }
-                }
-            });
-            // For more information about handling dismissals please visit
-            // https://sweetalert2.github.io/#handling-dismissals
-        }
-    });
-}
+// function Delete(id) {
+//     console.log(id);
+//     Swal.fire({
+//         title: "Esta seguro de borrar?",
+//         text: "Este contenido no se puede recuperar!",
+//         // type: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#DD6B55",
+//         confirmButtonText: "Si, borrar!",
+//         cancelButtonText:"Cancelar"
+//         // preConfirm: true
+//     }).then((result) => {
+//         if (result.value) {
+//             $.ajax({
+//                 type: 'POST',
+//                 url: window.location.pathname,
+//                 data: {'id': id, 'action': 'eliminar'},
+//                 success: function (data) {
+//                     Swal.fire(
+//                         'Borrado!',
+//                         'Tu registro fue borrado con éxito.',
+//                         'success'
+//                     )
+//                     tblCompra.ajax.reload();
+//                     // if (data.success) {
+//                     //     toastr.success(data.message);
+//                     //     dataTable.ajax.reload();
+//                     // } else {
+//                     //     toastr.error(data.message);
+//                     // }
+//                 }
+//             });
+//             // For more information about handling dismissals please visit
+//             // https://sweetalert2.github.io/#handling-dismissals
+//         }
+//     });
+// }

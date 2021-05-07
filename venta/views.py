@@ -39,7 +39,8 @@ from xhtml2pdf import pisa
 class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/normal/ListarVenta.html'
     model = Venta
-    permission_required = 'view_venta','delete_venta'
+    # permission_required = 'view_venta','delete_venta'
+    permission_required = 'view_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -63,21 +64,21 @@ class VentaListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVie
                 data = []
                 for i in GastAdc.objects.filter(venta_id=request.POST['id']):
                     data.append(i.toJSON())
-            elif action == 'eliminar':
-                with transaction.atomic():
-                    # vent = json.loads(request.POST['ventas'])
-                    # print(prod);
-                        # print('Eliminar')
-                    # cabventa = self.get_object()
-                    cabventa = Venta.objects.get(pk=request.POST['id'])
-                    cabventa.ventEstado = False
-                    cabventa.venEstVenta = 1
-                    cabventa.save()
-
-                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
-                        producto = Producto.objects.get(pk=i.producto_id)
-                        producto.prodCantidad += i.detCant
-                        producto.save()
+            # elif action == 'eliminar':
+            #     with transaction.atomic():
+            #         # vent = json.loads(request.POST['ventas'])
+            #         # print(prod);
+            #             # print('Eliminar')
+            #         # cabventa = self.get_object()
+            #         cabventa = Venta.objects.get(pk=request.POST['id'])
+            #         cabventa.ventEstado = False
+            #         cabventa.venEstVenta = 1
+            #         cabventa.save()
+            #
+            #         for i in DetVenta.objects.filter(venta_id=cabventa.id):
+            #             producto = Producto.objects.get(pk=i.producto_id)
+            #             producto.prodCantidad += i.detCant
+            #             producto.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -97,8 +98,10 @@ class VentaCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Creat
     model = Venta
     form_class = CabVentaForm
     # template_name = 'venta/normal/FormVenta.html'
+    success_url = reverse_lazy('venta:venta_mostrar')
     template_name = 'venta/normal/FormVentaNuevo.html'
     permission_required = 'add_venta'
+    url_redirect = success_url
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -360,6 +363,49 @@ class VentaUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Updat
         return context
 
 
+class VentaDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_venta'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                    # print('Eliminar')
+                    # cabventa = self.get_object()
+                    cabventa = Venta.objects.get(pk=request.POST['id'])
+                    cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        producto.save()
+                    data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
+
 class VentaDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     template_name = 'venta/DeleteVenta.html'
     model = Venta
@@ -488,7 +534,7 @@ class SaleInvoicePdfView(View):
 class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     template_name = 'venta/contrato/ListarVenta.html'
     model = Venta
-    permission_required = 'view_venta','delete_venta'
+    permission_required = 'view_venta'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -508,22 +554,22 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
                 data = []
                 for i in DetVenta.objects.filter(venta_id=request.POST['id']):
                     data.append(i.toJSON())
-            elif action == 'eliminar':
-                with transaction.atomic():
-                    # vent = json.loads(request.POST['ventas'])
-                    # print(prod);
-                    # cabventa = self.get_object()
-                    cabventa = Venta.objects.get(pk=request.POST['id'])
-                    cabventa.ventEstado = False
-                    cabventa.venEstVenta = 1
-                    cabventa.save()
-
-                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
-                        producto = Producto.objects.get(pk=i.producto_id)
-                        producto.prodCantidad += i.detCant
-                        if producto.prodEstprod==1:
-                            producto.prodTipo=2
-                        producto.save()
+            # elif action == 'eliminar':
+            #     with transaction.atomic():
+            #         # vent = json.loads(request.POST['ventas'])
+            #         # print(prod);
+            #         # cabventa = self.get_object()
+            #         cabventa = Venta.objects.get(pk=request.POST['id'])
+            #         cabventa.ventEstado = False
+            #         cabventa.venEstVenta = 1
+            #         cabventa.save()
+            #
+            #         for i in DetVenta.objects.filter(venta_id=cabventa.id):
+            #             producto = Producto.objects.get(pk=i.producto_id)
+            #             producto.prodCantidad += i.detCant
+            #             if producto.prodEstprod==1:
+            #                 producto.prodTipo=2
+            #             producto.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -542,8 +588,10 @@ class VentaContratoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,
 class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
     template_name = 'venta/contrato/FormVentaNuevo.html'
     form_class = CabVentaForm
+    success_url = reverse_lazy('venta:ventac_mostrar')
     model = Venta
     permission_required = 'add_venta'
+    url_redirect = success_url
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -661,6 +709,51 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
         context['det'] = []
         context['gasta'] = []
         return context
+
+
+class VentaContratoDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_venta'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                with transaction.atomic():
+                    # vent = json.loads(request.POST['ventas'])
+                    # print(prod);
+                    # cabventa = self.get_object()
+                    cabventa = Venta.objects.get(pk=request.POST['id'])
+                    cabventa.ventEstado = False
+                    cabventa.venEstVenta = 1
+                    cabventa.save()
+
+                    for i in DetVenta.objects.filter(venta_id=cabventa.id):
+                        producto = Producto.objects.get(pk=i.producto_id)
+                        producto.prodCantidad += i.detCant
+                        if producto.prodEstprod == 1:
+                            producto.prodTipo = 2
+                        producto.save()
+                    data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
 
 
 class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):

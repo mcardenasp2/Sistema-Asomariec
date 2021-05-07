@@ -64,8 +64,10 @@ class ProduccionListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Lis
 class ProducionCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,CreateView):
     model = Produccion
     form_class = ProduccionForm
+    success_url = reverse_lazy('producto:produccion_mostrar')
     template_name = 'producto/produccion/FormProduccion.html'
     permission_required = 'add_produccion'
+    url_redirect = success_url
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):

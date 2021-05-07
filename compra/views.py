@@ -36,7 +36,8 @@ from user.mixins import ValidatePermissionRequiredMixin
 class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = CabCompra
     template_name = 'compra/ListarCompra.html'
-    permission_required = 'view_cabcompra','delete_cabcompra'
+    # permission_required = 'view_cabcompra','delete_cabcompra'
+    permission_required = 'view_cabcompra'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -57,26 +58,26 @@ class CabComprListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListV
                 for i in DetCompra.objects.filter(cabCompra_id=request.POST['id']):
                     data.append(i.toJSON())
 
-            elif action == 'eliminar':
-                with transaction.atomic():
-                    # comp = json.loads(request.POST['compras'])
-                    # print('hola anadiendo 2')
-                    # cabcompra = self.get_object()
-                    cabcompra = CabCompra.objects.get(pk=request.POST['id'])
-                    cabcompra.ccoEstado = False
-                    cabcompra.save()
-                    # cabcompra.detcompra_set.all().delete()
-
-                    # for i in DetCompra.objects.filter(cabCompra_id=self.get_object().id):
-                    for i in DetCompra.objects.filter(cabCompra_id=cabcompra.id):
-                        # det = DetCompra()
-                        insumo = Insumo.objects.get(pk=i.insumo_id)
-                        insumo.insStock -= i.dcoCantidad
-                        insumo.save()
-
-                        # det.save()
-                    # cabcompra.detcompra_set.all().delete()
-                    # cabcompra.detcompra_set
+            # elif action == 'eliminar':
+            #     with transaction.atomic():
+            #         # comp = json.loads(request.POST['compras'])
+            #         # print('hola anadiendo 2')
+            #         # cabcompra = self.get_object()
+            #         cabcompra = CabCompra.objects.get(pk=request.POST['id'])
+            #         cabcompra.ccoEstado = False
+            #         cabcompra.save()
+            #         # cabcompra.detcompra_set.all().delete()
+            #
+            #         # for i in DetCompra.objects.filter(cabCompra_id=self.get_object().id):
+            #         for i in DetCompra.objects.filter(cabCompra_id=cabcompra.id):
+            #             # det = DetCompra()
+            #             insumo = Insumo.objects.get(pk=i.insumo_id)
+            #             insumo.insStock -= i.dcoCantidad
+            #             insumo.save()
+            #
+            #             # det.save()
+            #         # cabcompra.detcompra_set.all().delete()
+            #         # cabcompra.detcompra_set
 
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -100,6 +101,7 @@ class CabCompraCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Cr
     template_name = 'compra/FormCompraNuevo.html'
     success_url = reverse_lazy('insumo:insumo_mostrar')
     permission_required = 'add_cabcompra'
+    url_redirect = success_url
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -279,6 +281,55 @@ class CabCompraUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Up
         context['action'] = 'edit'
         context['det'] = json.dumps(self.get_details_insumos(), cls=DjangoJSONEncoder)
         return context
+
+
+class CompraDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_cabcompra'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                with transaction.atomic():
+                    # comp = json.loads(request.POST['compras'])
+                    # print('hola anadiendo 2')
+                    # cabcompra = self.get_object()
+                    cabcompra = CabCompra.objects.get(pk=request.POST['id'])
+                    cabcompra.ccoEstado = False
+                    cabcompra.save()
+                    # cabcompra.detcompra_set.all().delete()
+
+                    # for i in DetCompra.objects.filter(cabCompra_id=self.get_object().id):
+                    for i in DetCompra.objects.filter(cabCompra_id=cabcompra.id):
+                        # det = DetCompra()
+                        insumo = Insumo.objects.get(pk=i.insumo_id)
+                        insumo.insStock -= i.dcoCantidad
+                        insumo.save()
+
+                        # det.save()
+                    # cabcompra.detcompra_set.all().delete()
+                # cabcompra.detcompra_set
+                    data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
 
 
 class CabCompraDeleteView(LoginRequiredMixin,ValidatePermissionRequiredMixin,DeleteView):
