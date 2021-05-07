@@ -61,7 +61,7 @@ $(function () {
                 render: function (data, type, row) {
                     var buttons = '<a title="Editar" href="/proveedor/proveedor/editar/' + row.id + '/" class="btn btn-warning btn-sm btn-flat"><i class="fas fa-edit"></i></a> ';
                     // buttons += '<a title="Eliminar" href="/proveedor/proveedor/eliminar/' + row.id + '/" type="button" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
-                    buttons += '<a title="Eliminar" href="#" onclick=Delete("' + row.id + '") type="button" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    buttons += '<a title="Eliminar" href="#" onclick=Deletes("' + row.id + '","/proveedor/proveedor/eliminar/") type="button" class="btn btn-danger btn-sm btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
             },
@@ -75,40 +75,40 @@ $(function () {
 
 
 
-
-function Delete(id) {
-    Swal.fire({
-        title: "Esta seguro de borrar?",
-        text: "Este contenido no se puede recuperar!",
-        // type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, borrar!",
-        cancelButtonText:"Cancelar"
-        // preConfirm: true
-    }).then((result) => {
-        if (result.value) {
-            $.ajax({
-                type: 'POST',
-                url: window.location.pathname,
-                data: {'id': id, 'action': 'eliminar'},
-                success: function (data) {
-                    Swal.fire(
-                        'Borrado!',
-                        'Tu registro fue borrado con éxito.',
-                        'success'
-                    )
-                    tbl.ajax.reload();
-                    // if (data.success) {
-                    //     toastr.success(data.message);
-                    //     dataTable.ajax.reload();
-                    // } else {
-                    //     toastr.error(data.message);
-                    // }
-                }
-            });
-            // For more information about handling dismissals please visit
-            // https://sweetalert2.github.io/#handling-dismissals
-        }
-    });
-}
+//
+// function Delete(id) {
+//     Swal.fire({
+//         title: "Esta seguro de borrar?",
+//         text: "Este contenido no se puede recuperar!",
+//         // type: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#DD6B55",
+//         confirmButtonText: "Si, borrar!",
+//         cancelButtonText:"Cancelar"
+//         // preConfirm: true
+//     }).then((result) => {
+//         if (result.value) {
+//             $.ajax({
+//                 type: 'POST',
+//                 url: window.location.pathname,
+//                 data: {'id': id, 'action': 'eliminar'},
+//                 success: function (data) {
+//                     Swal.fire(
+//                         'Borrado!',
+//                         'Tu registro fue borrado con éxito.',
+//                         'success'
+//                     )
+//                     tbl.ajax.reload();
+//                     // if (data.success) {
+//                     //     toastr.success(data.message);
+//                     //     dataTable.ajax.reload();
+//                     // } else {
+//                     //     toastr.error(data.message);
+//                     // }
+//                 }
+//             });
+//             // For more information about handling dismissals please visit
+//             // https://sweetalert2.github.io/#handling-dismissals
+//         }
+//     });
+// }

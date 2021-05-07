@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 # Vistas genericas
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView,View
 # Modelos
 from insumo.models import *
 # Form
@@ -256,7 +256,7 @@ class MedidaView(TemplateView):
 class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
     model = Insumo
     template_name = 'insumo/insumo/ListarInsumo.html'
-    permission_required = 'view_insumo', 'delete_insumo'
+    permission_required = 'view_insumo'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -273,11 +273,11 @@ class InsumoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListVi
                     data.append(i.toJSON())
 
                 # print(data)
-            elif action == 'eliminar':
-                insumo = Insumo.objects.get(pk=request.POST['id'])
-                insumo.insEstado = False
-                # usuario.usuaEli=request.POST['usuaEli']
-                insumo.save()
+            # elif action == 'eliminar':
+            #     insumo = Insumo.objects.get(pk=request.POST['id'])
+            #     insumo.insEstado = False
+            #     # usuario.usuaEli=request.POST['usuaEli']
+            #     insumo.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -386,6 +386,38 @@ class InsumoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Upda
         context['action'] = 'edit'
         return context
 
+class InsumoDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_insumo'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                insumo = Insumo.objects.get(pk=request.POST['id'])
+                insumo.insEstado = False
+                # usuario.usuaEli=request.POST['usuaEli']
+                insumo.save()
+                data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
 
 class InsumoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
     model = Insumo

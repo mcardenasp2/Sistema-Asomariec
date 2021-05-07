@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 # Create your view here.
 from proveedor.forms import ProveedorForm
 from proveedor.models import *
@@ -14,7 +14,8 @@ from user.mixins import ValidatePermissionRequiredMixin
 class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Proveedor
     template_name = 'proveedor/proveedor/ListarProveedor.html'
-    permission_required = 'view_proveedor','delete_proveedor'
+    # permission_required = 'view_proveedor','delete_proveedor'
+    permission_required = 'view_proveedor'
     # , 'delete_proveedor'
 
     @method_decorator(csrf_exempt)
@@ -30,11 +31,11 @@ class ProveedorListarView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Li
                 data=[]
                 for i in Proveedor.objects.filter(proEstado=1):
                     data.append(i.toJSON())
-            elif action=='eliminar':
-                proveedor= Proveedor.objects.get(pk=request.POST['id'])
-                proveedor.proEstado=False
-                # proveedor.usuaEli=request.POST['usuaEli']
-                proveedor.save()
+            # elif action=='eliminar':
+            #     proveedor= Proveedor.objects.get(pk=request.POST['id'])
+            #     proveedor.proEstado=False
+            #     # proveedor.usuaEli=request.POST['usuaEli']
+            #     proveedor.save()
             else:
                 data['error']='Ha ocurrido un error'
         except Exception as e:
@@ -115,6 +116,41 @@ class ProveedorUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Up
         context['list_url'] = reverse_lazy('proveedor:proveedor_listar')
         context['action'] = 'edit'
         return context
+
+
+class ProveedorDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_proveedor'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+                proveedor = Proveedor.objects.get(pk=request.POST['id'])
+                proveedor.proEstado = False
+                # proveedor.usuaEli=request.POST['usuaEli']
+                proveedor.save()
+                data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
+
 
 class ProveedorDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     model = Proveedor

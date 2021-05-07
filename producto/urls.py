@@ -20,6 +20,7 @@ urlpatterns = [
     path('product/mostrar/', ProductListView.as_view(), name='product_mostrar'),
     path('product/create/', ProductCreateView.as_view(), name='product_create'),
     path('product/editar/<int:pk>/', ProductUpdateView.as_view(), name='product_edit'),
+    path('product/eliminar/', ProductoDelete.as_view(), name='product_delete'),
     # path('product/eliminar/<int:pk>/', ProductDeleteView.as_view(), name='product_delete'),
 
     #     produccion

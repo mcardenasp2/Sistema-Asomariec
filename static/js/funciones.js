@@ -160,3 +160,61 @@ function alerta_action2(title, content, callback, cancel) {
         }
     })
 }
+
+
+
+function Deletes(id, url) {
+    Swal.fire({
+        title: "Esta seguro de borrar?",
+        text: "Este contenido no se puede recuperar!",
+        // type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Si, borrar!",
+        cancelButtonText: "Cancelar"
+        // preConfirm: true
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                type: 'POST',
+                // url: window.location.pathname,
+                // url: '/cliente/cliente/eliminar/',
+                url: url,
+                data: {'id': id, 'action': 'eliminar'},
+                success: function (data) {
+                    // console.log(data);
+                    if (data.hasOwnProperty('success')) {
+                        Swal.fire(
+                            'Borrado!',
+                            'Tu registro fue borrado con éxito.',
+                            'success'
+                        )
+
+                    } else {
+
+                        Swal.fire(
+                            'Error!',
+                            'No tiene permiso para ingresar a este módulo',
+                            'error'
+                        )
+                    }
+
+
+                    tbl.ajax.reload();
+                    // if (data.success) {
+                    //     toastr.success(data.message);
+                    //     dataTable.ajax.reload();
+                    // } else {
+                    //     toastr.error(data.message);
+                    // }
+                }
+            });
+
+
+            // For more information about handling dismissals please visit
+            // https://sweetalert2.github.io/#handling-dismissals
+        }
+
+    });
+
+}

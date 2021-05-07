@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
 # Create your view here.
 from producto.models import Producto, DetProducto, GastosAdicionales
 from insumo.models import Insumo
@@ -354,7 +354,8 @@ class ProductoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Del
 class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListView):
     model = Producto
     template_name = 'producto/product/ListProduct.html'
-    permission_required = 'view_producto','delete_producto'
+    # permission_required = 'view_producto','delete_producto'
+    permission_required = 'view_producto'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -369,12 +370,12 @@ class ProductListView(LoginRequiredMixin, ValidatePermissionRequiredMixin,ListVi
                 data = []
                 for i in Producto.objects.filter(prodEstado=True, prodEstprod=True, prodTipo=2):
                     data.append(i.toJSON())
-            elif action == 'eliminar':
-
-                prod = Producto.objects.get(pk=request.POST['id'])
-                prod.prodEstado = False
-                # prod.usuaEli = request.POST['usuaEli']
-                prod.save()
+            # elif action == 'eliminar':
+            #
+            #     prod = Producto.objects.get(pk=request.POST['id'])
+            #     prod.prodEstado = False
+            #     # prod.usuaEli = request.POST['usuaEli']
+            #     prod.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -453,6 +454,40 @@ class ProductUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Upda
         context['title'] = 'Edición de un Producto'
         context['action'] = 'edit'
         return context
+
+class ProductoDelete(LoginRequiredMixin, ValidatePermissionRequiredMixin, View):
+    # model = Cliente
+    # template_name = 'cliente/ListarCliente.html'
+    # success_url = reverse_lazy('cliente:cliente_listar')
+    permission_required = 'delete_producto'
+    # url_redirect = success_url
+
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        # print(self.request)
+        return super().dispatch(request, *args, **kwargs)
+
+    # @permission_required('delete_cliente')
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            action = request.POST['action']
+            # print('eliminar')
+            if action == 'eliminar':
+
+                prod = Producto.objects.get(pk=request.POST['id'])
+                prod.prodEstado = False
+                # prod.usuaEli = request.POST['usuaEli']
+                prod.save()
+                data['success']="Correcto"
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        # return HttpResponseRedirect(reverse_lazy('cliente:cliente_listar'))
+        return JsonResponse(data)
 
 class ProductDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin,DeleteView):
     template_name = 'producto/product/DeleteProduct.html'

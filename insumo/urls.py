@@ -19,6 +19,7 @@ urlpatterns = [
     path('insumo/mostrar/', InsumoListView.as_view(), name='insumo_mostrar'),
     path('insumo/create/', InsumoCreateView.as_view(), name='insumo_create'),
     path('insumo/editar/<int:pk>/', InsumoUpdateView.as_view(), name='insumo_edit'),
+    path('insumo/eliminar/', InsumoDelete.as_view(), name='insumo_delete'),
     # path('insumo/eliminar/<int:pk>/', InsumoDeleteView.as_view(), name='insumo_delete'),
 
 ]

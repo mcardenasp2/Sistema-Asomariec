@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import Sistema_Asomariec.db as db
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf.global_settings import STATIC_ROOT
 
@@ -91,12 +91,14 @@ WSGI_APPLICATION = 'Sistema_Asomariec.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# DATABASES = db.POSTGRESQL
+DATABASES = db.SQLITE
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -172,3 +174,6 @@ DOMAIN = ''
 
 # pip freeze > requirements.txt
 # pip install -r requirements.txt
+# Python 3.8.1
+
+# psycopg2              2.8.4
