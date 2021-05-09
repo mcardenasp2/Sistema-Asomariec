@@ -133,6 +133,7 @@ class GrupoModuloForm(ModelForm):
             #     'multiple': 'multiple'
             # })
         }
+        exclude=['activo']
         # exclude = ['user_permissions', 'last_login', 'date_joined', 'is_superuser', 'is_active', 'is_staff']
 
     def save(self, commit=True):
