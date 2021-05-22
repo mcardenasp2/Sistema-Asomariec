@@ -15,6 +15,7 @@ $(function () {
         // order:[[ 2, "desc" ]],
         // {#Bolo#}
         ordering: true,
+        order:[[ 2, "desc" ]],
         info: true,
         pageLength: 5,
         searching: true,

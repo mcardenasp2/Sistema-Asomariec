@@ -12,6 +12,7 @@ $(function () {
         destroy: true,
         deferRender: true,
         paging: true,
+        order:[[ 2, "desc" ]],
         // {#Bolo#}
         ordering: true,
         info: true,
@@ -117,6 +118,7 @@ $(function () {
             var data = tbl.row(tr.row).data();
             console.log(data);
             // $("#valgast").val(data.id);
+            $('input[name="realizado"]').val(data['ventusuario']);
 
             $('#tblDet').DataTable({
                 responsive: true,

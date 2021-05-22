@@ -5,6 +5,8 @@ from django.db import models
 # Create your models here.
 from django.forms import model_to_dict
 
+from user.models import User
+
 from Sistema_Asomariec.models import BaseModel
 from producto.models import Producto
 from cliente.models import Cliente
@@ -30,6 +32,13 @@ class Venta(BaseModel):
     def __str__(self):
         return self.cliente.cliNombre
 
+    def get_full_name_usuario(self):
+        # usr= User.objects.get(pk=self.user_creation).toJSON()
+        usr= User.objects.get(pk=self.user_creation_id).toJSON()
+        return usr['full_name']
+
+        # return '{} {} / {}'.format(self.user_creation, self.cliApellido, self.cliRuc)
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         user = get_current_user()
@@ -50,6 +59,7 @@ class Venta(BaseModel):
         item['venFechaInici']=self.venFechaInici.strftime('%Y-%m-%d')
         item['venFechaFin']=self.venFechaFin.strftime('%Y-%m-%d')
         item['nfact']=format(str(self.id).zfill(10))
+        item['ventusuario']=self.get_full_name_usuario()
         return item
 
     class Meta:

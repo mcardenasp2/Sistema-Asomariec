@@ -165,6 +165,7 @@ $(function () {
                     {"data": "insumo.insDescripcion"},
                     {"data": "insumo.insImagen"},
                     {"data": "detprecio"},
+                    // {"data": "insIva"},
                     {"data": "detCantidad"},
                     {"data": "detSubtotal"},
                 ],

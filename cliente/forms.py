@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.forms import *
 from cliente.models import Cliente, Contrato
 
@@ -68,13 +69,38 @@ class ClienteForm(ModelForm):
 
         exclude=['user_creation','user_updated']
 
+    def comprobar(self):
+
+        # print(self.cleaned_data['cliEmail'])
+        # email = self.cleaned_data['cliEmail']
+
+        email = self.cleaned_data['cliEmail']
+        ruc = self.cleaned_data['cliRuc']
+        resp = Cliente.objects.get(Q(cliEmail=email) | Q(cliRuc=ruc), cliEstado=True, id=1)
+        print(resp.id)
+        if resp is None:
+            print("Guardar")
+            # instance = form.save()
+            # data = instance.toJSON()
+        else:
+            if resp.id:
+                print("Editar")
+                # instance = form.save()
+                # data = instance.toJSON()
+            else:
+                if resp.cliEmail == email:
+                    print("Email existe")
+                if resp.cliRuc == ruc:
+                    print("Email existe")
+        return resp;
+
     def save(self, commit=True):
         data = {}
         form = super()
         try:
             if form.is_valid():
-                instance=form.save()
-                data=instance.toJSON()
+                instance = form.save()
+                data = instance.toJSON()
             else:
                 data['error'] = form.errors
         except Exception as e:

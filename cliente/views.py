@@ -80,7 +80,12 @@ class ClienteCrearView(LoginRequiredMixin, ValidatePermissionRequiredMixin,Creat
             action = request.POST['action']
             if action == 'add':
                 # print('hola')
+
                 form = self.get_form()
+                # print(form["cliNombre"])
+                # resp = Cliente.objects.get(cliEmail=form.cliEmail, cliEstado=True)
+                # if(resp != ''):
+                #     print("Este Correo Existe")
                 # form.cliFecMod=""
                 # form.cliFecEli = ""
                 data = form.save()

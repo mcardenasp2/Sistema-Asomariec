@@ -232,7 +232,7 @@ class ResetPasswordView(FormView):
             mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
             mailServer.starttls()
             mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-            print('Hola');
+            # print('Hola');
 
             email_to = user.email
             mensaje = MIMEMultipart()
@@ -289,7 +289,7 @@ class ChangePasswordView(FormView):
 
     def get(self, request, *args, **kwargs):
         token = self.kwargs['token']
-        print(token)
+        # print(token)
         if User.objects.filter(token=token).exists():
             return super().get(request, *args, **kwargs)
         return HttpResponseRedirect('/login/')
