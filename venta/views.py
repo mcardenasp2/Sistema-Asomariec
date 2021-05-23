@@ -500,9 +500,15 @@ class SaleInvoicePdfView(View):
             for i in GastAdc.objects.filter(venta=self.kwargs['pk']):
                 gast.append(i)
 
+            idventa=Venta.objects.get(pk=self.kwargs['pk'])
+
             empresa = Empresa.objects.get(pk=1).toJSON()
 
+            creaadordeventa=User.objects.get(pk=idventa.user_creation_id).toJSON()
+            # print(creaadordeventa['full'])
+
             context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
+                       'vendedor':creaadordeventa['full_name'],
                        # context = {'sale': data,
                        # 'comp': {'name': 'AlgoriSoft S.A', 'ruc': '9999999999999', 'address': 'Milagro, Ecuador'},
                        'comp': empresa,
