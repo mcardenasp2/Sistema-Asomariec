@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+# zona horari
+# import pytz
+
 import Sistema_Asomariec.db as db
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf.global_settings import STATIC_ROOT
@@ -123,7 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-ec'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Guayaquil'
 
 USE_I18N = True
 
