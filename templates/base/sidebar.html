@@ -219,9 +219,52 @@
                             </li>
 
                         {% else %}
-                            {% if grupos.count > 0 %}
+{#                            {% if grupos.count > 0 %}#}
+{##}
+{#                                {% for grupo in grupos %}#}
+                                    {#                                {% for grupo in request.user.groups.modulogrupo.all %}#}
+{##}
+{#                                    <li class="nav-item itemNav">#}
+{#                                        <a class="nav-link collapsed" href="#{{ grupo.nombre }}" data-toggle="collapse"#}
+{#                                           role="button"#}
+{#                                           aria-expanded="false" aria-controls="navbar-tables">#}
+{#                                            <i class="{{ grupo.icono }} text-dark"></i>#}
+{#                                            <span class="nav-link-text">{{ grupo.nombre }}</span>#}
+{#                                        </a>#}
+{#                                        <div class="collapse marco" id="{{ grupo.nombre }}" style="">#}
+{#                                            <ul class="nav nav-sm flex-column">#}
+{##}
+{#                                                {% for modulo in grupo.modulos_activos %}#}
+{#                                                    <li class="nav-item ">#}
+                                                        {#                                                <a href="{% url 'venta:venta_mostrar' %}" class="nav-link">#}
+{#                                                        <a href="{{ modulo.url }}" class="nav-link">#}
+{#                                                            <span class="sidenav-normal"> {{ modulo.nombre }} </span>#}
+{#                                                        </a>#}
+{#                                                    </li>#}
+{##}
+{#                                                {% endfor %}#}
+{##}
+{#                                            </ul>#}
+{#                                        </div>#}
+{#                                    </li>#}
+{##}
+{#                                {% endfor %}#}
+{##}
+{##}
+{#                            {% endif %}#}
+{##}
 
-                                {% for grupo in grupos %}
+
+
+
+
+
+                            {% if request.user.get_modulos.count > 0 %}
+{#                            {% if modulo_grupo.get_modulos.count > 0 %}#}
+{#                                <h1>Hola</h1>#}
+                                {% for grupo in request.user.get_modulos %}
+{#                                {% for grupo in request.user.get_modulos %}#}
+                                    {#                                    <h1>Si es</h1>#}
                                     {#                                {% for grupo in request.user.groups.modulogrupo.all %}#}
 
                                     <li class="nav-item itemNav">
@@ -252,6 +295,8 @@
 
 
                             {% endif %}
+
+
 
                         {% endif %}
 

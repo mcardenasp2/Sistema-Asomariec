@@ -6,6 +6,9 @@ from django.forms import model_to_dict
 from Sistema_Asomariec.settings import MEDIA_URL, STATIC_URL
 
 # Create your models here.
+from seguridad.models import ModuloGrupo
+
+
 class User(AbstractUser):
     image =models.ImageField(upload_to='users/%Y/%m/%d', null=True, blank=True)
     token = models.UUIDField(primary_key=False, editable=False, null=True, blank=True)
@@ -36,3 +39,9 @@ class User(AbstractUser):
                     request.session['group'] = groups[0]
         except:
             pass
+
+    @property
+    def get_modulos(self):
+        # obtengo los grupos de modulos
+        request = get_current_request()
+        return ModuloGrupo.objects.filter(grupos=request.session['group'].id, activo=True).order_by('prioridad')

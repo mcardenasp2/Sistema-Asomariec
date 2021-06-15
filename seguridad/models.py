@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from django.forms import model_to_dict
+from crum import get_current_request
 
 # Create your models here.
 class Modulo(models.Model):
@@ -48,6 +49,11 @@ class ModuloGrupo(models.Model):
 
     def modulos_activos(self):
         return self.modulos.filter(activo=True).order_by('orden')
+
+    @property
+    def get_modulos(self):
+        request = get_current_request()
+        return ModuloGrupo.objects.filter(grupos=request.session['group'].id, activo=True).order_by('prioridad')
 
 
 # class Group(Group):
