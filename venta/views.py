@@ -13,7 +13,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-from cliente.forms import ClienteForm, ContratoForm
+from cliente.forms import ClienteForm
 from insumo.models import Insumo
 from producto.models import Producto, DetProducto, Produccion
 from user.mixins import ValidatePermissionRequiredMixin
@@ -21,12 +21,12 @@ from venta.models import *
 
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, View
 
-from venta.forms import CabVentaForm
+from venta.forms import CabVentaForm, ContratoForm
 
 from empresa.models import Empresa
 
 
-from cliente.models import Contrato
+# from cliente.models import Contrato
 from producto.forms import ProductoForm
 
 import os
@@ -484,9 +484,11 @@ class SaleInvoicePdfView(View):
         try:
             template = get_template('venta/normal/invoice2.html')
             # item={}
+
             det = []
 
             data = Venta.objects.get(pk=self.kwargs['pk']).toJSON()
+
             # det= DetVenta.objects.get(venta=self.kwargs['pk'])
             for i in DetVenta.objects.filter(venta=self.kwargs['pk']):
                 item = i.producto.toJSON()
@@ -500,12 +502,19 @@ class SaleInvoicePdfView(View):
             for i in GastAdc.objects.filter(venta=self.kwargs['pk']):
                 gast.append(i)
 
+            try:
+                contrato = Contrato.objects.get(cabventa=self.kwargs['pk']).toJSON()
+            except:
+                contrato=''
+
+            # print(contrato)
             idventa=Venta.objects.get(pk=self.kwargs['pk'])
 
             empresa = Empresa.objects.get(pk=1).toJSON()
 
             creaadordeventa=User.objects.get(pk=idventa.user_creation_id).toJSON()
-            # print(creaadordeventa['full'])
+            # print('Venta')
+            # print(creaadordeventa['full_name'])
 
             context = {'sale': Venta.objects.get(pk=self.kwargs['pk']),
                        'vendedor':creaadordeventa['full_name'],
@@ -516,6 +525,7 @@ class SaleInvoicePdfView(View):
                        'nfact': data['nfact'],
                        'fec': data['venFechaInici'],
                        'det': det,
+                       'contrato': contrato,
                        'gastad': gast
                        # se utiliza con collectstatic
                        # 'icon':'{}{}'.format(settings.STATIC_URL, 'img/logo2.jpeg')
@@ -632,12 +642,19 @@ class VentaContratoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixi
                     cabventa.ventEstado = 1
                     cabventa.save()
                     # Aggreo a la tabla contratos
+                    # contrato=Contrato()
+                    # contrato.cliente_id=vent['cliente']
+                    # contrato.contratoDescripcion=vent['observacion']
+                    # contrato.contratoFec_Inicio=vent['fecha']
+                    # contrato.contratoFec_Fin=vent['fechafin']
+                    # contrato.save()
                     contrato=Contrato()
-                    contrato.cliente_id=vent['cliente']
-                    contrato.contratoDescripcion=vent['observacion']
-                    contrato.contratoFec_Inicio=vent['fecha']
-                    contrato.contratoFec_Fin=vent['fechafin']
+                    contrato.cabventa_id=cabventa.id
+                    contrato.ctrnombre=vent['observacion']
+                    contrato.ctrFec_Inicio=vent['fecha']
+                    contrato.ctrFec_Fin=vent['fechafin']
                     contrato.save()
+
 
 
 
@@ -776,6 +793,8 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
     def get_form(self, form_class=None):
         instance = self.get_object()
         form = CabVentaForm(instance=instance)
+        # form.fields['contratoprueba'].queryset = Contrato.objects.filter(cabventa_id=2)
+        # form.fields['contratoprueba'].queryset = Cliente.objects.filter(id=instance.cliente.id)
         # queryset necesita un listado
         form.fields['cliente'].queryset = Cliente.objects.filter(id=instance.cliente.id)
         return form
@@ -1044,6 +1063,7 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['frmClient'] = ClienteForm()
+        # context['frmContrato']=ContratoForm(instance=self.get_object())
         # context['frmContrato'] = ContratoForm.
         # context['title'] = 'Edición de una Venta'
         # context['entity'] = 'Ventas'

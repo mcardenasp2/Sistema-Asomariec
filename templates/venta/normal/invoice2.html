@@ -115,7 +115,8 @@
 
 <table id="fact">
     <tbody>
-    {% if sale.ventObservacion.upper != 'NINGUNA' %}
+{#    {% if sale.ventObservacion.upper != 'NINGUNA' %}#}
+    {% if contrato != ''%}
         <tr style="padding-top: 5px; padding-bottom: 5px">
 
             <td style="padding-left: 10px" colspan="2">
@@ -126,7 +127,8 @@
 
                     {#            <center>#}
                     {#                <b>&nbsp;NOMBRE DEL CONTRATO: </b>{{ sale.cliente.contrato.contratoDescripcion|upper }}#}
-                    <b>&nbsp;NOMBRE DEL CONTRATO: </b>{{ sale.ventObservacion|upper }}
+{#                    <b>&nbsp;NOMBRE DEL CONTRATO: </b>{{ sale.ventObservacion|upper }}#}
+                    <b>&nbsp;NOMBRE DEL CONTRATO: </b>{{ contrato.ctrnombre|upper }}
                     {#            </center>#}
                 </p>
             </td>

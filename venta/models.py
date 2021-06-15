@@ -104,3 +104,24 @@ class GastAdc(models.Model):
         verbose_name_plural='Detalle de Ventas'
         ordering = ['id']
 
+class Contrato(models.Model):
+    cabventa=models.ForeignKey(Venta, on_delete=models.PROTECT)
+    ctrnombre=models.CharField(max_length=150, blank=True, verbose_name='Nombre')
+    ctrFec_Inicio=models.DateTimeField(default=datetime.now)
+    ctrFec_Fin=models.DateTimeField(default=datetime.now)
+    ctrEstado=models.BooleanField(default=True)
+
+    def toJSON(self):
+        item= model_to_dict(self)
+        item['ctrFec_Inicio']=self.ctrFec_Inicio.strftime('%Y-%m-%d')
+        item['ctrFec_Fin']=self.ctrFec_Fin.strftime('%Y-%m-%d')
+        return item
+
+    def __str__(self):
+        self.cabventa.cliente.get_full_name()
+    #
+    class Meta:
+        verbose_name='Contrato'
+        verbose_name_plural='Contratos'
+        ordering=['id']
+

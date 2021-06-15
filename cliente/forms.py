@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.forms import *
-from cliente.models import Cliente, Contrato
+from cliente.models import Cliente
 
 class ClienteForm(ModelForm):
     # def __init__(self, *args, **kwargs):
@@ -108,17 +108,17 @@ class ClienteForm(ModelForm):
         return data
 
 
-class ContratoForm(ModelForm):
-    class Meta:
-        model=Contrato
-        fields='__all__'
-        widgets={
-            'contratoDescripcion': TextInput(
-                attrs={
-                    'class': 'form-control',
-                    # 'placeholder': 'Ingrese un Nombre',
-                    # 'autocomplete':'off'
-                }
-            )
-        }
+# class ContratoForm(ModelForm):
+#     class Meta:
+#         model=Contrato
+#         fields='__all__'
+#         widgets={
+#             'contratoDescripcion': TextInput(
+#                 attrs={
+#                     'class': 'form-control',
+#                     # 'placeholder': 'Ingrese un Nombre',
+#                     # 'autocomplete':'off'
+#                 }
+#             )
+#         }
 

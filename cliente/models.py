@@ -46,26 +46,26 @@ class Cliente(BaseModel):
         verbose_name_plural = 'Clientes'
         ordering = ['id']
 
-class Contrato(models.Model):
-    contratoDescripcion=models.CharField(max_length=150, blank=True, verbose_name='Nombre')
-    cliente=models.ForeignKey(Cliente, models.PROTECT)
-    contratoFec_Inicio=models.DateTimeField(default=datetime.now)
-    contratoFec_Fin=models.DateTimeField(default=datetime.now)
-    contratoEstado=models.BooleanField(default=True)
-
-    def toJSON(self):
-        item= model_to_dict(self)
-        item['contratoFec_Inicio']=self.contratoFec_Inicio.strftime('%Y-%m-%d')
-        item['contratoFec_Fin']=self.contratoFec_Fin.strftime('%Y-%m-%d')
-        return item
-
-    def __str__(self):
-        self.cliente.get_full_name()
-
-    class Meta:
-        verbose_name='Contrato'
-        verbose_name_plural='Contratos'
-        ordering=['id']
+# class Contrato(models.Model):
+#     contratoDescripcion=models.CharField(max_length=150, blank=True, verbose_name='Nombre')
+#     cliente=models.ForeignKey(Cliente, models.PROTECT)
+#     contratoFec_Inicio=models.DateTimeField(default=datetime.now)
+#     contratoFec_Fin=models.DateTimeField(default=datetime.now)
+#     contratoEstado=models.BooleanField(default=True)
+#
+#     def toJSON(self):
+#         item= model_to_dict(self)
+#         item['contratoFec_Inicio']=self.contratoFec_Inicio.strftime('%Y-%m-%d')
+#         item['contratoFec_Fin']=self.contratoFec_Fin.strftime('%Y-%m-%d')
+#         return item
+#
+#     def __str__(self):
+#         self.cliente.get_full_name()
+#
+#     class Meta:
+#         verbose_name='Contrato'
+#         verbose_name_plural='Contratos'
+#         ordering=['id']
 
 
 

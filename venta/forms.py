@@ -6,6 +6,7 @@ from cliente.models import *
 
 
 class CabVentaForm(ModelForm):
+    # contratoprueba=forms.ModelChoiceField()
     date_range = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
         'autocomplete': 'off',
@@ -13,11 +14,13 @@ class CabVentaForm(ModelForm):
         # 'id':'date_ran'
     }))
     # cliente = forms.ModelChoiceField(queryset=Cliente.objects.filter(cliEstado=1))
+    # cliente = forms.ModelChoiceField(queryset=Cliente.objects.filter(cliEstado=1))
     # medida=ModelChoiceField(queryset=UnidadMedidad.objects.filter(medEstado=1))
     # categoria=ModelChoiceField(queryset=Categoria.objects.filter(catEstado=1))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].queryset=Cliente.objects.none()
+        # self.fields['contratoprueba'].queryset=Contrato.objects.none()
 
         # for form in self.visible_fields():
         #     form.field.widget.attrs['class'] = 'form-control'
@@ -77,3 +80,12 @@ class CabVentaForm(ModelForm):
 
         exclude=['user_creation','user_updated']
 
+
+class ContratoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model=Contrato
+        fields = '__all__'
+        exclude=['ctrEstado']
