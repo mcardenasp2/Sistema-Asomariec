@@ -654,6 +654,10 @@
 
 
         produ.items.productos ={{ det|safe }};
+        {#console.log('Detalle contrato')#}
+        {#console.log({{nomcontrato|safe }});#}
+        $('#id_ventObservacion').val({{nomcontrato|safe }});
+        {#console.log({{nomcontrato.nombre}});#}
         {#console.log('gatos');#}
         {#console.log({{ gasta|safe }});#}
         produ.items.gastoad ={{ gasta|safe }};

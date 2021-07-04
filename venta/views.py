@@ -1059,6 +1059,23 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
             pass
         return data
 
+    def get_contrato(self):
+        data=""
+        try:
+            print('pppppp')
+            # d=Contrato.objects.filter(cabventa_id=self.get_object().id)
+            # print(d)
+            # print(self.get_object().id)
+            for i in Contrato.objects.filter(cabventa_id=self.get_object().id):
+            # for i in Contrato.objects.all():
+            #     item={}
+                # item['nombre']=i.cabventa.id
+                data=i.ctrnombre
+                # data.append(item)
+        except:
+            pass
+        return data
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1070,6 +1087,7 @@ class VentaContratoDetalleView(LoginRequiredMixin, ValidatePermissionRequiredMix
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         context['det'] = json.dumps(self.get_details_produtos(), cls=DjangoJSONEncoder)
+        context['nomcontrato'] = json.dumps(self.get_contrato(), cls=DjangoJSONEncoder)
         # context['det'] = []
         context['gasta'] = json.dumps(self.get_details_gastos(), cls=DjangoJSONEncoder)
         return context

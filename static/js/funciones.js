@@ -45,7 +45,7 @@ function filePreview2(input) {
         reader.onload = function (e) {
             $('.cambiar2').attr("src", e.target.result);
             // $('#cambiar').attr({"src":e.target.result, "height":"500px"});
-        }
+        };
         reader.readAsDataURL(input.files[0]);
 
     }
@@ -98,7 +98,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
                 }
             },
         }
-    })
+    });
 }
 function alerta_action(title, content, callback) {
     $.confirm({
